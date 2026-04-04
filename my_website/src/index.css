@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* This tells every single element in your app to fade smoothly when its color or shadow changes */
+* {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+@theme {
+  --breakpoint-sm: 750px;
+}
