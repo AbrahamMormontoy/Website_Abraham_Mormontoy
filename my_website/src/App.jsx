@@ -1,4 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
+import { ThemeProvider, ThemeContext } from './components/clouds/ThemeContext';
+import CloudAnimation from './components/clouds/CloudAnimation';
 
 import About from './components/assets95/About.png'
 import Links from './components/assets95/Links.png'
@@ -12,6 +14,8 @@ import Copyright from './components/assets95/Copyright.png'
 
 
 function App() {
+
+    const { theme, setTheme } = useContext(ThemeContext);
 
     // TIMER FOR THE TASKBAR CLOCK 
     const [time, setTime] = useState(new Date());
@@ -47,21 +51,19 @@ function App() {
         { label: 'Music', icon: Music },
     ];
 
-    return (
-        <>
-        <div className=""></div>
-            <div className="bg-[#008080] w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+    return (<>
+            <CloudAnimation />
+            <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
 
                 {/*All the componets are here*/}
                 <main className="flex-auto flex p-20 sm:p-8">
 
                     {/* Centered window with a max width and height */}
                     <div className="m-auto w-full md:max-w-3xl sm:min-h-150 min-h-125 p-1 bg-[#c0c0c0] 
-                     shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
+                    dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
 
                         {/* Window header that contains the title*/}
-                        <div className="px-1 py-0.5 bg-[#000080]
-                         flex justify-start items-center h-8 
+                        <div className="px-1 py-0.5 bg-[#000080] dark:bg-[#121212] flex justify-start items-center h-8 
                         shadow-[inset_1px_1px_1px_1px_#000000]">
                             <div className="flex items-center gap-1">
                                 <img className="w-6 h-6 [image-rendering:pixelated]" src={Folder} alt="icon"/>
@@ -70,15 +72,15 @@ function App() {
                         </div>
 
                         {/* The white frame */}
-                        <div className="flex-auto bg-white flex flex-col mt-1
+                        <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333]
                         shadow-[inset_1px_1px_1px_1px_#000000]">
 
                             <div className="m-auto flex flex-col items-center justify-center gap-10 p-4 w-full">
 
                                 <div className="flex flex-col items-center text-center gap-4 px-2">
                                     <h1 className="text-black text-4xl sm:text-6xl leading-tight 
-                                    ">Hi <span className="font-bold">I am Abraham</span></h1>
-                                    <h2 className="text-black text-xl sm:text-2xl leading-tight t-white">CS student and developer</h2>
+                                    dark:text-white">Hi <span className="font-bold">I am Abraham</span></h1>
+                                    <h2 className="text-black text-xl sm:text-2xl leading-tight dark:text-white">CS student and developer</h2>
                                 </div>
 
                                 {/* Icon grid */}
@@ -100,7 +102,7 @@ function App() {
                                                 src={item.icon}
                                                 alt={item.label}
                                             />
-                                            <span className="text-black text-[16px] 
+                                            <span className="text-black text-[16px] dark:text-white
                                             text-center leading-tight transition-all duration-300 font-bold">{item.label}</span>
                                         </button>
                                     ))}
@@ -108,42 +110,47 @@ function App() {
                             </div>
                         </div>
 
-                        <div className="h-5 mt-1 bg-[#c0c0c0]
+                        <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
                         shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
-                            <span className="text-black text-[10px] leading-none">5 object(s)</span>
+                            <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
                         </div>
                     </div>
                 </main>
 
                 {/* Taskbar bottom of the screen */}
                 <footer className="w-full h-7 bg-[#c0c0c0] flex justify-between items-stretch p-0.5 gap-2 border-t-1.5
-                border-white shadow-[inset_0px_1px_0px_0px_#C0C0C0]">
+                border-white shadow-[inset_0px_1px_0px_0px_#C0C0C0] dark:bg-[#333333] dark:shadow-[inset_0px_0px_1px_0px_#FFFFFF] ">
                     <div className="flex items-center gap-1 overflow-x-hidden no-scrollbar h-full ">
-                        <div className="px-1.5 py-0 h-full bg-[#c0c0c0]
-                        shadow-[inset_0px_0px_1px_1px_#7F7F7F]
+                        <div className="px-1.5 py-0 h-full bg-[#c0c0c0] dark:bg-[#333333]
+                        shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000]
                          flex items-center gap-1 shrink-0">
                              {/* Fixed missing Start Icon */}
                             <img className="w-4 h-4 [image-rendering:pixelated]" src={Copyright} alt="start" />
-                            <span className="text-black text-[9px] sm:text-[11px] leading-2.5 text-left
+                            <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-2.5 text-left
                             ">Abraham Mormontoy</span>
                         </div>
 
 
                         {taskTabs.map((tab) => (
-                            <button key={tab.label}
-                            className="px-2 pr-20 py-0 h-full bg-[#C0C0C0]
-                            shadow-[inset_-2px_-2px_0px_0px_#7F7F7F]
+                            <button key={tab.label} onClick={ () => {
+                                if (tab.label === "Mode") {
+                                    setTheme(theme === "light" ? "dark" : "light");
+                                }    
+                            }
+                            } 
+                            className="px-2 pr-20 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
+                            shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
 
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
                                 {/*Taskbar icons*/}
                                 <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.icon} alt={tab.label} />
-                                <span className="text-black text-[11px] leading-none">{tab.label}</span>
+                                <span className="text-black dark:text-white text-[11px] leading-none">{tab.label === "Mode" ? `${theme === 'dark' ? 'Light' : 'Dark'} Mode` : tab.label}</span>
                             </button>
                         ))}
                     </div>  
                     <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
-                    flex items-center shrink-0">
-                        <span className="text-black text-[10px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
+                    dark:bg-[#333333] dark:shadow-[inset_1px_1px_0px_0px_#000000] flex items-center shrink-0">
+                        <span className="text-black dark:text-white text-[10px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
                     </div>
                 </footer>
             </div>
