@@ -1,4 +1,4 @@
-# Personal Website Still in project
+# Personal Website Still in progress
 
 ## Getting started
 ```bash
