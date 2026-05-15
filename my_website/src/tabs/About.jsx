@@ -8,7 +8,7 @@ function About() {
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 <main className="flex flex-auto p-20 sm:p-8">
                     {/*Frame of the white frame*/}
-                    <div className="m-auto w-full sm:max-w-189 h-125 sm:h-150 p-1 bg-[#c0c0c0] 
+                    <div className="m-auto w-full sm:max-w-170 h-125 sm:h-150 p-1 bg-[#c0c0c0] 
                     dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
                         {/* Tittle bar */}
                         <div className="flex justify-between bg-[#000080] dark:bg-[#121212] shadow-[inset_1px_1px_1px_1px_#000000] h-8">
@@ -31,20 +31,20 @@ function About() {
                             <div className="flex items-center justify-center p-6">
                                 <img className="w-24 h-24 [image-rendering:pixelated] mr-10" src={AboutIcon} alt="icon" draggable={false}/>
                                 <div className="flex flex-col gap-2">
-                                    <div className="text-[2.25rem] text-black dark:text-white font-bold">Abraham Mormontoy</div>
-                                <div className="text-[1rem] text-black dark:text-white leading-[0.9rem]">
-                                    <div>Computer Science Student specialized in:</div>
+                                    <div className="text-[36px] text-black dark:text-white font-bold leading-none">Abraham Mormontoy</div>
+                                <div className="text-[1rem] text-black dark:text-white leading-[1rem]">
+                                    <div>Computer Science Student focusing on:</div>
                                     <div className="flex flex-col">
-                                        <div>- Frontend Web Development</div>
+                                        <div>- Web Development</div>
                                         <div>- Data Analysis</div>
                                     </div>
                                 </div>
                                 </div>
                             </div>
-                            <div className="flex justify-center text-[1rem] text-black dark:text-white leading-[0.9rem] p-5">
-                                Hi, I am Abraham Mormontoy a second year computer science student from Simon Fraser University in Vancouver.  
-                                I am passionate about problem solving, creating innovative UI and UX, and analyzing data.  </div>
-                            <div className="flex flex-col text-[1rem] text-black dark:text-white leading-[0.9rem] p-5 px-8 gap-5">
+                            <div className="flex justify-center text-[1rem] text-black dark:text-white leading-[1rem] p-5">
+                                Hi, I am Abraham Mormontoy a second-year Computer Science student at Simon Fraser University. 
+                                I am passionate about problem solving, creating innovative UI and UX, and analyzing data.</div>
+                            <div className="flex flex-col text-[1rem] text-black dark:text-white leading-[1rem] p-5 px-8 gap-5">
                                 <div className="flex justify-between items-start leading-6">
                                     <div className="flex flex-col">
                                         <div className="font-bold">EDUCATION</div>
@@ -52,7 +52,7 @@ function About() {
                                         <div>Bachelor of Science in Computer Science</div>
                                     </div>
                                     <div className="flex flex-col items-end text-right leading-6">
-                                        <div className="font-bold">Burnaby British Columbia</div>
+                                        <div className="font-bold">Burnaby, British Columbia</div>
                                         <div>Expected Graduation date, Dec 2028</div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@ function About() {
                                     </div>
                                     <div className="flex flex-col items-end text-right leading-6">
                                         <div className="font-bold">CONCENTRATION (aiming)</div>
-                                        <div>- Computer System</div>
+                                        <div>- Computer Systems</div>
                                         <div>- Artificial Intelligence</div>
                                     </div>
                                 </div>

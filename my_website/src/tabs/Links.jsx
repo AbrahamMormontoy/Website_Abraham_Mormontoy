@@ -17,13 +17,11 @@ function links() {
     return (
         <>
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-                <main className="flex flex-1 p-4 sm:p-8 overflow-hidden relative ">
+                <main className="flex flex-auto p-25 sm:p-8">
 
-                    {/*Frame of the whole window*/}
-                    <div className="m-auto w-full max-w-120 min-h-20 sm:min-h-50 p-1 bg-[#c0c0c0] 
+                    <div className="m-auto w-full sm:max-w-120 min-h-50 p-1 bg-[#c0c0c0] 
                     dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
 
-                        {/* Tittle bar */}
                         <div className="px-1 py-0.5 bg-[#000080] dark:bg-[#121212] flex justify-between items-center h-8 
                                         shadow-[inset_1px_1px_1px_1px_#000000]">
                             <div className="flex items-center gap-1">
@@ -34,14 +32,11 @@ function links() {
                                 <button className="flex items-center gap-0.5 p-1 hover:scale-110 transition-transform duration-300 cursor-pointer">
                                     <img className="w-5 h-5 [image-rendering:pixelated]" src={Exit} alt="exit" draggable={false}/>
                                 </button>
-                                {/*<img className="w-6 h-6 [image-rendering:pixelated]" src={Exit} alt="exit" draggable={false}/>*/}
                             </div>
                         </div>
-                        {/* Tittle bar */}
 
-                        {/*White frame*/}
                         <div className="flex-auto bg-white dark:bg-[#333333] flex flex-col mt-1 shadow-[inset_1px_1px_1px_1px_#000000]">
-                            <div className="m-auto flex flex-row items-center justify-center flex-wrap gap-16 transition-all duration-300">
+                            <div className="m-5 flex flex-row items-center justify-center flex-wrap gap-x-16 gap-y-6 transition-all duration-300">
                                 {linksItems.map((item, index) => (
                                     <a key={index} className="flex flex-col items-center gap-2 p-1 hover:scale-110 transition-transform 
                                     duration-300 cursor-pointer w-20 h-25"
@@ -52,11 +47,8 @@ function links() {
                                 ))}
                             </div>
                         </div>
-                        {/*White frame*/}
-
                     </div>
                 </main>
-                {/*Frame of the whole window*/}
             </div>
         </>
     )
