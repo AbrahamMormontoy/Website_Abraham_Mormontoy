@@ -32,7 +32,7 @@ function About() {
                                 <img className="w-24 h-24 [image-rendering:pixelated] mr-10" src={AboutIcon} alt="icon" draggable={false}/>
                                 <div className="flex flex-col gap-2">
                                     <div className="text-[36px] text-black dark:text-white font-bold leading-none">Abraham Mormontoy</div>
-                                <div className="text-[1rem] text-black dark:text-white leading-[1rem]">
+                                <div className="text-[1rem] text-black dark:text-white ">
                                     <div>Computer Science Student focusing on:</div>
                                     <div className="flex flex-col">
                                         <div>- Web Development</div>
@@ -41,10 +41,10 @@ function About() {
                                 </div>
                                 </div>
                             </div>
-                            <div className="flex justify-center text-[1rem] text-black dark:text-white leading-[1rem] p-5">
+                            <div className="flex justify-center text-[1rem] text-black dark:text-white  p-5">
                                 Hi, I am Abraham Mormontoy a second-year Computer Science student at Simon Fraser University. 
                                 I am passionate about problem solving, creating innovative UI and UX, and analyzing data.</div>
-                            <div className="flex flex-col text-[1rem] text-black dark:text-white leading-[1rem] p-5 px-8 gap-5">
+                            <div className="flex flex-col text-[1rem] text-black dark:text-white p-5 px-8 gap-5">
                                 <div className="flex justify-between items-start leading-6">
                                     <div className="flex flex-col">
                                         <div className="font-bold">EDUCATION</div>
