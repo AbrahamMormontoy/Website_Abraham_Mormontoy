@@ -1,4 +1,3 @@
-import {  useState ,useEffect } from "react";
 import AboutIcon from '../components/assets95/About.png'
 import Exit from '../components/assets95/Exit.png'
 

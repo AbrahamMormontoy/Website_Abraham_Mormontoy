@@ -5,6 +5,7 @@ import App from './App.jsx'
 import About from './tabs/About.jsx'
 import Links from './tabs/Links.jsx'
 import Work from './tabs/Work.jsx'
+import More from './tabs/More.jsx'
 import { ThemeProvider } from './components/clouds/ThemeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
       <About />
       <Links />
       <Work />
+      <More />
     </ThemeProvider>
   </StrictMode>,
 )

@@ -104,7 +104,7 @@ function Work() {
                             <div className="flex flex-wrap gap-3">
                                 <SkillsSections>JavaScript</SkillsSections>
                                 <SkillsSections>TypeScript</SkillsSections>
-                                <SkillsSections>C</SkillsSections>
+                                <SkillsSections>C/C++</SkillsSections>
                                 <SkillsSections>HTML/CSS</SkillsSections>
                                 <SkillsSections>Python</SkillsSections>
                                 <SkillsSections>Java</SkillsSections>
