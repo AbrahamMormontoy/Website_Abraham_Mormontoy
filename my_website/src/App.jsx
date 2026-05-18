@@ -54,7 +54,6 @@ function App() {
     return (<>
             <CloudAnimation />
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-
                 {/*All the componets are here*/}
                 <main className="flex-auto flex p-20 sm:p-8">
 
@@ -67,7 +66,7 @@ function App() {
                         shadow-[inset_1px_1px_1px_1px_#000000]">
                             <div className="flex items-center gap-1">
                                 <img className="w-6 h-6 [image-rendering:pixelated]" src={Folder} alt="icon"/>
-                                <div className="text-white text-6 leading-none tracking-tight font-bold">Welcome</div>
+                                <div className="text-white text-[1rem] leading-none tracking-tight font-bold">Welcome</div>
                             </div>
                         </div>
 

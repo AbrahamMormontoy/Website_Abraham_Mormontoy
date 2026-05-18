@@ -11,7 +11,7 @@ import { ThemeProvider } from './components/clouds/ThemeContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
-      <App/>
+      <App />
       <About />
       <Links />
       <Work />
