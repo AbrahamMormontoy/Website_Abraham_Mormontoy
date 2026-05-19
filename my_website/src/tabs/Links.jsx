@@ -1,4 +1,4 @@
-import { TitleBar } from '../components/SharedUI.jsx'
+import { TitleBar, WindowFrame } from '../components/SharedUI.jsx'
 
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 import { useState, useEffect ,useContext } from 'react'
@@ -24,16 +24,11 @@ function links() {
         <>
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 <main className="flex flex-auto p-25 sm:p-8">
-                    
-                    {/* Size of the window */}
-                    <div className="m-auto w-full sm:max-w-120 min-h-50 p-1 bg-[#c0c0c0] 
-                    dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
-                        
-                        {/* Title bar */}
-                        <TitleBar title="Links" iconSrc={Links}/>
-
-                        {/* White frame sections */}
-                        <div className="flex-auto bg-white dark:bg-[#333333] flex flex-col mt-1 shadow-[inset_1px_1px_1px_1px_#000000]">
+                    <WindowFrame title="Links" iconSrc={Links}  
+                    footer={<div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
+                                <span className="text-black dark:text-white text-[10px] leading-none">3 object(s)</span>
+                            </div>}
+                    windowClassName="sm:max-w-120 min-h-50">
                             
                             {/* Links sections */}
                             <div className="m-5 flex flex-row items-center justify-center flex-wrap gap-x-16 gap-y-6 transition-all duration-300">
@@ -48,13 +43,8 @@ function links() {
                                         </a>
                                     )
                                 })}
-                            </div>
-                        </div>
-                        <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
-                        shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
-                            <span className="text-black dark:text-white text-[10px] leading-none">3 object(s)</span>
-                        </div>
-                    </div>
+                            </div>                        
+                    </WindowFrame>
                 </main>
             </div>
         </>

@@ -1,21 +1,15 @@
-import { TitleBar }  from '../components/SharedUI.jsx'
+import { TitleBar, WindowFrame }  from '../components/SharedUI.jsx'
 
 import AboutIcon from '../assets/assets95/About.png'
 
 function About() {
   return (
-    <>
-      <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-          <main className="flex flex-auto p-12 sm:p-8">
-          <div className="m-auto w-full sm:max-w-190 p-1 max-h-160 bg-[#c0c0c0] dark:bg-[#333333]
-                          shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
+      <>
+        <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+            <main className="flex flex-auto p-12 sm:p-8">
+            {/* Size of the window and title bar included */}
+              <WindowFrame title="About Me" iconSrc={AboutIcon} windowClassName="sm:max-w-190 max-h-160" frameclassName="p-6">
             
-            {/* Title bar */}
-            <TitleBar title="About" iconSrc={AboutIcon}/>
-
-            {/* The white frame */}
-            <div className="flex-auto bg-white dark:bg-[#333333] mt-1 shadow-[inset_1px_1px_1px_1px_#000000]
-                            overflow-y-auto custom-scrollbar p-6">
               {/* Header */}
               <div className="flex flex-col items-center text-center gap-3 mb-6">
                 <img className="w-28 h-28 [image-rendering:pixelated]" src={AboutIcon} alt="avatar" draggable={false}/>
@@ -74,7 +68,7 @@ function About() {
                     <li>Networking</li>
                   </ul>
                 </div>
-                
+
                 {/* Concentrations*/}
                 <div className="bg-[#f7f7f7] dark:bg-[#222222] p-5">
                   <div className="text-[1.25rem] font-bold mb-2 text-black dark:text-white">Concentrations</div>
@@ -91,8 +85,7 @@ function About() {
                 <div className="text-sm text-black dark:text-white">Email: 
                     <a className="underline" href="mailto:mormontoy.abraham@gmail.com"> mormontoy.abraham@gmail.com</a></div>
               </div>
-            </div>
-          </div>
+            </WindowFrame>
         </main>
       </div>
     </>

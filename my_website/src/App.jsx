@@ -1,3 +1,4 @@
+import { WindowFrame } from './components/SharedUI';
 import { useState, useEffect, useContext } from 'react';
 import { ThemeProvider, ThemeContext } from './components/clouds/ThemeContext';
 import CloudAnimation from './components/clouds/CloudAnimation';
@@ -53,27 +54,18 @@ function App() {
 
     return (
         <>
-            <CloudAnimation />
+        <CloudAnimation />
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 {/*All the componets are here*/}
                 <main className="flex-auto flex p-20 sm:p-8">
-
-                    {/* Centered window with a max width and height */}
-                    <div className="m-auto w-full md:max-w-3xl sm:min-h-150 min-h-125 p-1 bg-[#c0c0c0] 
-                    dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
-
-                        {/* Window header that contains the title*/}
-                        <div className="px-1 py-0.5 bg-[#000080] dark:bg-[#121212] flex justify-start items-center h-8 
-                        shadow-[inset_1px_1px_1px_1px_#000000]">
-                            <div className="flex items-center gap-1">
-                                <img className="w-6 h-6 [image-rendering:pixelated]" src={Folder} alt="icon"/>
-                                <div className="text-white text-[1rem] leading-none tracking-tight font-bold">Welcome</div>
-                            </div>
-                        </div>
-
-                        {/* The white frame */}
-                        <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333]
-                        shadow-[inset_1px_1px_1px_1px_#000000]">
+                    <WindowFrame title="Welcome" iconSrc={Folder} showExit={false} 
+                    footer={
+                    <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
+                        shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
+                        <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
+                    </div>
+                    }
+                    windowClassName="sm:max-w-3xl sm:min-h-150 min-h-125">
 
                             <div className="m-auto flex flex-col items-center justify-center gap-10 p-4 w-full">
 
@@ -107,14 +99,8 @@ function App() {
                                         </button>
                                     ))}
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
-                        shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
-                            <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
-                        </div>
-                    </div>
+                            </div>               
+                    </WindowFrame>
                 </main>
 
                 {/* Taskbar bottom of the screen */}

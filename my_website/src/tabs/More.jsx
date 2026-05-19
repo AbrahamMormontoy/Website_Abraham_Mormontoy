@@ -1,5 +1,5 @@
 import { useState ,useEffect } from "react";
-import { TitleBar } from "../components/SharedUI";
+import { TitleBar, WindowFrame } from "../components/SharedUI";
 
 import MoreIcon from '../assets/assets95/More.png'
 import Exit from '../assets/assets95/Exit.png'
@@ -11,7 +11,7 @@ function More() {
             question: `What are my hobbies and interests?`,
             answer: `I have a lot of hobbies and interests that vary a lot along time. My main hobbies are story driven media such as mangas and narrative videogames. I like how these media explore different themes in different ways and are still able to convey message and emotions even if you dont fully understand whats happening or dont completely relate to the characters.
             
-            My favorite genre in videogame is psychological horror and in manga is slice of life. If I had to pick one game and one manga, I would say Silent Hill 2 and Your Lie in April (they are not even remotely similar) but there are a lot of videogames and mangas that I enjoyed such as Resident Evil 2, Silksong, Deltarune, Portal 2, Fire punch, Full Metal Alchemist, Jojos, Tokyo Ghoul and more.`  
+            My favorite genre in videogame is psychological horror and in manga is thriller. If I had to pick one game and one manga, I would say Silent Hill 2 and Fire Punch (at this moment) but there are a lot of videogames and mangas that I enjoyed such as Resident Evil 2, Silksong, Deltarune, Portal 2, Full Metal Alchemist, Jojos, Tokyo Ghoul and more.`  
         },
         {
             question: `Why do I use Hyprland Arch Linux?`,
@@ -66,15 +66,7 @@ function More() {
         <>
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                     <main className="flex flex-auto p-20 sm:p-8">
-                         
-                        {/* Size of the window */}
-                        <div className="m-auto w-full sm:max-w-170 h-95 sm:h-95 p-1 bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
-                            
-                            {/* Title bar */}
-                            <TitleBar title="More" iconSrc={MoreIcon}/>
-                            
-                            {/* White frame */}
-                            <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333] shadow-[inset_1px_1px_1px_1px_#000000] overflow-y-auto custom-scrollbar p-3 gap-3">
+                        <WindowFrame title="More" iconSrc={MoreIcon} windowClassName="sm:max-w-170 h-95" frameclassName="p-3 gap-3">
                                 {/* Question sections */}
                                 {questionList.map((item, index) => (
                                     // Question button to display the answer when is clicked
@@ -98,8 +90,7 @@ function More() {
                                         )}
                                     </div>
                                 ))}
-                            </div>
-                        </div>
+                        </WindowFrame>
                     </main>
                 </div>
         </>

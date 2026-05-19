@@ -1,4 +1,4 @@
-import { TitleBar } from '../components/SharedUI.jsx'
+import { TitleBar, SkillsSections , ProjectCard, WindowFrame } from '../components/SharedUI.jsx'
 import {  useState ,useEffect, useContext } from "react";
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 
@@ -13,42 +13,9 @@ import PetMind from '../assets/workImages/PetMind.png'
 import SFUFitness from '../assets/workImages/SfuFitness.jpg'
 import Windows95 from '../assets/workImages/Windows95.png'
 
-const SkillsSections = function ({children}) {
-    return (
-        <div className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
-         shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
-         transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
-            {children}
-        </div>
-    )
-}
-
-const ProjectCard = function ( { title, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
-    return (
-        <div className="mb-4 bg-[#f7f7f7] dark:bg-[#222222] p-5">
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-            {imageSrc && ( <img src={imageSrc} alt={imageAlt} className="shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-pointer hover:scale-105 
-            transition-transform duration-300" onClick={onImageClick} />)}
-                <div className="flex flex-col gap-2 flex-auto">
-                    <div className="font-bold text-[1rem] sm:text-[1.25rem] leading-tight dark:text-white">{title}</div>
-                    <div className="text-[0.875rem] sm:text-[1rem] leading-[1.4] dark:text-white">{description}</div>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="text-[0.8rem] sm:text-[0.95rem] italic dark:text-white">Tools: {tools}</div>
-                        {githubUrl && (<a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex shrink-0 cursor-pointer items-center 
-                        hover:scale-105 transition-transform duration-300">
-                        {darkMode ? <img src={GithubDark} alt="github" className="w-6 h-6" /> : <img src={Github} alt="github" className="w-6 h-6" />}
-                        </a>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 
 function Work() {
-
     const [image, setImage] = useState(null);
 
     const imageViewer = function (img, onClose) {
@@ -63,20 +30,18 @@ function Work() {
 
     const { theme }  = useContext(ThemeContext);
     const darkMode = theme === 'dark';
-    
-    return (<>
-    <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-        <main className="flex flex-auto p-20 sm:p-8">
 
-            {/* Size of the window */}
-            <div className="m-auto w-full sm:max-w-250 h-125 sm:h-170 p-1 bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
+    return (
+    <>
+        <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+            
+            {imageViewer(image, () => setImage(null))}
+            <main className="flex flex-auto p-20 sm:p-8">
+
+                {/* Size of the window and title bar included */}
+                <WindowFrame title="Work" iconSrc={WorkIcon} windowClassName="sm:max-w-250 sm:h-170 h-125">
                 
-                {/* Title bar */}
-                <TitleBar title="Work" iconSrc={WorkIcon}/>
-
-                {/* White frame */}
-                <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333] shadow-[inset_1px_1px_1px_1px_#000000] overflow-y-auto custom-scrollbar">
-                    
+                        
                     {/* Skills section */}
                     <div className="flex flex-col gap-5 mt-5 ml-5 pr-5 pb-5">
                         
@@ -130,32 +95,35 @@ function Work() {
                             title="Windows95 Web Portfolio" 
                             description="Build a personalized website with darkmode, tab movement, displaying in one 
                             index, used libraries from thirds for movement."
-                            tools="Javascript, React, Tailwind, HTML/CSS, Figma, Next.js" 
+                            tools="Javascript, React, Tailwind CSS, HTML/CSS, Figma, Next.js" 
                             imageSrc={Windows95} 
                             imageAlt="Windows95 Portfolio" 
                             githubUrl="https://github.com/AbrahamMormontoy/Website_Abraham_Mormontoy" 
-                            onImageClick={() => setImage(Windows95)} darkMode={darkMode}/>
+                            onImageClick={() => setImage(Windows95)} 
+                            darkMode={darkMode}/>
 
                             {/* Pet Mind Reader */}
                             <ProjectCard 
                             title="Pet Mind Reader" 
                             description="Build a personalized website with darkmode..."
-                            tools="Javascript, React, Tailwind, HTML/CSS, Figma, Next.js" 
+                            tools="TypeScript, React, Tailwind CSS, Next.js, Framer Motion, Google Generative AI SDK" 
                             imageSrc={PetMind} 
                             imageAlt="Pet Mind Reader" 
                             githubUrl="https://github.com/kentishnguyen/pet-mind-reader" 
-                            onImageClick={() => setImage(PetMind)} darkMode={darkMode}/>
+                            onImageClick={() => setImage(PetMind)} 
+                            darkMode={darkMode}/>
 
                             {/* SFU Fitness Tracker */}
                             <ProjectCard 
                             title="SFU Fitness Tracker" 
                             description="Built in stormhacks of 4 (hackathon) a full-stack fitness tracking application 
                             that connects clients and trainers with user registration, personalized exercise preference and dashboard."
-                            tools="Javascript, React, Tailwind, HTML/CSS, Figma, Next.js" 
+                            tools="Java, Spring Boot, JavaScript, HTML/CSS, SQL" 
                             imageSrc={SFUFitness} 
                             imageAlt="SFU Fitness Tracker" 
                             githubUrl="https://github.com/egemen-guney/stormhacks-2025" 
-                            onImageClick={() => setImage(SFUFitness)} darkMode={darkMode}/>
+                            onImageClick={() => setImage(SFUFitness)} 
+                            darkMode={darkMode}/>
 
                             {/* Dog Breed Classifier */}
                             <ProjectCard 
@@ -166,8 +134,9 @@ function Work() {
                             imageSrc={DogBreed} 
                             imageAlt="Dog Breed Classifier" 
                             githubUrl="https://github.com/viktorz05/ImageClassification" 
-                            onImageClick={() => setImage(DogBreed)} darkMode={darkMode}/>
-                     
+                            onImageClick={() => setImage(DogBreed)}
+                            darkMode={darkMode}/>
+                    
                             {/* Daycare inferno */}
                             <ProjectCard 
                             title="Daycare inferno" 
@@ -177,7 +146,8 @@ function Work() {
                             imageSrc={DayCare} 
                             imageAlt="Daycare inferno" 
                             githubUrl="https://github.com/AbrahamMormontoy/DAYCARE_INFERNO" 
-                            onImageClick={() => setImage(DayCare)} darkMode={darkMode}/>
+                            onImageClick={() => setImage(DayCare)} 
+                            darkMode={darkMode}/>
                             
                             {/* Group Chat Server with Fuzzing Clients */}
                             <ProjectCard 
@@ -185,8 +155,6 @@ function Work() {
                             description=" Developed a TCP multi-threaded group chat server and fuzzing client. 
                             Handles concurrent connections up to 100 clients ensuring message ordering and broadcast."
                             tools="C, Socket Programming, Multithreading" 
-                            imageSrc={Windows95} 
-                            imageAlt="Windows95 Portfolio" 
                             githubUrl="https://github.com/AbrahamMormontoy/Group-Chat-Server-with-Fuzzing-Clients" 
                             darkMode={darkMode}/>
 
@@ -196,8 +164,6 @@ function Work() {
                             description="Develop Rubik's Cube solver with A* search algorithm, heuristic function, and a 
                             Pattern DataBase to get the optimal result taking into account the position and orientation."
                             tools="Java" 
-                            imageSrc={Windows95}
-                            imageAlt="Windows95 Portfolio" 
                             githubUrl="https://github.com/AbrahamMormontoy/Rubiks-Cube-Solver" 
                             darkMode={darkMode}/>
 
@@ -206,9 +172,7 @@ function Work() {
                             title="Email Spam Detector" 
                             description="Processed, cleaned and analyzed 75 000 email messages converting HTML content, tokenizing 
                             text and linear classification achieving 99% accuracy over 7000 emails."
-                            tools="Javascript, React, Tailwind, HTML/CSS, Figma, Next.js" 
-                            imageSrc={Windows95} 
-                            imageAlt="Windows95 Portfolio" 
+                            tools="Python, NLTK, Pandas, Scikit-learn" 
                             githubUrl="https://github.com/AbrahamMormontoy/Spam-detection-with-machine-learning" 
                             darkMode={darkMode}/>
 
@@ -218,17 +182,13 @@ function Work() {
                             description="Analyzed over 16,000 video game records identifying market trends and insights 
                             using visualization and a clustering algorithm to classify video games titles into recent hits."
                             tools="Python, Pandas, Matplotlib, Scikit-learn" 
-                            imageSrc={Windows95} 
-                            imageAlt="Windows95 Portfolio" 
                             githubUrl="https://github.com/AbrahamMormontoy/Videogames-Market-Analysis" 
                             darkMode={darkMode}/>
-
                         </div>
                     </div>
-                </div>
-            </div>
-        </main>
-    </div>
+                </WindowFrame>
+            </main>
+        </div>
     
     </>)
 }
