@@ -55,7 +55,7 @@ function Work() {
                                 <SkillsSections>VS Code</SkillsSections>
                                 <SkillsSections>IntelliJ IDEA</SkillsSections>
                                 <SkillsSections>Linux</SkillsSections>
-                                <SkillsSections>Excel</SkillsSections>
+                                <SkillsSections>MS Office</SkillsSections>
                             </div>
                         </div>
 
@@ -91,33 +91,44 @@ function Work() {
                         <div className="flex flex-col gap-4 mb-5 mx-4">
 
                             {/* Windows95 Portfolio */}
-                            <ProjectCard 
-                            title="Windows95 Web Portfolio" 
-                            description="Build a personalized website with darkmode, tab movement, displaying in one 
-                            index, used libraries from thirds for movement."
-                            tools="Javascript, React, Tailwind CSS, HTML/CSS, Figma, Next.js" 
-                            imageSrc={Windows95} 
-                            imageAlt="Windows95 Portfolio" 
-                            githubUrl="https://github.com/AbrahamMormontoy/Website_Abraham_Mormontoy" 
-                            onImageClick={() => setImage(Windows95)} 
-                            darkMode={darkMode}/>
+                           <ProjectCard
+                           title="Windows95 Web Portfolio"
+                           date="Personal Project | April - May 2026"
+                           description="Build a portfolio website inspired by the Windows 95 aesthetic. The project supports tab movement in desktop form for each section as well as the ability to
+                           open multiple windows at the same time. The design is responsive and includes dark mode support that depends on the system preferences or the time of the day. It also includes
+                           animated clouds in the background that respond to the current theme. Added contact form with validation and email sending functionality using EmailJS. Added sound effects
+                           for opening and closing windows, hovering over icons, and clicking buttons to enhance the user experience."
+                           tools="Javascript, React, Tailwind CSS, HTML/CSS, Figma, Next.js"
+                           imageSrc={Windows95}
+                           imageAlt="Windows95 Portfolio"
+                           githubUrl="https://github.com/AbrahamMormontoy/Website_Abraham_Mormontoy"
+                           onImageClick={() => setImage(Windows95)}
+                           darkMode={darkMode}/>
 
-                            {/* Pet Mind Reader */}
-                            <ProjectCard 
-                            title="Pet Mind Reader" 
-                            description="Build a personalized website with darkmode..."
-                            tools="TypeScript, React, Tailwind CSS, Next.js, Framer Motion, Google Generative AI SDK" 
-                            imageSrc={PetMind} 
-                            imageAlt="Pet Mind Reader" 
-                            githubUrl="https://github.com/kentishnguyen/pet-mind-reader" 
-                            onImageClick={() => setImage(PetMind)} 
-                            darkMode={darkMode}/>
+
+                           {/* Pet Mind Reader */}
+                           <ProjectCard
+                           title="Pet Mind Reader"
+                           date="SFU Surge Sillyhack | April 2026"
+                           description="Develop a web application where you upload a photo of a pet and it generates a humorous caption of what the pet might be thinking. The application supports the
+                           upload of sinle pet photos as well as multiple pets in the same photo generating a caption for each pet. The app uses the Gemini model from Google Generative AI to generate
+                           the captions and Next.js API routes to handle the backend processing of the images and communication with the Gemini API. It supports jpeg, png, gif and webp formats with
+                           a limit of 10MB. This project was developed in the sillyhack 2025 hackathon in a group of 4 following the hackathon theme of fun, chaotic and unhinge ideas."
+                           tools="TypeScript, React, Tailwind CSS, Next.js, Framer Motion, Google Generative AI SDK"
+                           imageSrc={PetMind}
+                           imageAlt="Pet Mind Reader"
+                           githubUrl="https://github.com/kentishnguyen/pet-mind-reader"
+                           onImageClick={() => setImage(PetMind)}
+                           darkMode={darkMode}/>
 
                             {/* SFU Fitness Tracker */}
                             <ProjectCard 
                             title="SFU Fitness Tracker" 
-                            description="Built in stormhacks of 4 (hackathon) a full-stack fitness tracking application 
-                            that connects clients and trainers with user registration, personalized exercise preference and dashboard."
+                            date="SFU Surge Stormhacks | December 2025"
+                            description="Develop a fitness tracking full stack web application with trainer and client user registration and log in system with encryption. The app has a integrated 
+                            client-trainer data communication to keep track of a exercise preferences, long-term, short-term goals, avialability and information. This information can go from certifications
+                            of the trainer to gender and favorite exercise of the client. Implemented a dashboard for both clients and trainers so they can see the avialability of each one has and the 
+                            possibility to book a session if possible. The project was developed in a group of 4 for the SFU Stormhacks 2025."
                             tools="Java, Spring Boot, JavaScript, HTML/CSS, SQL" 
                             imageSrc={SFUFitness} 
                             imageAlt="SFU Fitness Tracker" 
@@ -128,8 +139,11 @@ function Work() {
                             {/* Dog Breed Classifier */}
                             <ProjectCard 
                             title="Dog Breed Classifier" 
-                            description="Group project of 4 to build a convolutional neural network using 50 breeds with 
-                            150 images each achieving a accuracy of 80% using transfer learning with a pretrained ResNet-18 model"
+                            date="SFU CMPT 310 Introduction to Artificial Intelligence | January - April 2026"
+                            description="Build a Dog Breed Image Classificator model using a Convolutionall Neural Network that gives the top 3 most accurate predictions of the picture of a dog breed. 
+                            The model supports jpg, jpeg and png formats. The model was trained using transfer learning with a pretrained ResNet-18 model. The pipeline included image resizing to 224x224.
+                            Training was performed over 15 epochs using a CUDA-acelerated GPU and backpropagation. The dataset used for the training is the Stanford Dogs Dataset using only 50 breeds with 150 images each.
+                            The accuracy achieved is 80% for Top-1 and 94% for the Top-3. This project was developed in a group of 4 for the CMPT 310 course at SFU creating reports for each phase of the development process."  
                             tools="python, torch, torchvision, pandas/numpy, matplotlib, scikit-learn, openCV" 
                             imageSrc={DogBreed} 
                             imageAlt="Dog Breed Classifier" 
@@ -140,9 +154,13 @@ function Work() {
                             {/* Daycare inferno */}
                             <ProjectCard 
                             title="Daycare inferno" 
-                            description="Group project of 4 to build 2D-arcade style maze game avoiding enemies and collecting 
-                            rewards. Included UML diagrams, Use Cases, UI mockups, project management (Scrum) and version control."
-                            tools="Java, Swing, Awt" 
+                            date="SFU CMPT 276 Introduction to Software Engineering | January - April 2026"
+                            description="Build a 2D arcade-style maze game that consists of a daycare burning and an employee trapped inside. The main objective of the game is to rescue all of the scattered children while avoiding
+                            the fire enemies (moving) and debris enemies (static). The core mechanics of the game consists in AI-driven enemies using Greedy Search, collision detection using rectangles, score system based on the rescued 
+                            children and special rewards and a timer system. The enemies, both static and moving, and rewards are randomly generated at the start of each game. This project was developed in a group of 4 for the CMPT 276 
+                            course at SFU following software engineering principles like Version Control, UML diagrams, use cases, UI mockups, Scrum and Agile development, maven for project managment, unit testing with JUnit and Javadocs.
+                            Constant reports were made for each phase of the development process."
+                            tools="Java, Swing, Awt, JUnit" 
                             imageSrc={DayCare} 
                             imageAlt="Daycare inferno" 
                             githubUrl="https://github.com/AbrahamMormontoy/DAYCARE_INFERNO" 
@@ -152,8 +170,10 @@ function Work() {
                             {/* Group Chat Server with Fuzzing Clients */}
                             <ProjectCard 
                             title="Group Chat Server with Fuzzing Clients" 
-                            description=" Developed a TCP multi-threaded group chat server and fuzzing client. 
-                            Handles concurrent connections up to 100 clients ensuring message ordering and broadcast."
+                            date="SFU CMPT 201 System Programming | March 2026"
+                            description="Build a multithreaded group chat TCP server capable of handling 100 concurrent clients. The server ensures all messages are broadcasted to every client maintaining the order of the messages. The server
+                            implements a messaging protocol supporting writing a message, sender metadata (IP/Port), and new-line termination framing to guarante correct parsing. Implemented a CMake for the project structure and compilation. 
+                            Verify correctness of the server and clients requirements with provided automated tests. Debug memmory leaks and threading issues using sanitizers and CGDB."
                             tools="C, Socket Programming, Multithreading" 
                             githubUrl="https://github.com/AbrahamMormontoy/Group-Chat-Server-with-Fuzzing-Clients" 
                             darkMode={darkMode}/>
@@ -161,8 +181,10 @@ function Work() {
                             {/*Rubiks Cube Solver*/}
                             <ProjectCard 
                             title="Rubiks Cube Solver" 
-                            description="Develop Rubik's Cube solver with A* search algorithm, heuristic function, and a 
-                            Pattern DataBase to get the optimal result taking into account the position and orientation."
+                            date="SFU CMPT 225 Data Structures and Programming | November - December 2026"
+                            description="Build a Rubik’s Cube solver utilizing the A∗ search algorithm paired with a Pattern Database (PDB) and a tiered heuristic function. Implemented a complex heuristic estimation incorporating
+                             Manhattan distances for corner and edge permutations, accounting for both position and orientation. Optimized search performance by integrating transposition pruning via HashMaps to eliminate redundant state 
+                             evaluations and modular move logic using matrix rotations. This project was developed for the CMPT 225 course at SFU following data structures and algorithms principles like search algorithms and heuristic functions."
                             tools="Java" 
                             githubUrl="https://github.com/AbrahamMormontoy/Rubiks-Cube-Solver" 
                             darkMode={darkMode}/>
@@ -170,8 +192,9 @@ function Work() {
                             {/* Email Spam Detector */}
                             <ProjectCard 
                             title="Email Spam Detector" 
-                            description="Processed, cleaned and analyzed 75 000 email messages converting HTML content, tokenizing 
-                            text and linear classification achieving 99% accuracy over 7000 emails."
+                            date="Personal Project | August 2025"
+                            description="Processed, cleaned, and analyzed 75,000+ email messages. Extracted numerical features from email data by converting HTML content and tokenizing text, enabling effective spam classification.      
+                            Achieved an accuracy rate of 99% on a test dataset of over 7,000 emails, natural language processing."
                             tools="Python, NLTK, Pandas, Scikit-learn" 
                             githubUrl="https://github.com/AbrahamMormontoy/Spam-detection-with-machine-learning" 
                             darkMode={darkMode}/>
@@ -179,8 +202,10 @@ function Work() {
                             {/* Video Games Market Analysis */}
                             <ProjectCard 
                             title="Video Games Market Analysis" 
-                            description="Analyzed over 16,000 video game records identifying market trends and insights 
-                            using visualization and a clustering algorithm to classify video games titles into recent hits."
+                            date="Personal Project | June 2025"
+                            description="Analyzed over 16,000 video game records to identify market trends and insights. Created data visualizations to detect trends in genres, publishers, and regional preferences, 
+                            enabling data-driven decision-making. Built clustering algorithms to classify video game titles into recent hits and successful legacy titles. Made a report about my finding and insights from
+                            the analysis and visualization of the data."
                             tools="Python, Pandas, Matplotlib, Scikit-learn" 
                             githubUrl="https://github.com/AbrahamMormontoy/Videogames-Market-Analysis" 
                             darkMode={darkMode}/>

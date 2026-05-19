@@ -54,16 +54,17 @@ export const SkillsSections = function ({children}) {
     )
 }
 
-export const ProjectCard = function ( { title, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
+export const ProjectCard = function ( { title, date, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
     
     return (
         <div className="mb-4 bg-[#f7f7f7] dark:bg-[#222222] p-5">
-            <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4 ">
             {imageSrc && ( <img src={imageSrc} alt={imageAlt} className="shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-pointer hover:scale-105 
             transition-transform duration-300" onClick={onImageClick} />)}
                 <div className="flex flex-col gap-2 flex-auto">
                     <div className="font-bold text-[1rem] sm:text-[1.25rem] leading-tight dark:text-white">{title}</div>
-                    <div className="text-[0.875rem] sm:text-[1rem] leading-[1.4] dark:text-white">{description}</div>
+                    <div className="text-[0.8rem] sm:text-[0.95rem] dark:text-white">{date}</div>
+                    <div className="text-[0.875rem] sm:text-[1rem] leading-[1.4] dark:text-white text-justify">{description}</div>
                     <div className="flex items-center justify-between gap-3">
                         <div className="text-[0.8rem] sm:text-[0.95rem] italic dark:text-white">Tools: {tools}</div>
                         {githubUrl && (<a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex shrink-0 cursor-pointer items-center 
