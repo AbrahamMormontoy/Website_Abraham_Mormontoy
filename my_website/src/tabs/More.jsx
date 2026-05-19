@@ -1,7 +1,8 @@
 import { useState ,useEffect } from "react";
+import { TitleBar } from "../components/SharedUI";
 
-import MoreIcon from '../components/assets95/More.png'
-import Exit from '../components/assets95/Exit.png'
+import MoreIcon from '../assets/assets95/More.png'
+import Exit from '../assets/assets95/Exit.png'
 
 function More() {
     
@@ -65,35 +66,32 @@ function More() {
         <>
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                     <main className="flex flex-auto p-20 sm:p-8">
-                        <div className="m-auto w-full sm:max-w-170 h-95 sm:h-95 p-1 bg-[#c0c0c0]
-                        dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
-                            <div className="flex justify-between bg-[#000080] dark:bg-[#121212] shadow-[inset_1px_1px_1px_1px_#000000] h-8">
-                                <div className="flex items-center gap-1 p-1">
-                                    <img className="w-6 h-6 [image-rendering:pixelated]" src={MoreIcon} alt="icon" draggable={false}/>
-                                    <div className="text-white text-[1rem] leading-none tracking-tight font-bold">More</div>
-                                </div>
-                                <div className="flex items-center">
-                                    <button className="p-1 cursor-pointer hover:scale-110 transition-transform duration-300">
-                                        <img className="w-6 h-6 [image-rendering:pixelated]" src={Exit} alt="exit" draggable={false}/>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333]
-                            shadow-[inset_1px_1px_1px_1px_#000000] overflow-y-auto custom-scrollbar p-3 gap-3">
+                         
+                        {/* Size of the window */}
+                        <div className="m-auto w-full sm:max-w-170 h-95 sm:h-95 p-1 bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col">
+                            
+                            {/* Title bar */}
+                            <TitleBar title="More" iconSrc={MoreIcon}/>
+                            
+                            {/* White frame */}
+                            <div className="flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333] shadow-[inset_1px_1px_1px_1px_#000000] overflow-y-auto custom-scrollbar p-3 gap-3">
+                                {/* Question sections */}
                                 {questionList.map((item, index) => (
+                                    // Question button to display the answer when is clicked
                                     <div key={index} className="flex flex-col" >
                                         <button onClick={() => toggle(index)} 
-                                        className="bg-[#c0c0c0] dark:bg-[#444] text-black dark:text-white flex justify-between items-center px-3 py-1.5 
+                                        className="bg-[#c0c0c0] dark:bg-[#444444] text-black dark:text-white flex justify-between items-center px-3 py-1.5 
                                             shadow-[inset_1px_1px_1px_1px_#000000] cursor-pointer transition-none">
                                             <span className="text-[1.5rem] text-left">{item.question}</span>
-                                            <div className="bg-[#c0c0c0] dark:bg-[#333] shadow-[inset_-1px_-1px_0px_0px_#000000,inset_1px_1px_0px_0px_#ffffff] px-2 py-0.5 ml-4 flex items-center justify-center shrink-0">
+                                            <div className="bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1px_-1px_0px_0px_#000000,inset_1px_1px_0px_0px_#ffffff] px-2 py-0.5 ml-4 flex items-center justify-center shrink-0">
                                                 <span className="text-[1.25rem] leading-none transform transition-transform duration-200">
                                                     {openTabs === index ? '▲' : '▼'}
                                                 </span>
                                             </div>
                                         </button>
                                         {openTabs === index && (
-                                            <div className="bg-[#e0e0e0] dark:bg-[#222] text-black dark:text-[#ddd] p-3 text-[1.25rem] leading-tight whitespace-pre-line
+                                            // Answer section that is display when the question button is clicked
+                                            <div className="bg-[#e0e0e0] dark:bg-[#222222] text-black dark:text-[#ddd] p-3 text-[1.25rem] leading-tight whitespace-pre-line
                                             shadow-[inset_-1px_-1px_1px_1px_#000000]">
                                                 {item.answer}
                                             </div>

@@ -2,15 +2,15 @@ import { useState, useEffect, useContext } from 'react';
 import { ThemeProvider, ThemeContext } from './components/clouds/ThemeContext';
 import CloudAnimation from './components/clouds/CloudAnimation';
 
-import About from './components/assets95/About.png'
-import Links from './components/assets95/Links.png'
-import More from './components/assets95/More.png'
-import Folder from './components/assets95/Folder.png'
-import Music from './components/assets95/Music.png'
-import Contact from './components/assets95/Contact.png'
-import Documents from './components/assets95/Work.png'
-import Mode from './components/assets95/Mode.png'
-import Copyright from './components/assets95/Copyright.png'
+import About from './assets/assets95/About.png'
+import Links from './assets/assets95/Links.png'
+import More from './assets/assets95/More.png'
+import Folder from './assets/assets95/Folder.png'
+import Music from './assets/assets95/Music.png'
+import Contact from './assets/assets95/Contact.png'
+import Documents from './assets/assets95/Work.png'
+import Mode from './assets/assets95/Mode.png'
+import Copyright from './assets/assets95/Copyright.png'
 
 
 function App() {
@@ -51,7 +51,8 @@ function App() {
         { label: 'Music', icon: Music },
     ];
 
-    return (<>
+    return (
+        <>
             <CloudAnimation />
             <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 {/*All the componets are here*/}
