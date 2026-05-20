@@ -2,7 +2,7 @@ import { TitleBar, SkillsSections , ProjectCard, WindowFrame } from '../componen
 import {  useState ,useEffect, useContext } from "react";
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 
-import WorkIcon from '../assets/assets95/Work.png'
+import workIcon from '../assets/assets95/workIcon.png'
 import Exit from '../assets/assets95/Exit.png'
 import Cv from '../assets/assets95/Cv.png'
 import Github from '../assets/assets95/Github.png'
@@ -15,7 +15,7 @@ import Windows95 from '../assets/workImages/Windows95.png'
 
 
 
-function Work() {
+function Work( {onClose} ) {
     const [image, setImage] = useState(null);
 
     const imageViewer = function (img, onClose) {
@@ -33,13 +33,12 @@ function Work() {
 
     return (
     <>
-        <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+        <div className="font-['W95font'] select-none relative z-50">
             
             {imageViewer(image, () => setImage(null))}
-            <main className="flex flex-auto p-20 sm:p-8">
 
                 {/* Size of the window and title bar included */}
-                <WindowFrame title="Work" iconSrc={WorkIcon} windowClassName="sm:max-w-250 sm:h-170 h-125">
+                <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:max-w-250 sm:h-170 h-125" onClose={onClose}>
                 
                         
                     {/* Skills section */}
@@ -212,7 +211,6 @@ function Work() {
                         </div>
                     </div>
                 </WindowFrame>
-            </main>
         </div>
     
     </>)

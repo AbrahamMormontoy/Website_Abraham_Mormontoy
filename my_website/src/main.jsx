@@ -13,11 +13,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
       <App />
-      <About />
-      <Links />
-      <Work />
-      <More />
-      <Contact />
     </ThemeProvider>
   </StrictMode>,
 )

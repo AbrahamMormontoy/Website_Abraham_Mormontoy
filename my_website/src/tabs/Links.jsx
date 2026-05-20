@@ -2,14 +2,14 @@ import { TitleBar, WindowFrame } from '../components/SharedUI.jsx'
 
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 import { useState, useEffect ,useContext } from 'react'
-import Links from '../assets/assets95/Links.png'
+import linksIcon from '../assets/assets95/linksIcon.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
 import Github from '../assets/assets95/Github.png'
 import LinkedIn from '../assets/assets95/LinkedIn.png'
 import Cv from '../assets/assets95/Cv.png'
 
 
-function links() {
+function links( { onClose } ) {
     const { theme }  = useContext(ThemeContext);
     const darkMode = theme === 'dark';
 
@@ -22,13 +22,12 @@ function links() {
 
     return (
         <>
-            <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-                <main className="flex flex-auto p-25 sm:p-8">
-                    <WindowFrame title="Links" iconSrc={Links}  
+            <div className="font-['W95font'] select-none relative z-50">
+                    <WindowFrame title="Links" iconSrc={linksIcon}  
                     footer={<div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
                                 <span className="text-black dark:text-white text-[10px] leading-none">3 object(s)</span>
                             </div>}
-                    windowClassName="sm:max-w-120 min-h-50">
+                    windowClassName="sm:min-w-120 min-h-50" onClose={onClose}>
                             
                             {/* Links sections */}
                             <div className="m-5 flex flex-row items-center justify-center flex-wrap gap-x-16 gap-y-6 transition-all duration-300">
@@ -45,7 +44,7 @@ function links() {
                                 })}
                             </div>                        
                     </WindowFrame>
-                </main>
+                
             </div>
         </>
     )

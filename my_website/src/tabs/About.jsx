@@ -1,18 +1,17 @@
 import { TitleBar, WindowFrame }  from '../components/SharedUI.jsx'
 
-import AboutIcon from '../assets/assets95/About.png'
+import aboutIcon from '../assets/assets95/aboutIcon.png'
 
-function About() {
+function About( { onClose } ) {
   return (
       <>
-        <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-            <main className="flex flex-auto p-12 sm:p-8">
+        <div className="font-['W95font'] select-none relative z-50">
             {/* Size of the window and title bar included */}
-              <WindowFrame title="About Me" iconSrc={AboutIcon} windowClassName="sm:max-w-190 max-h-160" frameclassName="p-6">
+              <WindowFrame title="About Me" iconSrc={aboutIcon} windowClassName="sm:max-w-190 max-h-160" frameclassName="p-6" onClose={onClose}>
             
               {/* Header */}
               <div className="flex flex-col items-center text-center gap-3 mb-6">
-                <img className="w-28 h-28 [image-rendering:pixelated]" src={AboutIcon} alt="avatar" draggable={false}/>
+                <img className="w-28 h-28 [image-rendering:pixelated]" src={aboutIcon} alt="avatar" draggable={false}/>
                 <div className="text-[2rem] sm:text-[3rem] text-black dark:text-white font-bold leading-tight">Abraham Mormontoy</div>
                 <div className="text-[1rem] sm:text-[1.25rem] text-black dark:text-white">Computer Science Student · Frontend and Software Development</div>
               </div>
@@ -86,7 +85,6 @@ function About() {
                     <a className="underline" href="mailto:mormontoy.abraham@gmail.com"> mormontoy.abraham@gmail.com</a></div>
               </div>
             </WindowFrame>
-        </main>
       </div>
     </>
   )

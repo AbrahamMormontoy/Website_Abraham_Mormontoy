@@ -1,10 +1,10 @@
 import { useState ,useEffect } from "react";
 import { TitleBar, WindowFrame } from "../components/SharedUI";
 
-import MoreIcon from '../assets/assets95/More.png'
+import moreIcon from '../assets/assets95/moreIcon.png'
 import Exit from '../assets/assets95/Exit.png'
 
-function More() {
+function More( { onClose } ) {
     
     const questionList = [
         {
@@ -64,9 +64,8 @@ function More() {
 
     return (
         <>
-            <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-                    <main className="flex flex-auto p-20 sm:p-8">
-                        <WindowFrame title="More" iconSrc={MoreIcon} windowClassName="sm:max-w-170 h-95" frameclassName="p-3 gap-3">
+            <div className="font-['W95font'] select-none relative z-50">
+                        <WindowFrame title="More" iconSrc={moreIcon} windowClassName="sm:max-w-[50rem] sm:h-95" frameclassName="p-3 gap-3" onClose={onClose}>
                                 {/* Question sections */}
                                 {questionList.map((item, index) => (
                                     // Question button to display the answer when is clicked
@@ -91,7 +90,6 @@ function More() {
                                     </div>
                                 ))}
                         </WindowFrame>
-                    </main>
                 </div>
         </>
     )

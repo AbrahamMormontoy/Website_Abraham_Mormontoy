@@ -1,14 +1,14 @@
 import { TitleBar, WindowFrame, InputText } from '../components/SharedUI';
 
-import ContactIcon from '../assets/assets95/Contact.png'
+import contactIcon from '../assets/assets95/contactIcon.png'
 import Exit from '../assets/assets95/Exit.png'
 
-function Contact() {
+function Contact({ onClose }) {
   return (
     <>
-      <div className="w-screen min-h-screen flex flex-col overflow-y-auto font-['W95font'] select-none relative z-50">
-        <main className="flex flex-auto p-6 sm:p-8">
-            <WindowFrame title="Contact" iconSrc={ContactIcon} windowClassName="sm:max-w-190 min-h-95" frameclassName="p-6 sm:p-10">
+      <div className="font-['W95font'] select-none relative z-50">
+
+            <WindowFrame title="Contact" iconSrc={contactIcon} windowClassName="sm:max-w-190 min-h-95" frameclassName="p-6 sm:p-10" onClose={onClose}>
               {/* Header */}
               <div className="flex flex-col items-center text-center mb-8">
                 <div className="text-[1.5rem] sm:text-[2rem] text-black dark:text-white font-bold mb-2">EMAIL</div>
@@ -56,7 +56,6 @@ function Contact() {
                 or phone me at: <a href="tel:123-456-7890" className="hover:underline"> 123-456-7890</a>
               </div>
             </WindowFrame>
-        </main>
       </div>
     </>
   )
