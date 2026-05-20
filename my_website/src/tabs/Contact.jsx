@@ -1,9 +1,31 @@
 import { TitleBar, WindowFrame, InputText } from '../components/SharedUI';
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 import contactIcon from '../assets/assets95/contactIcon.png'
 import Exit from '../assets/assets95/Exit.png'
 
 function Contact({ onClose }) {
+
+  const form = useRef();
+  const [isSending, setIsSending] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setIsSending(true);
+
+    emailjs.sendForm('service_n3zyqop', 'template_gynhh2g', form.current, 'Dtc8fn6k0d4fbW7xc')
+      .then((result) => {
+          console.log(result.text);
+          alert('Email sent successfully!');
+          form.current.reset();
+      }, (error) => {
+          console.log(error.text);
+          alert('Failed to send email. Please try again later.');
+          setIsSending(false);
+      })
+  }
+
   return (
     <>
       <div className="font-['W95font'] select-none relative z-50">
@@ -19,28 +41,28 @@ function Contact({ onClose }) {
 
               {/* Form container */}
               <div className="bg-[#f7f7f7] dark:bg-[#222] p-5 mb-6">
-                <form className="flex flex-col gap-4">
+                <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-4">
                   {/* Grid for top 4 inputs */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name */}
-                  <InputText label="Name:" />
+                  <InputText name="name" required={true} label="Name:" />
                   {/* Email */}
-                  <InputText label="Email:" type="email" />
+                  <InputText name="email" required={true} label="Email:" type="email" />
                   {/* Phone Number */}
-                  <InputText label="Phone number (Optional):" type="tel" />
+                  <InputText name="phone" label="Phone number (Optional):" type="tel" />
                   {/* Subject */}
-                  <InputText label="Subject:" />
+                  <InputText name="subject" required={true} label="Subject:" />
                 </div>
 
                   {/* Message */}
                   <div className="flex flex-col gap-1">
                     <label className="text-black dark:text-white text-[1rem]">Message:</label>
-                    <textarea rows="4" className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
+                    <textarea name="message" required={true} rows="4" className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
                       shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#ffffff] dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>
                   </div>
 
                   {/* Submit Button */}
-                  <button type="button" className="mt-4 w-full py-2 bg-[#c0c0c0] dark:bg-[#444] text-black dark:text-white font-bold 
+                  <button type="submit" disabled={isSending} className="mt-4 w-full py-2 bg-[#c0c0c0] dark:bg-[#444] text-black dark:text-white font-bold 
                   shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#111111,inset_1.5px_1.5px_0px_0px_#666666]
                   active:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1.5px_-1.5px_0px_0px_#ffffff] dark:active:shadow-[inset_1.5px_1.5px_0px_0px_#111,inset_-1px_-1px_0px_0px_#555]
                   cursor-pointer hover:scale-101 transition-all duration-100">Send me an email</button>
