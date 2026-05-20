@@ -7,13 +7,15 @@ function About( { onClose } ) {
       <>
         <div className="font-['W95font'] select-none relative z-50">
             {/* Size of the window and title bar included */}
-              <WindowFrame title="About Me" iconSrc={aboutIcon} windowClassName="sm:max-w-190 max-h-160" frameclassName="p-6" onClose={onClose}>
+              <WindowFrame title="About Me" iconSrc={aboutIcon} windowClassName="sm:w-[50rem] w-[90vw] sm:h-[38rem] h-[80vh]" frameclassName="p-6" onClose={onClose}>
             
               {/* Header */}
-              <div className="flex flex-col items-center text-center gap-3 mb-6">
+              <div className="flex sm:flex-row flex-col justify-center items-center text-center gap-3 mb-6">
                 <img className="w-28 h-28 [image-rendering:pixelated]" src={aboutIcon} alt="avatar" draggable={false}/>
-                <div className="text-[2rem] sm:text-[3rem] text-black dark:text-white font-bold leading-tight">Abraham Mormontoy</div>
-                <div className="text-[1rem] sm:text-[1.25rem] text-black dark:text-white">Computer Science Student · Frontend and Software Development</div>
+                <div>
+                  <div className="text-[2rem] sm:text-[3rem] text-black dark:text-white font-bold leading-tight">Abraham Mormontoy</div>
+                  <div className="text-[1rem] sm:text-[1.25rem] text-black dark:text-white">Computer Science Student · Frontend and Software Development</div>
+                </div>
               </div>
 
               {/* About Myself card */}

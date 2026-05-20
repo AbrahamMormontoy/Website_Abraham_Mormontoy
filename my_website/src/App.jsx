@@ -20,31 +20,48 @@ import workIcon from './assets/assets95/workIcon.png'
 import modeIcon from './assets/assets95/modeIcon.png'
 import Copyright from './assets/assets95/Copyright.png'
 
-function DraggableWindow({ label, zIndex, defaultPosition, onFocus, children }) {
+// Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
+function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
     
+    // Traking of the tab position
     const nodeRef = useRef(null);
+    const [dragBounds, setDragBounds] = useState({})
+
+    // Handle the start of the dragging to generate the focus on the current label and set the drag bounds based in the size of the screen
+    const handleStart = () => {
+        onFocus(label);
+        
+        const node = nodeRef.current;
+        if (!node) return;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        setDragBounds({
+            left: -node.offsetWidth / 2,
+            right: vw - node.offsetWidth / 2,
+            top: 0,
+            bottom: vh - node.offsetHeight / 2,
+        })
+    }
     
+    // Mobile portability
+    if (isMobile) {
+        return (
+            <div className='fixed inset-0 flex items-center justify-center pointer-events-none pb-7' style={{ zIndex}}>
+                <div className='pointer-events-auto' onMouseDownCapture={() => onFocus(label)}>
+                    {children}
+                </div>
+            </div>
+        )
+    }
+
+    // desktop portability with dragging, the handle is .title bar which means that the classes that have the tittle bar in className tailwind can be dragged around
+    // Node ref is tracking, default position gives the initial position of each tab, bounds makes sure that tabs can only be dragged half of the screen, onStart handles the 
+    // focus, on MouseDown capture is to make sure that the moment the user clicks a tab it becomes the focus with the highest zIndex. 
     return (
-        <Draggable nodeRef={nodeRef} handle=".title-bar" defaultPosition={defaultPosition}
-        onStop={(e, data) => {
-            const node = nodeRef.current;
-            if (!node) return;
-            
-            const bounds = node.getBoundingClientRect();
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-
-            const minX = -bounds.width / 2;
-            const maxX = vw - bounds.width / 2;
-            const minY = -bounds.height / 2;
-            const maxY = vh - bounds.height / 2;
-
-            const boundX = Math.min(Math.max(data.x, minX), maxX);
-            const boundY = Math.min(Math.max(data.y, minY), maxY);
-
-            data.node.style.transform = `translate(${boundX}px, ${boundY}px)`;
-        }}>
-            <div ref={nodeRef} className='absolute' style={{ zIndex }} onMouseDown={() => onFocus(label)}>{children}</div>
+        <Draggable nodeRef={nodeRef} handle=".title-bar" defaultPosition={defaultPosition} bounds={dragBounds} onStart={handleStart}>
+            <div ref={nodeRef} className='absolute' style={{ zIndex }} onMouseDownCapture={() => onFocus(label)}>{children}</div>
         </Draggable>
     )
 }
@@ -52,19 +69,37 @@ function DraggableWindow({ label, zIndex, defaultPosition, onFocus, children }) 
 
 function App() {
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 750);
+
+    // Checks constantly if the screen is in mobile size to inform the DraggableWindow component
+    useEffect(() => {
+        const handleResize = () => {
+            return setIsMobile(window.innerWidth < 750)
+        }
+        // Allows to go back and forth between mobile and desktop size keeping the features of each one
+        // This is done by cleaning the even listeners
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    })
+
+    // List of open windows by labels
+    const [openWindows, setOpenWindows] = useState([]) 
+    // Tracks z-index of each window in order
+    const [zOrder, setZOrder] = useState({})
+    // Current highes z-index
+    const [zTop, setZTop] = useState(20)
+
+    // Increases the z-index of the window so that it is in front of the others
     const bringToFront = (label) => {
         setZTop((prev) => {
             const next = prev + 1;
+            // Tracks the order which is open first then second and so on
             setZOrder((prevZ) => ({...prevZ, [label]: next }));
             return next;
         })
     }
 
-    // List of open windows by labels
-    const [openWindows, setOpenWindows] = useState([])
-    const [zOrder, setZOrder] = useState({})
-    const [zTop, setZTop] = useState(20)
-
+    // Add new tab to the list in openWindow if its already there
     const openWindow = (label) => {
         setOpenWindows((prev) => {
             return (prev.includes(label) ? prev : [...prev, label])
@@ -72,6 +107,7 @@ function App() {
         bringToFront(label)
     }
 
+    // Removes the tab from the list and the screen
     const closeWindow = (label) => {
         setOpenWindows((prev) => {
             return prev.filter((item) => {
@@ -80,14 +116,33 @@ function App() {
         })
     }
 
-    const windowConfig = {
-        About: { Component: About, defaultPosition: { x: 120, y: 80}},
-        Links: { Component: Links, defaultPosition: { x: 140, y: 100}},
-        Work: { Component: Work, defaultPosition: { x: 160, y: 120}},
-        More: { Component: More, defaultPosition: { x: 180, y: 140}},
-        Contact: { Component: Contact, defaultPosition: { x: 200, y: 160}},
+    const getPosition = (index) => {
+
+        // Get the size of the screen
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        const startX = vw * 0.1;
+        const startY = vh * 0.1;
+
+        const spacingX = 120;
+        const spacingY = 100;
+
+        return {
+            x: startX + index * spacingX,
+            y: startY + index * spacingY
+        }
     }
 
+    const windowConfig = {
+        About: { Component: About, defaultPosition: getPosition(0)},
+        Links: { Component: Links, defaultPosition: getPosition(1)},
+        Work: { Component: Work, defaultPosition: getPosition(2)},
+        More: { Component: More, defaultPosition: getPosition(3)},
+        Contact: { Component: Contact, defaultPosition: getPosition(4)},
+    }
+
+    // Check if the theme is dark or light to change the icons in the links tab
     const { theme, setTheme } = useContext(ThemeContext);
 
     // TIMER FOR THE TASKBAR CLOCK 
@@ -136,7 +191,7 @@ function App() {
                 {openWindows.map((label) => {
                     const {Component, defaultPosition} = windowConfig[label]
                     return (
-                        <DraggableWindow key={label} label={label} defaultPosition={defaultPosition} zIndex={zOrder[label] || 0} onFocus={() => bringToFront(label)}>         
+                        <DraggableWindow key={label} label={label} defaultPosition={defaultPosition} zIndex={zOrder[label] || 0} onFocus={bringToFront} isMobile={isMobile}>         
                             <Component onClose={() => closeWindow(label)}/>
                             </DraggableWindow>
                         )
@@ -148,9 +203,7 @@ function App() {
                     <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
                         shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
                         <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
-                    </div>
-                    }
-                    windowClassName="sm:max-w-3xl sm:min-h-150 min-h-125">
+                    </div> } windowClassName="sm:w-3xl w-[90vw] sm:h-150 h-125">
 
                             <div className="m-auto flex flex-col items-center justify-center gap-10 p-4 w-full">
 
@@ -171,7 +224,7 @@ function App() {
                                             onClick={() => openWindow(item.label)}>
                                                 
                                                 {/* Images components */}
-                                                <img className="w-16 h-16 shrink-0 [image-rendering:pixelated] transition-all duration-300 object-contain" draggable="false"
+                                                <img className="w-16 h-16 [image-rendering:pixelated] transition-all duration-300 object-contain" draggable="false"
                                                 src={item.icon} alt={item.label}/>
                                                 <span className="text-black text-[16px] dark:text-white
                                                 text-center leading-tight transition-all duration-300 font-bold">{item.label}</span>
@@ -183,9 +236,9 @@ function App() {
                 </main>
 
                 {/* Taskbar bottom of the screen */}
-                <footer className="w-full h-7 bg-[#c0c0c0] flex justify-between items-stretch p-0.5 gap-2 border-t-1.5 z-50 relative
+                <footer className="w-full h-7 bg-[#c0c0c0] flex justify-between items-stretch p-0.5 gap-2 border-t-1.5 z-100 relative
                 border-white shadow-[inset_0px_1px_0px_0px_#C0C0C0] dark:bg-[#333333] dark:shadow-[inset_0px_0px_1px_0px_#FFFFFF] ">
-                    <div className="flex items-center gap-1 overflow-x-hidden no-scrollbar h-full ">
+                    <div className="flex items-center gap-1 h-full ">
                         <div className="px-1.5 py-0 h-full bg-[#c0c0c0] dark:bg-[#333333]
                         shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000]
                          flex items-center gap-1 shrink-0">

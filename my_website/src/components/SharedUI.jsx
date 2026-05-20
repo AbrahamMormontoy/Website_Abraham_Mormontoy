@@ -23,7 +23,7 @@ export function TitleBar({ title, iconSrc, showExit = true, onClose }) {
 
 export function WindowFrame({ title, iconSrc, showExit, children, footer ,windowClassName="" , frameclassName="", onClose }) {
     return (
-        <div className={`m-auto w-full p-1 bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col ${windowClassName}`}>
+        <div className={`m-auto p-1 bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000] flex flex-col ${windowClassName}`}>
             <TitleBar title={title} iconSrc={iconSrc} showExit={showExit} onClose={onClose} />
             <div className={`flex-auto bg-white flex flex-col mt-1 dark:bg-[#333333] shadow-[inset_1px_1px_1px_1px_#000000] overflow-y-auto custom-scrollbar ${frameclassName}`}>
             {children}

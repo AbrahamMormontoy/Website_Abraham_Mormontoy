@@ -20,10 +20,10 @@ function Work( {onClose} ) {
 
     const imageViewer = function (img, onClose) {
         if (!img) return null;
-
+        // fix
         return (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center cursor-pointer z-50" onClick={onClose}>
-                <img src={img} alt="Enlarged view" className="max-w-[80vw] max-h-[90vh] object-contain"/>
+                <img src={img} alt="Enlarged view" className="w-[80vw] h-[90vh] object-contain"/>
             </div>
         );
     }  
@@ -38,7 +38,7 @@ function Work( {onClose} ) {
             {imageViewer(image, () => setImage(null))}
 
                 {/* Size of the window and title bar included */}
-                <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:max-w-250 sm:h-170 h-125" onClose={onClose}>
+                <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:w-250 w-[90vw] sm:h-170 h-[80vh]" onClose={onClose}>
                 
                         
                     {/* Skills section */}
@@ -53,7 +53,7 @@ function Work( {onClose} ) {
                                 <SkillsSections>Figma</SkillsSections>
                                 <SkillsSections>VS Code</SkillsSections>
                                 <SkillsSections>IntelliJ IDEA</SkillsSections>
-                                <SkillsSections>Linux</SkillsSections>
+                                <SkillsSections>Arch/Linux</SkillsSections>
                                 <SkillsSections>MS Office</SkillsSections>
                             </div>
                         </div>

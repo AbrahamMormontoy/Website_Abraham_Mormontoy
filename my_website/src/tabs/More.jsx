@@ -65,7 +65,7 @@ function More( { onClose } ) {
     return (
         <>
             <div className="font-['W95font'] select-none relative z-50">
-                        <WindowFrame title="More" iconSrc={moreIcon} windowClassName="sm:max-w-[50rem] sm:h-95" frameclassName="p-3 gap-3" onClose={onClose}>
+                        <WindowFrame title="More" iconSrc={moreIcon} windowClassName="sm:w-[50rem] w-[90vw] sm:h-[38rem] h-[50vh]" frameclassName="p-6 gap-6" onClose={onClose}>
                                 {/* Question sections */}
                                 {questionList.map((item, index) => (
                                     // Question button to display the answer when is clicked
