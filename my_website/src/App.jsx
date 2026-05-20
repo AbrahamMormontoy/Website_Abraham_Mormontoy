@@ -19,6 +19,8 @@ import contactIcon from './assets/assets95/contactIcon.png'
 import workIcon from './assets/assets95/workIcon.png'
 import modeIcon from './assets/assets95/modeIcon.png'
 import Copyright from './assets/assets95/Copyright.png'
+import darkModeIcon from './assets/assets95/DarkMode.png'
+import lightModeIcon from './assets/assets95/LightMode.png'
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -179,7 +181,7 @@ function App() {
 
     const taskTabs = [
         { label: 'Dark Mode', icon: modeIcon },
-        { label: 'Music', icon: musicIcon },
+        //{ label: 'Music', icon: musicIcon },
     ];
 
     return (
@@ -259,8 +261,9 @@ function App() {
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
                                 {/*Taskbar icons*/}
-                                <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.icon} alt={tab.label} />
-                                <span className="text-black dark:text-white text-[11px] leading-none">{tab.label === "modeIcon" ? `${theme === 'dark' ? 'Light' : 'Dark'} modeIcon` : tab.label}</span>
+                                
+                                <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : tab.icon} alt={tab.label} />
+                                <span className="text-black dark:text-white text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
                             </button>
                         ))}
                     </div>  
