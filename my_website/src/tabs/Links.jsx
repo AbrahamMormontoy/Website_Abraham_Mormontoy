@@ -27,17 +27,17 @@ function links( { onClose } ) {
                     footer={<div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
                                 <span className="text-black dark:text-white text-[10px] leading-none">3 object(s)</span>
                             </div>}
-                    windowClassName="w-[20rem] sm:w-120 sm:h-55 h-62" onClose={onClose}>
+                    windowClassName="w-[92vw] max-w-[24rem] sm:max-w-none sm:w-[30rem] h-[15.5rem] sm:h-[14rem]" onClose={onClose}>
                             
                             {/* Links sections */}
                             <div className="flex-auto p-4 sm:p-5 flex flex-col sm:flex-row sm:flex-wrap items-center sm:justify-center gap-3 sm:gap-x-16 sm:gap-y-6 w-full transition-all duration-300">
                                 {linksItems.map((item, index) => {
                                     const IconItem = (item.label === 'GitHub') ? (darkMode ? GithubDark : Github) : item.icon;
                                     return (
-                                        <a key={index} className="flex flex-row sm:flex-col justify-start sm:justify-center items-center gap-4 sm:gap-2 sm:p-1 w-full sm:w-20 sm:h-25 bg-[#f3f4f6] dark:bg-[#2a2a2a] 
-                                        border border-black dark:border-white sm:border-none hover:scale-101 sm:hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                        <a key={index} className="flex flex-row sm:flex-col justify-start sm:justify-center items-center gap-4 sm:gap-2 sm:p-1 w-full sm:w-20 sm:h-25 bg-[#f3f4f6] dark:bg-[#2a2a2a]
+                                        sm:bg-transparent sm:dark:bg-transparent border border-black dark:border-white sm:border-none hover:scale-101 sm:hover:scale-110 transition-transform duration-300 cursor-pointer"
                                         href={item.url} target="_blank" rel="noopener noreferrer">
-                                            <img src={IconItem} alt={item.label} className="w-10 h-10 sm:w-14 sm:h-14 [image-rendering:pixelated]"/>
+                                            <img src={IconItem} alt={item.label} className="w-10 h-10 sm:w-12 sm:h-12 [image-rendering:pixelated]"/>
                                             <span className="text-black text-[16px] font-bold dark:text-white transition-all duration-300">{item.label}</span>
                                         </a>
                                     )
