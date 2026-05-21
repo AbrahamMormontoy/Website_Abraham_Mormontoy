@@ -207,7 +207,7 @@ function App() {
                         shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
                         <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
                     </div> } 
-                    windowClassName="w-[28rem] sm:w-[80vh] sm:h-[65vh] h-[55vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                    windowClassName="w-[28rem] sm:w-[45rem] sm:h-[35rem] h-[25rem] overflow-y-auto overflow-x-hidden custom-scrollbar">
 
                             <div className="m-auto flex flex-col items-center justify-center gap-6 sm:gap-10 p-4 w-full">
 
