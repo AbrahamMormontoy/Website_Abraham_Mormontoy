@@ -201,7 +201,6 @@ function App() {
                 </div>
                 <main className="flex-auto flex p-4 sm:p-8 relative items-center justify-center">
                     
-                    {/* 1. THE WINDOW: Gently scales from 90vw -> 30rem -> 40rem -> 3xl */}
                     <WindowFrame title="Welcome" iconSrc={folderIcon} showExit={false} 
                     footer={
                     <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
@@ -219,7 +218,7 @@ function App() {
                                     <div className="text-black text-lg sm:text-2xl leading-tight dark:text-white">CS student and developer</div>
                                 </div>
 
-                                {/* 3. THE ICON GRID */}
+                                {/* THE ICON GRID */}
                                 <div className="grid grid-cols-3 gap-y-4 gap-x-4 sm:flex sm:flex-wrap sm:justify-center
                                 sm:gap-x-10 w-full max-w-sm sm:max-w-none transition-all duration-300">
                                     {desktopItems.map((item, index) => (
@@ -229,11 +228,9 @@ function App() {
                                         ${index === 4 ? 'col-start-2 col-end-3 ml-[50%] sm:ml-0' : ''}`}
                                         onClick={() => openWindow(item.label)}>
                                             
-                                            {/* THE ICONS: Step up smoothly: 10 -> 12 -> 16 */}
                                             <img className="w-10 h-10 sm:w-16 sm:h-16 [image-rendering:pixelated] transition-all duration-300 object-contain" draggable="false"
                                             src={item.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : item.icon} alt={item.label}/>
                                             
-                                            {/* THE LABELS: Step up smoothly: 12px -> 14px -> 16px */}
                                             <span className="text-black text-[12px] sm:text-[16px] dark:text-white
                                             text-center leading-tight transition-all duration-300 font-bold">
                                                 {item.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : item.label}
@@ -253,7 +250,6 @@ function App() {
                         <div className="px-1.5 py-0 h-full bg-[#c0c0c0] dark:bg-[#333333]
                         shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000]
                          flex items-center gap-1 shrink-0">
-                             {/* Fixed missing Start Icon */}
                             <img className="w-4 h-4 [image-rendering:pixelated]" src={Copyright} alt="start" />
                             <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-2.5 text-left
                             ">Abraham Mormontoy</span>

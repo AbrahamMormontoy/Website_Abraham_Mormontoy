@@ -19,7 +19,7 @@ The website is currently running on Vercel for now as there are features that I 
 
 - **DarkMode**: The background, pages and icons are all design to have a dark mode variant that changes depending on the time of the day or the button in the taskbar.
 
--**Adding more features in the future like a typing game and a leave a quote with a database**
+- **Adding more features in the future like a typing game and a leave a quote with a database**
 
 ## Teachnologies Used
 
