@@ -25,7 +25,7 @@ import lightModeIcon from './assets/assets95/LightMode.png'
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
     
-    // Traking of the tab position
+    // Tracking of the tab position
     const nodeRef = useRef(null);
     const [dragBounds, setDragBounds] = useState({})
 
@@ -88,7 +88,7 @@ function App() {
     const [openWindows, setOpenWindows] = useState([]) 
     // Tracks z-index of each window in order
     const [zOrder, setZOrder] = useState({})
-    // Current highes z-index
+    // Current highest z-index
     const [zTop, setZTop] = useState(20)
 
     // Increases the z-index of the window so that it is in front of the others
@@ -188,7 +188,7 @@ function App() {
         <>
         <CloudAnimation />
             <div className="w-screen h-dvh flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
-                {/*All the componets are here*/}
+                {/*All the components are here*/}
                 <div>
                 {openWindows.map((label) => {
                     const {Component, defaultPosition} = windowConfig[label]
@@ -213,7 +213,7 @@ function App() {
 
                                 <div className="flex flex-col items-center text-center gap-2 sm:gap-4 px-2">                           
                                     <div className="text-black text-3xl sm:text-6xl leading-tight 
-                                    dark:text-white">Hi <span className="font-bold">I am Abraham</span></div>
+                                    dark:text-white">Hi <span className="font-bold">I'm Abraham</span></div>
                                     
                                     <div className="text-black text-lg sm:text-2xl leading-tight dark:text-white">CS student and developer</div>
                                 </div>

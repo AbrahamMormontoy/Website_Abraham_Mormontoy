@@ -93,10 +93,10 @@ function Work( {onClose} ) {
                            <ProjectCard
                            title="Windows95 Web Portfolio"
                            date="Personal Project | April - May 2026"
-                           description="Build a portfolio website inspired by the Windows 95 aesthetic. The project supports tab movement in desktop form for each section as well as the ability to
-                           open multiple windows at the same time. The design is responsive and includes dark mode support that depends on the system preferences or the time of the day. It also includes
-                           animated clouds in the background that respond to the current theme. Added contact form with validation and email sending functionality using EmailJS. Added sound effects
-                           for opening and closing windows, hovering over icons, and clicking buttons to enhance the user experience."
+                           description="Build a portfolio website inspired by the Windows 95 aesthetic. The project supports tab movement for each section on desktop and the ability to open multiple windows 
+                           simultaneously. The design is responsive and includes dark mode support that depends on the system preferences or the time of day. It also includes animated clouds in the background 
+                           that respond to the current theme, as well as a contact form with validation and email sending functionality using EmailJS. Finally, there are sound effects for opening and closing 
+                           windows, hovering over icons, and clicking buttons to enhance the user experience."
                            tools="Javascript, React, Tailwind CSS, HTML/CSS, Figma, Next.js"
                            imageSrc={Windows95}
                            imageAlt="Windows95 Portfolio"
@@ -109,10 +109,10 @@ function Work( {onClose} ) {
                            <ProjectCard
                            title="Pet Mind Reader"
                            date="SFU Surge Sillyhack | April 2026"
-                           description="Develop a web application where you upload a photo of a pet and it generates a humorous caption of what the pet might be thinking. The application supports the
-                           upload of sinle pet photos as well as multiple pets in the same photo generating a caption for each pet. The app uses the Gemini model from Google Generative AI to generate
-                           the captions and Next.js API routes to handle the backend processing of the images and communication with the Gemini API. It supports jpeg, png, gif and webp formats with
-                           a limit of 10MB. This project was developed in the sillyhack 2025 hackathon in a group of 4 following the hackathon theme of fun, chaotic and unhinge ideas."
+                           description="Develop a web application where you upload a photo of a pet, and it generates a humorous caption of what the pet might be thinking. The application supports the upload of 
+                           single pet photos as well as multiple pets in the same photo, generating a caption for each pet. The app uses the Gemini model from Google Generative AI to generate the captions and 
+                           Next.js API routes to handle the backend processing of the images and communication with the Gemini API. It supports JPEG, PNG, GIF, and WebP formats with a limit of 10MB. This project 
+                           was developed in the Sillyhack 2025 hackathon in a group of 4, following the hackathon theme of fun, chaotic, and unhinged ideas."
                            tools="TypeScript, React, Tailwind CSS, Next.js, Framer Motion, Google Generative AI SDK"
                            imageSrc={PetMind}
                            imageAlt="Pet Mind Reader"
@@ -124,10 +124,10 @@ function Work( {onClose} ) {
                             <ProjectCard 
                             title="SFU Fitness Tracker" 
                             date="SFU Surge Stormhacks | December 2025"
-                            description="Develop a fitness tracking full stack web application with trainer and client user registration and log in system with encryption. The app has a integrated 
-                            client-trainer data communication to keep track of a exercise preferences, long-term, short-term goals, avialability and information. This information can go from certifications
-                            of the trainer to gender and favorite exercise of the client. Implemented a dashboard for both clients and trainers so they can see the avialability of each one has and the 
-                            possibility to book a session if possible. The project was developed in a group of 4 for the SFU Stormhacks 2025."
+                            description="Develop a fitness tracking full-stack web application with trainer and client user registration and a login system with encryption. The app has an integrated client-trainer 
+                            data communication to keep track of exercise preferences, long-term and short-term goals, availability, and information. This information can go from certifications of the trainer to the 
+                            gender and favorite exercise of the client. A dashboard has also been implemented for both clients and trainers so they can see the availability of each one and the possibility of booking 
+                            a session. The project was developed in a group of 4 for the SFU Stormhacks 2025."
                             tools="Java, Spring Boot, JavaScript, HTML/CSS, SQL" 
                             imageSrc={SFUFitness} 
                             imageAlt="SFU Fitness Tracker" 
@@ -139,11 +139,11 @@ function Work( {onClose} ) {
                             <ProjectCard 
                             title="Dog Breed Classifier" 
                             date="SFU CMPT 310 Introduction to Artificial Intelligence | January - April 2026"
-                            description="Build a Dog Breed Image Classificator model using a Convolutionall Neural Network that gives the top 3 most accurate predictions of the picture of a dog breed. 
-                            The model supports jpg, jpeg and png formats. The model was trained using transfer learning with a pretrained ResNet-18 model. The pipeline included image resizing to 224x224.
-                            Training was performed over 15 epochs using a CUDA-acelerated GPU and backpropagation. The dataset used for the training is the Stanford Dogs Dataset using only 50 breeds with 150 images each.
-                            The accuracy achieved is 80% for Top-1 and 94% for the Top-3. This project was developed in a group of 4 for the CMPT 310 course at SFU creating reports for each phase of the development process."  
-                            tools="python, torch, torchvision, pandas/numpy, matplotlib, scikit-learn, openCV" 
+                            description="BBuild a Dog Breed Image Classificator model using a Convolutional Neural Network that gives the top 3 most likely breeds of the picture of a dog. The model supports JPG, 
+                            JPEG, and PNG formats, and it was trained using transfer learning with a pretrained ResNet-18 model. The pipeline included image resizing to 224x224. Training was performed over 15 epochs 
+                            using a CUDA-accelerated GPU and backpropagation. The dataset used for the training is the Stanford Dogs Dataset, using only 50 breeds with 150 images each. The accuracy achieved is 80% for 
+                            Top-1 and 94% for Top-3. This project was developed in a group of 4 for the CMPT 310, creating reports for each phase of the development process. "  
+                            tools="Python, PyTorch/Torchvision, Pandas/Numpy, Matplotlib, Scikit-learn, OpenCV" 
                             imageSrc={DogBreed} 
                             imageAlt="Dog Breed Classifier" 
                             githubUrl="https://github.com/viktorz05/ImageClassification" 
@@ -154,11 +154,10 @@ function Work( {onClose} ) {
                             <ProjectCard 
                             title="Daycare inferno" 
                             date="SFU CMPT 276 Introduction to Software Engineering | January - April 2026"
-                            description="Build a 2D arcade-style maze game that consists of a daycare burning and an employee trapped inside. The main objective of the game is to rescue all of the scattered children while avoiding
-                            the fire enemies (moving) and debris enemies (static). The core mechanics of the game consists in AI-driven enemies using Greedy Search, collision detection using rectangles, score system based on the rescued 
-                            children and special rewards and a timer system. The enemies, both static and moving, and rewards are randomly generated at the start of each game. This project was developed in a group of 4 for the CMPT 276 
-                            course at SFU following software engineering principles like Version Control, UML diagrams, use cases, UI mockups, Scrum and Agile development, maven for project managment, unit testing with JUnit and Javadocs.
-                            Constant reports were made for each phase of the development process."
+                            description="Build a 2D arcade-style maze game that consists of a daycare burning and an employee trapped inside. The main objective is to pick up all of the scattered rewards while avoiding the
+                            moving enemies and static enemies. The main features were AI-driven enemies using Greedy Search, collision detection using rectangles, a score system, special rewards, and a timer system. All
+                            entities are generated at the start of each game. This project was developed in a group of 4 for the CMPT 276  following software engineering principles like Version Control, UML diagrams, 
+                            use cases, UI mockups, Scrum and Agile development, Maven for project management, unit testing with JUnit, and Javadocs doing reports for each phase of the development process."
                             tools="Java, Swing, Awt, JUnit" 
                             imageSrc={DayCare} 
                             imageAlt="Daycare inferno" 
@@ -171,15 +170,15 @@ function Work( {onClose} ) {
                             title="Group Chat Server with Fuzzing Clients" 
                             date="SFU CMPT 201 System Programming | March 2026"
                             description="Build a multithreaded group chat TCP server capable of handling 100 concurrent clients. The server ensures all messages are broadcasted to every client maintaining the order of the messages. The server
-                            implements a messaging protocol supporting writing a message, sender metadata (IP/Port), and new-line termination framing to guarante correct parsing. Implemented a CMake for the project structure and compilation. 
-                            Verify correctness of the server and clients requirements with provided automated tests. Debug memmory leaks and threading issues using sanitizers and CGDB."
+                            implements a messaging protocol supporting writing a message, sender metadata (IP/Port), and new-line termination framing to guarantee correct parsing. Implemented a CMake for the project structure and compilation. 
+                            Verify correctness of the server and clients requirements with provided automated tests. Debug memory leaks and threading issues using sanitizers and CGDB."
                             tools="C, Socket Programming, Multithreading, Docker, CMake, CGDB, Linux" 
                             githubUrl="https://github.com/AbrahamMormontoy/Group-Chat-Server-with-Fuzzing-Clients" 
                             darkMode={darkMode}/>
 
                             {/*Rubiks Cube Solver*/}
                             <ProjectCard 
-                            title="Rubiks Cube Solver" 
+                            title="rubik's Cube Solver" 
                             date="SFU CMPT 225 Data Structures and Programming | November - December 2026"
                             description="Build a Rubik’s Cube solver utilizing the A∗ search algorithm paired with a Pattern Database (PDB) and a tiered heuristic function. Implemented a complex heuristic estimation incorporating
                              Manhattan distances for corner and edge permutations, accounting for both position and orientation. Optimized search performance by integrating transposition pruning via HashMaps to eliminate redundant state 

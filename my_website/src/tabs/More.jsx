@@ -56,9 +56,11 @@ function More( { onClose } ) {
 
     // Handles opening and closing
     const toggle = function (index) {
+        // If the index is already in the openTabs array, remove it from the array to close the tab
         if (openTabs.includes(index)) {
             setOpenTabs(openTabs.filter(i => i !== index))
         } else {
+            // If the index is not in the openTabs array, add it to the array to open the tab
             setOpenTabs([...openTabs, index])
         }
     }    
