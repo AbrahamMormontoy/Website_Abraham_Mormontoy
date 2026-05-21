@@ -71,12 +71,12 @@ function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, ch
 
 function App() {
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 750);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
     // Checks constantly if the screen is in mobile size to inform the DraggableWindow component
     useEffect(() => {
         const handleResize = () => {
-            return setIsMobile(window.innerWidth < 750)
+            return setIsMobile(window.innerWidth < 766)
         }
         // Allows to go back and forth between mobile and desktop size keeping the features of each one
         // This is done by cleaning the even listeners
@@ -199,39 +199,48 @@ function App() {
                         )
                         })}
                 </div>
-                <main className="flex-auto flex p-20 sm:p-8 relative">
+                <main className="flex-auto flex p-4 sm:p-8 relative items-center justify-center">
+                    
+                    {/* 1. THE WINDOW: Gently scales from 90vw -> 30rem -> 40rem -> 3xl */}
                     <WindowFrame title="Welcome" iconSrc={folderIcon} showExit={false} 
                     footer={
                     <div className="h-5 mt-1 bg-[#c0c0c0] dark:bg-[#333333] dark:shadow-[inset_1px_1px_1px_1px_#000000] 
                         shadow-[inset_1px_1px_1px_1px_#7F7F7F] flex items-center px-1">
                         <span className="text-black dark:text-white text-[10px] leading-none">5 object(s)</span>
-                    </div> } windowClassName="sm:w-3xl w-[90vw] sm:h-150 h-125">
+                    </div> } 
+                    windowClassName="w-[28rem] sm:w-[80vh] sm:h-[65vh] h-[55vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
 
-                            <div className="m-auto flex flex-col items-center justify-center gap-10 p-4 w-full">
+                            <div className="m-auto flex flex-col items-center justify-center gap-6 sm:gap-10 p-4 w-full">
 
-                                <div className="flex flex-col items-center text-center gap-4 px-2">
-                                    <h1 className="text-black text-4xl sm:text-6xl leading-tight 
-                                    dark:text-white">Hi <span className="font-bold">I am Abraham</span></h1>
-                                    <h2 className="text-black text-xl sm:text-2xl leading-tight dark:text-white">CS student and developer</h2>
+                                <div className="flex flex-col items-center text-center gap-2 sm:gap-4 px-2">                           
+                                    <div className="text-black text-3xl sm:text-6xl leading-tight 
+                                    dark:text-white">Hi <span className="font-bold">I am Abraham</span></div>
+                                    
+                                    <div className="text-black text-lg sm:text-2xl leading-tight dark:text-white">CS student and developer</div>
                                 </div>
 
-                                {/* Icon grid */}
-                                    <div className="grid grid-cols-3 gap-y-8 gap-x-4 sm:flex sm:flex-wrap sm:justify-center
-                                    sm:gap-x-10 w-full max-w-sm sm:max-w-none transition-all duration-300">
-                                        {desktopItems.map((item, index) => (
-                                            <button key={item.label} className={`flex flex-col items-center gap-2 w-full sm:w-20 
-                                            cursor-pointer p-1 hover:scale-110 transition-transform duration-300 
-                                            ${index === 3 ? 'col-start-1 col-end-2 ml-[50%] sm:ml-0' : ''} 
-                                            ${index === 4 ? 'col-start-2 col-end-3 ml-[50%] sm:ml-0' : ''}`}
-                                            onClick={() => openWindow(item.label)}>
-                                                
-                                                {/* Images components */}
-                                                <img className="w-16 h-16 [image-rendering:pixelated] transition-all duration-300 object-contain" draggable="false"
-                                                src={item.icon} alt={item.label}/>
-                                                <span className="text-black text-[16px] dark:text-white
-                                                text-center leading-tight transition-all duration-300 font-bold">{item.label}</span>
-                                            </button>
-                                        ))}
+                                {/* 3. THE ICON GRID */}
+                                <div className="grid grid-cols-3 gap-y-4 gap-x-4 sm:flex sm:flex-wrap sm:justify-center
+                                sm:gap-x-10 w-full max-w-sm sm:max-w-none transition-all duration-300">
+                                    {desktopItems.map((item, index) => (
+                                        <button key={item.label} className={`flex flex-col items-center gap-1 sm:gap-2 w-full sm:w-20 
+                                        cursor-pointer p-1 hover:scale-110 transition-transform duration-300 
+                                        ${index === 3 ? 'col-start-1 col-end-2 ml-[50%] sm:ml-0' : ''} 
+                                        ${index === 4 ? 'col-start-2 col-end-3 ml-[50%] sm:ml-0' : ''}`}
+                                        onClick={() => openWindow(item.label)}>
+                                            
+                                            {/* THE ICONS: Step up smoothly: 10 -> 12 -> 16 */}
+                                            <img className="w-10 h-10 sm:w-16 sm:h-16 [image-rendering:pixelated] transition-all duration-300 object-contain" draggable="false"
+                                            src={item.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : item.icon} alt={item.label}/>
+                                            
+                                            {/* THE LABELS: Step up smoothly: 12px -> 14px -> 16px */}
+                                            <span className="text-black text-[12px] sm:text-[16px] dark:text-white
+                                            text-center leading-tight transition-all duration-300 font-bold">
+                                                {item.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : item.label}
+                                            </span>
+                                            
+                                        </button>
+                                    ))}
                                 </div>
                             </div>               
                     </WindowFrame>
@@ -263,13 +272,13 @@ function App() {
                                 {/*Taskbar icons*/}
                                 
                                 <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : tab.icon} alt={tab.label} />
-                                <span className="text-black dark:text-white text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
+                                <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
                             </button>
                         ))}
                     </div>  
                     <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
                     dark:bg-[#333333] dark:shadow-[inset_1px_1px_0px_0px_#000000] flex items-center shrink-0">
-                        <span className="text-black dark:text-white text-[10px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
+                        <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
                     </div>
                 </footer>
             </div>

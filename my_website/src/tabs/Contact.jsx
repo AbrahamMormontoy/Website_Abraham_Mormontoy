@@ -30,7 +30,7 @@ function Contact({ onClose }) {
     <>
       <div className="font-['W95font'] select-none relative z-50">
 
-            <WindowFrame title="Contact" iconSrc={contactIcon} windowClassName="sm:max-w-190 min-h-95" frameclassName="p-6 sm:p-10" onClose={onClose}>
+            <WindowFrame title="Contact" iconSrc={contactIcon} windowClassName="max-w-[92vw] sm:max-w-[50rem] w-full sm:max-h-[46rem] max-h-[80vh] h-full" frameclassName="p-6 sm:p-10" onClose={onClose}>
               {/* Header */}
               <div className="flex flex-col items-center text-center mb-8">
                 <div className="text-[1.5rem] sm:text-[2rem] text-black dark:text-white font-bold mb-2">EMAIL</div>

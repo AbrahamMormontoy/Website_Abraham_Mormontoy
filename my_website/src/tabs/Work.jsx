@@ -38,7 +38,7 @@ function Work( {onClose} ) {
             {imageViewer(image, () => setImage(null))}
 
                 {/* Size of the window and title bar included */}
-                <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:w-250 w-[90vw] sm:h-170 h-[80vh]" onClose={onClose}>
+                <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:w-250 w-[92vw] sm:h-170 h-[80vh]" onClose={onClose}>
                 
                         
                     {/* Skills section */}
