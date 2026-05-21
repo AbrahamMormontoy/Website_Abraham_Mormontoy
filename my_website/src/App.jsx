@@ -187,7 +187,7 @@ function App() {
     return (
         <>
         <CloudAnimation />
-            <div className="w-screen h-screen flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+            <div className="w-screen h-dvh flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 {/*All the componets are here*/}
                 <div>
                 {openWindows.map((label) => {
