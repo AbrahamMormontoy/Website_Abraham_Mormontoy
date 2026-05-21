@@ -173,7 +173,7 @@ function Work( {onClose} ) {
                             description="Build a multithreaded group chat TCP server capable of handling 100 concurrent clients. The server ensures all messages are broadcasted to every client maintaining the order of the messages. The server
                             implements a messaging protocol supporting writing a message, sender metadata (IP/Port), and new-line termination framing to guarante correct parsing. Implemented a CMake for the project structure and compilation. 
                             Verify correctness of the server and clients requirements with provided automated tests. Debug memmory leaks and threading issues using sanitizers and CGDB."
-                            tools="C, Socket Programming, Multithreading" 
+                            tools="C, Socket Programming, Multithreading, Docker, CMake, CGDB, Linux" 
                             githubUrl="https://github.com/AbrahamMormontoy/Group-Chat-Server-with-Fuzzing-Clients" 
                             darkMode={darkMode}/>
 
