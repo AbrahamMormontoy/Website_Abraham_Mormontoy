@@ -14,16 +14,12 @@ function Contact({ onClose }) {
     e.preventDefault();
     setIsSending(true);
 
-    emailjs.sendForm('service_n3zyqop', 'template_gynhh2g', form.current, 'Dtc8fn6k0d4fbW7xc')
-      .then((result) => {
-          console.log(result.text);
-          alert('Email sent successfully!');
-          form.current.reset();
-      }, (error) => {
-          console.log(error.text);
-          alert('Failed to send email. Please try again later.');
-          setIsSending(false);
-      })
+    emailjs.sendForm(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      form.current,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
   }
 
   return (
