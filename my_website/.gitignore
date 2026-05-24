@@ -14,6 +14,13 @@ dist-ssr
 .env
 .env.*.local
 
+# Block all audio files from being uploaded to GitHub
+*.wav
+*.mp3
+
+# Block the entire audio asset directory just to be safe
+/src/sound/
+
 # Editor directories and files
 .vscode/*
 .idea/*
