@@ -1,5 +1,5 @@
 import { useState ,useEffect } from "react";
-import { TitleBar, WindowFrame } from "../components/SharedUI";
+import { TitleBar, WindowFrame, Button } from "../components/SharedUI";
 
 import moreIcon from '../assets/assets95/moreIcon.png'
 import Exit from '../assets/assets95/Exit.png'
@@ -73,7 +73,7 @@ function More( { onClose } ) {
                                 {questionList.map((item, index) => (
                                     // Question button to display the answer when is clicked
                                     <div key={index} className="flex flex-col" >
-                                        <button onClick={() => toggle(index)} 
+                                        <Button soundType="open" onClick={() => toggle(index)} 
                                         //w-[92vw] max-w-[24rem] sm:max-w-none sm:w-[30rem] h-[15.5rem] sm:h-[14rem] case necessary for heigh maybe later
                                         className="bg-[#c0c0c0] dark:bg-[#444444] text-black dark:text-white flex justify-between items-center px-3 py-1.5 
                                             shadow-[inset_1px_1px_1px_1px_#000000] cursor-pointer transition-none">
@@ -83,7 +83,7 @@ function More( { onClose } ) {
                                                     {openTabs.includes(index) ? '▲' : '▼'}
                                                 </span>
                                             </div>
-                                        </button>
+                                        </Button>
                                         {openTabs.includes(index) && (
                                             // Answer section that is display when the question button is clicked
                                             <div className="bg-[#e0e0e0] dark:bg-[#222222] text-black dark:text-[#ddd] p-3 text-[1rem] sm:text-[1.25rem] leading-tight whitespace-pre-line

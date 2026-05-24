@@ -3,6 +3,47 @@ import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
 
+import openSound from '../sound/open.wav'
+import closeSound from '../sound/close.wav'
+import skillsSound from '../sound/skills.wav'
+import ambientSound from '../sound/ambient.mp3'
+
+export function Button ({ children, onClick, soundType, href, className="" }) {
+    const playSound = () => {
+        // Map sound type with the files in the import
+        const soundMap = {
+            open: openSound,
+            close: closeSound,
+            skills: skillsSound,
+            ambient: ambientSound
+        }
+
+        const soundSrc = soundMap[soundType] // Get the sound file source using the map
+        const audio = new Audio(soundSrc) // Audio object with the sound
+        audio.play() // Play the sound
+    }
+
+    // Handle the click event to play the sound and the call of another onClick function that is probably in the button
+    const handleClick = (event) => {
+        playSound()
+        onClick?.(event)
+    }
+
+    if (href) {
+        return (
+            <a href={href} target="_blank" rel="noopener noreferrer" onClick={handleClick} className={className} >
+                {children}
+            </a>
+        )
+    }
+
+    return (
+        <button type="button" onClick={handleClick} className={className}>
+            {children}
+        </button>
+    )
+}
+
 export function TitleBar({ title, iconSrc, showExit = true, onClose }) {
   return (
         <div className="title-bar flex justify-between bg-[#000080] dark:bg-[#121212] shadow-[inset_1px_1px_1px_1px_#000000] h-6 sm:h-8">
@@ -12,9 +53,9 @@ export function TitleBar({ title, iconSrc, showExit = true, onClose }) {
             </div>
             {showExit && (
                 <div className="flex items-center justify-end p-1">
-                    <button className="p-1 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center gap-0.5" onClick={onClose}>
+                    <Button soundType="close" onClick={onClose} className="p-1 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center gap-0.5 bg-transparent">
                         <img className="sm:w-6 sm:h-6 w-4 h-4 [image-rendering:pixelated]" src={Exit} alt="exit" draggable={false}/>
-                    </button>
+                    </Button>
                 </div>
             )}
         </div>
@@ -45,8 +86,13 @@ export function InputText( { label, type="text", name, required } ) {
 }
 
 export const SkillsSections = function ({children}) {
+    const playSound = () => {
+        const audio = new Audio(skillsSound)
+        audio.play()
+    }
+    
     return (
-        <div className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
+        <div onMouseEnter={playSound} className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
          shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
          transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
             {children}

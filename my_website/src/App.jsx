@@ -1,4 +1,4 @@
-import { WindowFrame } from './components/SharedUI';
+import { WindowFrame, Button } from './components/SharedUI';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { ThemeProvider, ThemeContext } from './components/clouds/ThemeContext';
 import CloudAnimation from './components/clouds/CloudAnimation';
@@ -21,6 +21,8 @@ import modeIcon from './assets/assets95/modeIcon.png'
 import Copyright from './assets/assets95/Copyright.png'
 import darkModeIcon from './assets/assets95/DarkMode.png'
 import lightModeIcon from './assets/assets95/LightMode.png'
+
+import ambientSound from './sound/ambient.mp3'
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -70,6 +72,23 @@ function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, ch
 
 
 function App() {
+
+
+    const ambientSoundRef = useRef(null);
+
+    const toggleAmbientSound = () => {
+        if (!ambientSoundRef.current) {
+            ambientSoundRef.current = new Audio(ambientSound);
+            ambientSoundRef.current.loop = true;
+            ambientSoundRef.current.volume = 0.5;
+        }
+        if (ambientSoundRef.current.paused) {
+            ambientSoundRef.current.play();
+        } else {
+            ambientSoundRef.current.pause();
+            ambientSoundRef.current.currentTime = 0;
+        }
+    };
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -180,8 +199,8 @@ function App() {
     ];
 
     const taskTabs = [
-        { label: 'Dark Mode', icon: modeIcon },
-        //{ label: 'Music', icon: musicIcon },
+        { label: 'Dark Mode', icon: modeIcon, soundType: 'mode' },
+        { label: 'Music', icon: musicIcon, soundType: 'ambient' },
     ];
 
     return (
@@ -222,7 +241,7 @@ function App() {
                                 <div className="grid grid-cols-3 gap-y-4 gap-x-4 sm:flex sm:flex-wrap sm:justify-center
                                 sm:gap-x-10 w-full max-w-sm sm:max-w-none transition-all duration-300">
                                     {desktopItems.map((item, index) => (
-                                        <button key={item.label} className={`flex flex-col items-center gap-1 sm:gap-2 w-full sm:w-20 
+                                        <Button soundType="open" key={item.label} className={`flex flex-col items-center gap-1 sm:gap-2 w-full sm:w-20 
                                         cursor-pointer p-1 hover:scale-110 transition-transform duration-300 
                                         ${index === 3 ? 'col-start-1 col-end-2 ml-[50%] sm:ml-0' : ''} 
                                         ${index === 4 ? 'col-start-2 col-end-3 ml-[50%] sm:ml-0' : ''}`}
@@ -236,7 +255,7 @@ function App() {
                                                 {item.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : item.label}
                                             </span>
                                             
-                                        </button>
+                                        </Button>
                                     ))}
                                 </div>
                             </div>               
@@ -257,10 +276,13 @@ function App() {
 
 
                         {taskTabs.map((tab) => (
-                            <button key={tab.label} onClick={() => {
+                            <Button soundType={tab.soundType} key={tab.label} onClick={() => {
                                 if (tab.label === "Dark Mode") {
                                     setTheme(theme === "light" ? "dark" : "light");
-                                }    
+                                }
+                                else if (tab.label === "Music") {
+                                    toggleAmbientSound();
+                                }
                             }} 
                             className="px-2 pr-20 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
@@ -269,7 +291,8 @@ function App() {
                                 
                                 <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : tab.icon} alt={tab.label} />
                                 <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
-                            </button>
+                                
+                            </Button>
                         ))}
                     </div>  
                     <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 

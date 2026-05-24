@@ -1,4 +1,4 @@
-import { TitleBar, WindowFrame, InputText } from '../components/SharedUI';
+import { TitleBar, WindowFrame, InputText, Button } from '../components/SharedUI';
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
@@ -58,10 +58,10 @@ function Contact({ onClose }) {
                   </div>
 
                   {/* Submit Button */}
-                  <button type="submit" disabled={isSending} className="mt-4 w-full py-2 bg-[#c0c0c0] dark:bg-[#444] text-black dark:text-white font-bold 
+                  <Button soundType="open" type="submit" disabled={isSending} className="mt-4 w-full py-2 bg-[#c0c0c0] dark:bg-[#444] text-black dark:text-white font-bold 
                   shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#111111,inset_1.5px_1.5px_0px_0px_#666666]
                   active:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1.5px_-1.5px_0px_0px_#ffffff] dark:active:shadow-[inset_1.5px_1.5px_0px_0px_#111,inset_-1px_-1px_0px_0px_#555]
-                  cursor-pointer hover:scale-101 transition-all duration-100">Send me an email</button>
+                  cursor-pointer hover:scale-101 transition-all duration-100">Send me an email</Button>
                 </form>
               </div>
 
