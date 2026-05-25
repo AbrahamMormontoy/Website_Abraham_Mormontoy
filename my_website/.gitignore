@@ -18,6 +18,8 @@ dist-ssr
 *.wav
 *.mp3
 
+/src/assets/
+
 # Allow committing app audio assets (needed for production builds)
 !/src/sound/
 !/src/sound/*.mp3
