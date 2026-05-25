@@ -8,7 +8,7 @@ import Work from './tabs/Work.jsx'
 import More from './tabs/More.jsx'
 import Contact from './tabs/Contact.jsx'
 import { ThemeProvider } from './components/clouds/ThemeContext.jsx'
-import { SoundProvider } from './sound/SoundContext.jsx'
+import { SoundProvider } from './components/SoundContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

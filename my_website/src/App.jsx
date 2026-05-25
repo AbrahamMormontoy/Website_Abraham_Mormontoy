@@ -9,8 +9,10 @@ import Links from './tabs/Links.jsx';
 import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
+import { useSound } from './components/SoundContext.jsx';
 
-import aboutIcon from './assets/assets95/aboutIcon.png'
+
+/*import aboutIcon from './assets/assets95/aboutIcon.png'
 import linksIcon from './assets/assets95/linksIcon.png'
 import moreIcon from './assets/assets95/moreIcon.png'
 import folderIcon from './assets/assets95/folderIcon.png'
@@ -24,9 +26,25 @@ import lightModeIcon from './assets/assets95/LightMode.png'
 import muteLight from './assets/assets95/muteLight.png'
 import muteDark from './assets/assets95/muteDark.png'
 import unmuteLight from './assets/assets95/unmuteLight.png'
-import unmuteDark from './assets/assets95/unmuteDark.png'
+import unmuteDark from './assets/assets95/unmuteDark.png'8 */
 
-import { useSound } from './sound/SoundContext.jsx';
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const aboutIcon = `${ASSET_BASE}/assets95/aboutIcon.png`;
+const linksIcon = `${ASSET_BASE}/assets95/linksIcon.png`;
+const moreIcon = `${ASSET_BASE}/assets95/moreIcon.png`;
+const folderIcon = `${ASSET_BASE}/assets95/folderIcon.png`;
+const musicIcon = `${ASSET_BASE}/assets95/musicIcon.png`;
+const contactIcon = `${ASSET_BASE}/assets95/contactIcon.png`;
+const workIcon = `${ASSET_BASE}/assets95/workIcon.png`;
+const modeIcon = `${ASSET_BASE}/assets95/modeIcon.png`;
+const Copyright = `${ASSET_BASE}/assets95/Copyright.png`;
+const darkModeIcon = `${ASSET_BASE}/assets95/DarkMode.png`;
+const lightModeIcon = `${ASSET_BASE}/assets95/LightMode.png`;
+const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
+const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
+const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
+const unmuteDark = `${ASSET_BASE}/assets95/unmuteDark.png`;
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -90,7 +108,7 @@ function App() {
         // This is done by cleaning the even listeners
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    })
+    }, [])
 
     // List of open windows by labels
     const [openWindows, setOpenWindows] = useState([]) 

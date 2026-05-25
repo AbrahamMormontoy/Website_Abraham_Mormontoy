@@ -2,8 +2,13 @@ import { TitleBar, WindowFrame, InputText, Button } from '../components/SharedUI
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-import contactIcon from '../assets/assets95/contactIcon.png'
-import Exit from '../assets/assets95/Exit.png'
+/*import contactIcon from '../assets/assets95/contactIcon.png'
+import Exit from '../assets/assets95/Exit.png'*/
+
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const contactIcon = `${ASSET_BASE}/assets95/contactIcon.png`;
+const Exit = `${ASSET_BASE}/assets95/Exit.png`;
 
 function Contact({ onClose }) {
 

@@ -3,7 +3,7 @@ import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
 
-import { useSound } from '../sound/SoundContext'    
+import { useSound } from './SoundContext'    
 
 export function Button ({ children, onClick, soundType, href, className="" }) {
     const { playSound } = useSound() || {}

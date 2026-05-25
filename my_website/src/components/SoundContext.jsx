@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
-import openSound from './open.wav'
-import closeSound from './close.wav'
-import skillsSound from './skills.wav'
-import ambientSound from './ambient.mp3'
+import openSound from '../assets/sound/open.wav'
+import closeSound from '../assets/sound/close.wav'
+import skillsSound from '../assets/sound/skills.wav'
+import ambientSound from '../assets/sound/ambient.mp3'
 
 const SoundContext = createContext(undefined);
 
@@ -28,7 +28,6 @@ export function SoundProvider({ children }) {
             audio.loop = true;
             ambientAudioRef.current = audio;
         }
-        ambientAudioRef.current.volume = volume;
         return ambientAudioRef.current;
     }
 
@@ -38,7 +37,6 @@ export function SoundProvider({ children }) {
         const soundSrc = soundMap[soundKey];
         if (!soundSrc) return;
         const audio = new Audio(soundSrc);
-        audio.volume = volume;
         audio.play();
     }
 
@@ -47,6 +45,7 @@ export function SoundProvider({ children }) {
         const ambientAudio = ambientSound();
         
         if (ambientAudio.paused) {
+            if (isMuted) return;
             ambientAudio.play();
             setIsAmbientPlaying(true);
         } else {
@@ -76,7 +75,7 @@ export function SoundProvider({ children }) {
     }, [isMuted, isAmbientPlaying]) // This effect will run whenever isMuted or isAmbientPlaying changes
 
     return (
-        <SoundContext.Provider value={{ isMuted, setIsMuted, soundMap, playSound, toggleAmbientSound, stopAmbientSound, isAmbientPlaying, setVolume, volume }}>
+        <SoundContext.Provider value={{ isMuted, setIsMuted, soundMap, playSound, toggleAmbientSound, stopAmbientSound, isAmbientPlaying }}>
             {children}
         </SoundContext.Provider>
     );

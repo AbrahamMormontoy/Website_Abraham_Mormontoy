@@ -1,8 +1,13 @@
 import { useState ,useEffect } from "react";
 import { TitleBar, WindowFrame, Button } from "../components/SharedUI";
 
-import moreIcon from '../assets/assets95/moreIcon.png'
-import Exit from '../assets/assets95/Exit.png'
+/*import moreIcon from '../assets/assets95/moreIcon.png'
+import Exit from '../assets/assets95/Exit.png'*/
+
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const moreIcon = `${ASSET_BASE}/assets95/moreIcon.png`;
+const Exit = `${ASSET_BASE}/assets95/Exit.png`;
 
 function More( { onClose } ) {
     

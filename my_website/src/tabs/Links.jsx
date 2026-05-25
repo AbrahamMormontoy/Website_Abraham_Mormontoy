@@ -2,13 +2,22 @@ import { TitleBar, WindowFrame } from '../components/SharedUI.jsx'
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 import { useState, useEffect ,useContext } from 'react'
 
-import linksIcon from '../assets/assets95/linksIcon.png'
+/*import linksIcon from '../assets/assets95/linksIcon.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
 import Github from '../assets/assets95/Github.png'
 import LinkedIn from '../assets/assets95/LinkedIn.png'
 import Cv from '../assets/assets95/Cv.png'
 
-import resume from '../resumeAbrahamMormontoy.pdf'
+import resume from '../assets/resumeAbrahamMormontoy.pdf'*/
+
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const linksIcon = `${ASSET_BASE}/assets95/linksIcon.png`;
+const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
+const Github = `${ASSET_BASE}/assets95/Github.png`;
+const LinkedIn = `${ASSET_BASE}/assets95/LinkedIn.png`;
+const Cv = `${ASSET_BASE}/assets95/Cv.png`;
+const resume = `${ASSET_BASE}/resumeAbrahamMormontoy.pdf`;
 
 import { Button } from '../components/SharedUI.jsx'
 
