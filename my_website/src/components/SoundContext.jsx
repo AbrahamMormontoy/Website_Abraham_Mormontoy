@@ -1,9 +1,16 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
-import openSound from '../assets/sound/open.wav'
+/*import openSound from '../assets/sound/open.wav'
 import closeSound from '../assets/sound/close.wav'
 import skillsSound from '../assets/sound/skills.wav'
-import ambientSound from '../assets/sound/ambient.mp3'
+import ambientSound from '../assets/sound/ambient.mp3'*/
+
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const openSound = `${ASSET_BASE}/sound/open.wav`;
+const closeSound = `${ASSET_BASE}/sound/close.wav`;
+const skillsSound = `${ASSET_BASE}/sound/skills.wav`;
+const ambientSound = `${ASSET_BASE}/sound/ambient.mp3`;
 
 const SoundContext = createContext(undefined);
 

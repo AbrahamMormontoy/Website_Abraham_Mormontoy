@@ -1,7 +1,14 @@
 import React from 'react';
-import Exit from '../assets/assets95/Exit.png'
+
+/*import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
-import GithubDark from '../assets/assets95/GithubDarkmode.png'
+import GithubDark from '../assets/assets95/GithubDarkmode.png'*/
+
+const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+
+const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
+const Github = `${ASSET_BASE}/assets95/Github.png`;
+const Exit = `${ASSET_BASE}/assets95/Exit.png`;
 
 import { useSound } from './SoundContext'    
 
