@@ -21,8 +21,12 @@ import modeIcon from './assets/assets95/modeIcon.png'
 import Copyright from './assets/assets95/Copyright.png'
 import darkModeIcon from './assets/assets95/DarkMode.png'
 import lightModeIcon from './assets/assets95/LightMode.png'
+import muteLight from './assets/assets95/muteLight.png'
+import muteDark from './assets/assets95/muteDark.png'
+import unmuteLight from './assets/assets95/unmuteLight.png'
+import unmuteDark from './assets/assets95/unmuteDark.png'
 
-import ambientSound from './sound/ambient.mp3'
+import { useSound } from './sound/SoundContext.jsx';
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -73,22 +77,7 @@ function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, ch
 
 function App() {
 
-
-    const ambientSoundRef = useRef(null);
-
-    const toggleAmbientSound = () => {
-        if (!ambientSoundRef.current) {
-            ambientSoundRef.current = new Audio(ambientSound);
-            ambientSoundRef.current.loop = true;
-            ambientSoundRef.current.volume = 0.5;
-        }
-        if (ambientSoundRef.current.paused) {
-            ambientSoundRef.current.play();
-        } else {
-            ambientSoundRef.current.pause();
-            ambientSoundRef.current.currentTime = 0;
-        }
-    };
+    const { playSound, toggleAmbientSound, isMuted, setIsMuted } = useSound()
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -199,8 +188,8 @@ function App() {
     ];
 
     const taskTabs = [
-        { label: 'Dark Mode', icon: modeIcon, soundType: 'mode' },
-        { label: 'Music', icon: musicIcon, soundType: 'ambient' },
+        { label: 'Dark Mode', icon: modeIcon, soundType: 'open' },
+        { label: 'Music', icon: musicIcon, soundType: 'open' },
     ];
 
     return (
@@ -265,7 +254,7 @@ function App() {
                 {/* Taskbar bottom of the screen */}
                 <footer className="w-full h-7 bg-[#c0c0c0] flex justify-between items-stretch p-0.5 gap-2 border-t-1.5 z-100 relative
                 border-white shadow-[inset_0px_1px_0px_0px_#C0C0C0] dark:bg-[#333333] dark:shadow-[inset_0px_0px_1px_0px_#FFFFFF] ">
-                    <div className="flex items-center gap-1 h-full ">
+                    <div className="flex items-center gap-1 h-full">
                         <div className="px-1.5 py-0 h-full bg-[#c0c0c0] dark:bg-[#333333]
                         shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000]
                          flex items-center gap-1 shrink-0">
@@ -284,7 +273,7 @@ function App() {
                                     toggleAmbientSound();
                                 }
                             }} 
-                            className="px-2 pr-20 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
+                            className="px-2 sm:pr-20 pr-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
                                 {/*Taskbar icons*/}
@@ -294,10 +283,18 @@ function App() {
                                 
                             </Button>
                         ))}
-                    </div>  
-                    <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
-                    dark:bg-[#333333] dark:shadow-[inset_1px_1px_0px_0px_#000000] flex items-center shrink-0">
-                        <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
+                    </div> 
+                    
+                    <div className='flex item-center h-full'>
+                        <Button soundType="open" onClick={() => setIsMuted(prev => !prev)} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
+                            shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
+                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
+                            <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark'? (isMuted ? unmuteDark : unmuteLight) : (isMuted ? muteDark : muteLight)} alt="music" />
+                        </Button> 
+                        <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
+                        dark:bg-[#333333] dark:shadow-[inset_1px_1px_0px_0px_#000000] flex items-center shrink-0">
+                            <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
+                        </div>
                     </div>
                 </footer>
             </div>

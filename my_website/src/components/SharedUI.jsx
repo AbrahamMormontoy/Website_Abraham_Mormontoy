@@ -3,30 +3,18 @@ import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
 
-import openSound from '../sound/open.wav'
-import closeSound from '../sound/close.wav'
-import skillsSound from '../sound/skills.wav'
-import ambientSound from '../sound/ambient.mp3'
+import { useSound } from '../sound/SoundContext'    
 
 export function Button ({ children, onClick, soundType, href, className="" }) {
-    const playSound = () => {
-        // Map sound type with the files in the import
-        const soundMap = {
-            open: openSound,
-            close: closeSound,
-            skills: skillsSound,
-            ambient: ambientSound
-        }
-
-        const soundSrc = soundMap[soundType] // Get the sound file source using the map
-        const audio = new Audio(soundSrc) // Audio object with the sound
-        audio.play() // Play the sound
-    }
-
-    // Handle the click event to play the sound and the call of another onClick function that is probably in the button
+    const { playSound } = useSound() || {}
+    
     const handleClick = (event) => {
-        playSound()
-        onClick?.(event)
+        if (soundType && playSound) {
+            playSound(soundType)
+        }
+        if (onClick) {
+            onClick(event)
+        }
     }
 
     if (href) {
@@ -38,7 +26,7 @@ export function Button ({ children, onClick, soundType, href, className="" }) {
     }
 
     return (
-        <button type="button" onClick={handleClick} className={className}>
+        <button type="button" onClick={handleClick} className={`active:scale-105 ${className} `} >
             {children}
         </button>
     )
@@ -86,13 +74,10 @@ export function InputText( { label, type="text", name, required } ) {
 }
 
 export const SkillsSections = function ({children}) {
-    const playSound = () => {
-        const audio = new Audio(skillsSound)
-        audio.play()
-    }
+    const { playSound } = useSound() || {}
     
     return (
-        <div onMouseEnter={playSound} className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
+        <div onMouseEnter={() => playSound?.('skills')} className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
          shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
          transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
             {children}

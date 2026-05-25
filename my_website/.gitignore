@@ -18,8 +18,10 @@ dist-ssr
 *.wav
 *.mp3
 
-# Block the entire audio asset directory just to be safe
-/src/sound/
+# Allow committing app audio assets (needed for production builds)
+!/src/sound/
+!/src/sound/*.mp3
+!/src/sound/*.wav
 
 # Editor directories and files
 .vscode/*
