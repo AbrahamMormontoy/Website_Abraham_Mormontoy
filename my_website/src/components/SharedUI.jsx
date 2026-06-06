@@ -129,7 +129,7 @@ export const ProjectCard = function ( { title, date, description, tools, imageSr
     return (
         <div className="mb-4 bg-[#f7f7f7] dark:bg-[#222222] p-5 hover:scale-101 cursor-pointer" onClick={handleCardClick}>
             <div className="flex flex-col sm:flex-row items-center gap-4 ">
-            {imageSrc && ( <img src={imageSrc} alt={imageAlt} className={`shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-pointer hover:scale-103 
+            {imageSrc && ( <img src={imageSrc} alt={imageAlt} className={`shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-zoom-in hover:scale-103 
             transition-transform duration-300 ${isPulsing ? 'scale-102' : ''}`} onClick={onImageClick} />)}
                 <div className="flex flex-col gap-2 flex-auto">
                     <div className="font-bold text-[1rem] sm:text-[1.25rem] leading-tight dark:text-white">{title}</div>

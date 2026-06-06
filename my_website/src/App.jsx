@@ -3,6 +3,7 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import { ThemeProvider, ThemeContext } from './components/clouds/ThemeContext';
 import CloudAnimation from './components/clouds/CloudAnimation';
 import Draggable from 'react-draggable';
+import { TypeAnimation } from 'react-type-animation';
 
 import About from './tabs/About.jsx';
 import Links from './tabs/Links.jsx';
@@ -101,7 +102,7 @@ function App() {
     const imageViewer = function (img, onClose) {
         if (!img) return null;
         return (
-            <div className="fixed inset-0 bg-black/70 p-4 sm:p-8 flex items-center justify-center cursor-pointer z-9999" onClick={onClose}>
+            <div className="fixed inset-0 bg-black/70 p-4 sm:p-8 flex items-center justify-center cursor-zoom-out z-9999" onClick={onClose}>
                 <img src={img} alt="Enlarged view" className="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain"/>
             </div>
         );
@@ -255,9 +256,21 @@ function App() {
 
                                 <div className="flex flex-col items-center text-center gap-2 sm:gap-4 px-2">                           
                                     <div className="text-black text-3xl sm:text-6xl leading-tight 
-                                    dark:text-white">Hi <span className="font-bold">I'm Abraham</span></div>
+                                    dark:text-white">Hi! <span className="font-bold">I'm Abraham</span></div>
                                     
-                                    <div className="text-black text-lg sm:text-2xl leading-tight dark:text-white">CS student and developer</div>
+                                    <div className="text-black text-[1rem] sm:text-[1.5rem] leading-tight dark:text-white h-[2rem] sm:h-[1.7rem]">
+                                        <TypeAnimation
+                                            sequence={[
+                                                'Computer Science Student at Simon Fraser University',
+                                                2000, 
+                                                'Frontend and Software Developer',
+                                                2000,
+                                            ]}
+                                            wrapper="span"
+                                            speed={50}
+                                            repeat={Infinity}
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* THE ICON GRID */}
