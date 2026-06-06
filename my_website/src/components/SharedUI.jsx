@@ -12,7 +12,7 @@ const Exit = `${ASSET_BASE}/assets95/Exit.png`;
 
 import { useSound } from './SoundContext'    
 
-export function Button ({ children, onClick, soundType, href, className="" }) {
+export function Button ({ children, onClick, soundType, href, className="", disableScale }) {
     const { playSound } = useSound() || {}
     
     const handleClick = (event) => {
@@ -26,9 +26,19 @@ export function Button ({ children, onClick, soundType, href, className="" }) {
 
     if (href) {
         return (
+            <button className={`active:scale-105`} >
             <a href={href} target="_blank" rel="noopener noreferrer" onClick={handleClick} className={className} >
                 {children}
             </a>
+            </button>
+        )
+    }
+
+    if (disableScale) {
+        return (
+            <button className={`${className} `} onClick={handleClick}>
+                {children}
+            </button>
         )
     }
 

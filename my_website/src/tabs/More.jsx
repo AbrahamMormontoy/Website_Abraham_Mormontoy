@@ -78,9 +78,9 @@ function More( { onClose } ) {
                                 {questionList.map((item, index) => (
                                     // Question button to display the answer when is clicked
                                     <div key={index} className="flex flex-col" >
-                                        <Button soundType="open" onClick={() => toggle(index)} 
+                                        <Button soundType="open" onClick={() => toggle(index)} disableScale={true}
                                         className="bg-[#c0c0c0] dark:bg-[#444444] text-black dark:text-white flex justify-between items-center px-3 py-1.5 
-                                            shadow-[inset_1px_1px_1px_1px_#000000] cursor-pointer transition-none active:scale-100">
+                                            shadow-[inset_1px_1px_1px_1px_#000000] cursor-pointer transition-none">
                                             <span className="text-[1.25rem] sm:text-[1.5rem] text-left">{item.question}</span>
                                             <div className="bg-[#c0c0c0] dark:bg-[#333333] shadow-[inset_-1px_-1px_0px_0px_#000000,inset_1px_1px_0px_0px_#ffffff] px-2 py-0.5 ml-4 flex items-center justify-center shrink-0">
                                                 <span className="text-[1rem] sm:text-[1.25rem] leading-none transform transition-transform duration-200">

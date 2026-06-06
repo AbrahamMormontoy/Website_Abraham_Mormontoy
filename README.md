@@ -59,3 +59,8 @@ npm run dev
 ## Design
 The initial design of the website can be found here. This is not final and was changed over and over for better UX and UI practice.
 https://www.figma.com/design/BFeH8knoNLnylHtkmxnInx/Personal-Website?node-id=1-385&t=P1ibkDIG1r2GnCFW-1
+
+## Music
+Ambient sound https://www.zapsplat.com/music/chapter-calm-downtempo-documentary-style-track-featuring-soft-piano-and-ambient-textures/
+
+Open button 
