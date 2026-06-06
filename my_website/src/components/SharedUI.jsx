@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /*import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
@@ -36,14 +36,14 @@ export function Button ({ children, onClick, soundType, href, className="", disa
 
     if (disableScale) {
         return (
-            <button className={`${className} `} onClick={handleClick}>
+            <button type="button" className={`${className} `} onClick={handleClick}>
                 {children}
             </button>
         )
     }
 
     return (
-        <button type="button" onClick={handleClick} className={`active:scale-105 ${className} `} >
+        <button type="button" onClick={handleClick} className={`transition-all duration-300 active:scale-105 ${className} `} >
             {children}
         </button>
     )
@@ -94,7 +94,7 @@ export const SkillsSections = function ({children}) {
     const { playSound } = useSound() || {}
     
     return (
-        <div onMouseEnter={() => playSound?.('skills')} className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
+        <div /*onMouseEnter={() => playSound?.('skills')}*/ className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 
          shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
          transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
             {children}
@@ -103,20 +103,42 @@ export const SkillsSections = function ({children}) {
 }
 
 export const ProjectCard = function ( { title, date, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
-    
+    const [isPulsing, setIsPulsing] = useState(false)
+    const pulseTimeoutRef = useRef(null)
+
+    useEffect(() => {
+        return () => {
+            if (pulseTimeoutRef.current) {
+                window.clearTimeout(pulseTimeoutRef.current)
+            }
+        }
+    }, [])
+
+    const handleCardClick = () => {
+        setIsPulsing(true)
+
+        if (pulseTimeoutRef.current) {
+            window.clearTimeout(pulseTimeoutRef.current)
+        }
+
+        pulseTimeoutRef.current = window.setTimeout(() => {
+            setIsPulsing(false)
+        }, 180)
+    }
+
     return (
-        <div className="mb-4 bg-[#f7f7f7] dark:bg-[#222222] p-5">
+        <div className="mb-4 bg-[#f7f7f7] dark:bg-[#222222] p-5 hover:scale-101 cursor-pointer" onClick={handleCardClick}>
             <div className="flex flex-col sm:flex-row items-center gap-4 ">
-            {imageSrc && ( <img src={imageSrc} alt={imageAlt} className="shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-pointer hover:scale-105 
-            transition-transform duration-300" onClick={onImageClick} />)}
+            {imageSrc && ( <img src={imageSrc} alt={imageAlt} className={`shrink-0 w-full sm:w-auto sm:max-w-[20rem] h-auto cursor-pointer hover:scale-103 
+            transition-transform duration-300 ${isPulsing ? 'scale-102' : ''}`} onClick={onImageClick} />)}
                 <div className="flex flex-col gap-2 flex-auto">
                     <div className="font-bold text-[1rem] sm:text-[1.25rem] leading-tight dark:text-white">{title}</div>
                     <div className="text-[0.8rem] sm:text-[0.95rem] dark:text-white">{date}</div>
                     <div className="text-[0.875rem] sm:text-[1rem] leading-[1.4] dark:text-white text-justify">{description}</div>
                     <div className="flex items-center justify-between gap-3">
                         <div className="text-[0.8rem] sm:text-[0.95rem] italic dark:text-white">Tools: {tools}</div>
-                        {githubUrl && (<a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex shrink-0 cursor-pointer items-center 
-                        hover:scale-105 transition-transform duration-300">
+                        {githubUrl && (<a href={githubUrl} target="_blank" rel="noopener noreferrer" className={`flex shrink-0 cursor-pointer items-center 
+                        hover:scale-105 transition-transform duration-300 ${isPulsing ? 'scale-110' : ''}`}>
                         {darkMode ? <img src={GithubDark} alt="github" className="w-6 h-6" /> : <img src={Github} alt="github" className="w-6 h-6" />}
                         </a>
                         )}

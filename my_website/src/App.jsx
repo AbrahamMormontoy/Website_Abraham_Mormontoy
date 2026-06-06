@@ -38,9 +38,10 @@ const musicIcon = `${ASSET_BASE}/assets95/musicIcon.png`;
 const contactIcon = `${ASSET_BASE}/assets95/contactIcon.png`;
 const workIcon = `${ASSET_BASE}/assets95/workIcon.png`;
 const modeIcon = `${ASSET_BASE}/assets95/modeIcon.png`;
-const Copyright = `${ASSET_BASE}/assets95/Copyright.png`;
+const CopyrightLight = `${ASSET_BASE}/assets95/CopyrightLightMode.png`;
+const CopyrightDark = `${ASSET_BASE}/assets95/CopyrightDarkMode.png`;
 const darkModeIcon = `${ASSET_BASE}/assets95/DarkMode.png`;
-const lightModeIcon = `${ASSET_BASE}/assets95/LightMode.png`;
+const lightModeIcon = `${ASSET_BASE}/assets95/LightMode1.png`;
 const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
 const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
 const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
@@ -94,6 +95,17 @@ function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, ch
 
 
 function App() {
+    
+    const [activeImage, setActiveImage] = useState(null);
+
+    const imageViewer = function (img, onClose) {
+        if (!img) return null;
+        return (
+            <div className="fixed inset-0 bg-black/70 p-4 sm:p-8 flex items-center justify-center cursor-pointer z-9999" onClick={onClose}>
+                <img src={img} alt="Enlarged view" className="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain"/>
+            </div>
+        );
+    }  
 
     const { playSound, toggleAmbientSound, isMuted, setIsMuted } = useSound()
 
@@ -214,13 +226,17 @@ function App() {
         <>
         <CloudAnimation />
             <div className="w-screen h-dvh flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
+                {/* Image Viewer */}
+                {imageViewer(activeImage, () => setActiveImage(null))}
+
                 {/*All the components are here*/}
                 <div>
                 {openWindows.map((label) => {
                     const {Component, defaultPosition} = windowConfig[label]
                     return (
-                        <DraggableWindow key={label} label={label} defaultPosition={defaultPosition} zIndex={zOrder[label] || 0} onFocus={bringToFront} isMobile={isMobile}>         
-                            <Component onClose={() => closeWindow(label)}/>
+                        <DraggableWindow key={label} label={label} defaultPosition={defaultPosition} zIndex={zOrder[label] || 0} onFocus={bringToFront} isMobile={isMobile}>             
+                        {label === 'Work' ? ( <Component onClose={() => closeWindow(label)} onImageOpen={setActiveImage} />) : 
+                        ( <Component onClose={() => closeWindow(label)} />)}
                             </DraggableWindow>
                         )
                         })}
@@ -276,9 +292,9 @@ function App() {
                         <div className="px-1.5 py-0 h-full bg-[#c0c0c0] dark:bg-[#333333]
                         shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000]
                          flex items-center gap-1 shrink-0">
-                            <img className="w-4 h-4 [image-rendering:pixelated]" src={Copyright} alt="start" />
-                            <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-2.5 text-left
-                            ">Abraham Mormontoy</span>
+                            <img className="w-4 h-4 [image-rendering:pixelated] transition-transform duration-300" src={theme === 'dark' ? CopyrightDark : CopyrightLight} alt="start" />
+                            <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-2.5 text-left transition-transform duration-300">
+                                2026 Abraham Mormontoy</span>
                         </div>
 
 
@@ -293,9 +309,9 @@ function App() {
                             }} 
                             className="px-2 sm:pr-20 pr-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
-                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
-                                {/*Taskbar icons*/}
+                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
                                 
+                                {/*Taskbar icons*/}
                                 <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : tab.icon} alt={tab.label} />
                                 <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
                                 
@@ -306,7 +322,7 @@ function App() {
                     <div className='flex item-center h-full'>
                         <Button soundType="open" onClick={() => setIsMuted(prev => !prev)} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
-                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-200">
+                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
                             <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark'? (isMuted ? unmuteDark : unmuteLight) : (isMuted ? muteDark : muteLight)} alt="music" />
                         </Button> 
                         <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
