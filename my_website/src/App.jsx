@@ -10,7 +10,7 @@ import Links from './tabs/Links.jsx';
 import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
-//import Tetra from './game/Tetra.jsx';
+import Wordafall from './game/Wordafall.jsx';
 import { SoundContext } from './components/SoundContext.jsx';
 
 
@@ -48,7 +48,7 @@ const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
 const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
 const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
 const unmuteDark = `${ASSET_BASE}/assets95/unmuteDark.png`;
-const tetraIcon = `${ASSET_BASE}/assets95/tetraIcon.png`;
+const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -180,6 +180,7 @@ function App() {
         Work: { Component: Work, defaultPosition: getPosition(2)},
         More: { Component: More, defaultPosition: getPosition(3)},
         Contact: { Component: Contact, defaultPosition: getPosition(4)},
+        Wordafall: { Component: Wordafall, defaultPosition: getPosition(5)},    
     }
 
     // Check if the theme is dark or light to change the icons in the links tab
@@ -220,7 +221,7 @@ function App() {
     const taskTabs = [
         { label: 'Dark Mode', icon: modeIcon, soundType: 'open' },
         { label: 'Music', icon: musicIcon, soundType: 'open' },
-        { label: 'Tetra', icon: tetraIcon, soundType: 'open' },
+        { label: 'Wordafall', icon: wordafallIcon, soundType: 'open' },
     ];
 
     return (
@@ -317,7 +318,7 @@ function App() {
                                     setTheme(theme === "light" ? "dark" : "light");
                                 } else if (tab.label === "Music") {
                                     toggleAmbientSound();
-                                } else if (tab.label === "Tetra") {
+                                } else if (tab.label === "Wordafall") {
                                     openWindow(tab.label);
                                 }
                             }} 
