@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useContext, useRef, useState } from 'react';
 
 /*import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
@@ -10,10 +10,10 @@ const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
 const Github = `${ASSET_BASE}/assets95/Github.png`;
 const Exit = `${ASSET_BASE}/assets95/Exit.png`;
 
-import { useSound } from './SoundContext'    
+import { SoundContext } from './SoundContext'    
 
 export function Button ({ children, onClick, soundType, href, className="", disableScale }) {
-    const { playSound } = useSound() || {}
+    const { playSound } = useContext(SoundContext) || {}
     
     const handleClick = (event) => {
         if (soundType && playSound) {
@@ -84,14 +84,15 @@ export function InputText( { label, type="text", name, required } ) {
         <div className="flex flex-col gap-1">
             <label className="text-black dark:text-white text-[1rem]">{label}</label>
             <input type={type} name={name} required={required} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 focus:outline-none
-            shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#ffffff]
+            shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#000000]
             dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>
         </div>
     )
 }
 
 export const SkillsSections = function ({children}) {
-    const { playSound } = useSound() || {}
+    // Took away the sound from the skill section because it was too much noise
+    //const { playSound } = useSound() || {}
     
     return (
         <div /*onMouseEnter={() => playSound?.('skills')}*/ className="bg-[#c0c0c0] px-4 py-1 text-black text-[0.8rem]  sm:text-[1rem] 

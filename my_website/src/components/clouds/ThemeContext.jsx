@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState, useContext } from "react";
+import React, { useEffect, createContext, useState } from "react";
 
 // Create a context for theme management
 const ThemeContext = createContext(undefined);
@@ -21,7 +21,7 @@ function ThemeProvider({ children }) {
 
     const [backgroundEffect, setBackgroundEffect] = useState("clouds"); // default effect is clouds
     const [isAnimating, setIsAnimating] = useState(false); // tracking animation state
-    const [isUserInteracted, setIsUserInteracted] = useState(userPreference); // track if user has interacted with theme toggle
+    const [isUserInteracted] = useState(userPreference); // track if user has interacted with theme toggle
     
     // Update localStorage whenever theme changes
     function setTheme(newTheme) {
@@ -57,9 +57,3 @@ function ThemeProvider({ children }) {
 }
 
 export { ThemeProvider, ThemeContext }; 
-
-// Hook to access the theme context values in other components ()
-const useTheme = () => {
-    const context = useContext(ThemeContext);
-    return context;
-}

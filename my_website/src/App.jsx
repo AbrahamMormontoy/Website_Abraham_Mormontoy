@@ -10,7 +10,7 @@ import Links from './tabs/Links.jsx';
 import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
-import { useSound } from './components/SoundContext.jsx';
+import { SoundContext } from './components/SoundContext.jsx';
 
 
 /*import aboutIcon from './assets/assets95/aboutIcon.png'
@@ -108,7 +108,7 @@ function App() {
         );
     }  
 
-    const { playSound, toggleAmbientSound, isMuted, setIsMuted } = useSound()
+    const { toggleAmbientSound, isMuted, setIsMuted } = useContext(SoundContext)
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -132,12 +132,9 @@ function App() {
 
     // Increases the z-index of the window so that it is in front of the others
     const bringToFront = (label) => {
-        setZTop((prev) => {
-            const next = prev + 1;
-            // Tracks the order which is open first then second and so on
-            setZOrder((prevZ) => ({...prevZ, [label]: next }));
-            return next;
-        })
+        const next = zTop + 1;
+        setZTop(next)
+        setZOrder((prevZ) => ({...prevZ, [label]: next }));
     }
 
     // Add new tab to the list in openWindow if its already there

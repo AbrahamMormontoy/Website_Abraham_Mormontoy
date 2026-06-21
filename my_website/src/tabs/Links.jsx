@@ -1,6 +1,6 @@
 import { TitleBar, WindowFrame } from '../components/SharedUI.jsx'
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
-import { useState, useEffect ,useContext } from 'react'
+import { useContext } from 'react'
 
 /*import linksIcon from '../assets/assets95/linksIcon.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'
@@ -21,7 +21,7 @@ const resume = `${ASSET_BASE}/resumeAbrahamMormontoy.pdf`;
 
 import { Button } from '../components/SharedUI.jsx'
 
-function links( { onClose } ) {
+function Links( { onClose } ) {
     const { theme }  = useContext(ThemeContext);
     const darkMode = theme === 'dark';
 
@@ -46,8 +46,8 @@ function links( { onClose } ) {
                                 {linksItems.map((item, index) => {
                                     const IconItem = (item.label === 'GitHub') ? (darkMode ? GithubDark : Github) : item.icon;
                                     return (
-                                        <Button soundType="open" key={index} className="flex flex-row sm:flex-col justify-start sm:justify-center items-center gap-4 sm:gap-2 sm:p-1 w-full sm:w-20 sm:h-25 bg-[#f3f4f6] dark:bg-[#2a2a2a]
-                                        sm:bg-transparent sm:dark:bg-transparent border border-black dark:border-white sm:border-none hover:scale-101 sm:hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                        <Button soundType="open" key={index} className="flex flex-row sm:flex-col justify-start sm:justify-center items-center gap-4 sm:gap-2 sm:p-1 w-full sm:w-20 sm:h-25 
+                                        sm:bg-transparent sm:dark:bg-transparent hover:scale-105 sm:hover:scale-110 transition-transform duration-300 cursor-pointer"
                                         href={item.url} target="_blank" rel="noopener noreferrer">
                                             <img src={IconItem} alt={item.label} className="w-10 h-10 sm:w-12 sm:h-12 [image-rendering:pixelated]"/>
                                             <span className="text-black text-[16px] font-bold dark:text-white transition-all duration-300">{item.label}</span>
@@ -62,4 +62,4 @@ function links( { onClose } ) {
     )
 }
 
-export default links;
+export default Links;

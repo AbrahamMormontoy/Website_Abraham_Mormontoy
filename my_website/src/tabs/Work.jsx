@@ -1,5 +1,5 @@
 import { TitleBar, SkillsSections , ProjectCard, WindowFrame } from '../components/SharedUI.jsx'
-import {  useState ,useEffect, useContext } from "react";
+import { useContext } from "react";
 import { ThemeContext } from '../components/clouds/ThemeContext.jsx'
 
 /*import workIcon from '../assets/assets95/workIcon.png'
@@ -173,7 +173,6 @@ function Work( {onClose, onImageOpen} ) {
                             Verify correctness of the server and clients requirements with provided automated tests. Debug memory leaks and threading issues using sanitizers and CGDB."
                             tools="C, Socket Programming, Multithreading, Docker, CMake, CGDB, Linux" 
                             githubUrl="https://github.com/AbrahamMormontoy/Group-Chat-Server-with-Fuzzing-Clients" 
-                            onImageClick={() => onImageOpen(GroupChatServer)} 
                             darkMode={darkMode}/>
 
                             {/*Rubiks Cube Solver*/}

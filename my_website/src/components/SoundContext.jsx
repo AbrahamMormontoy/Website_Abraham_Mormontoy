@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useState, useEffect, useRef } from 'react';
 
 /*import openSound from '../assets/sound/open.wav'
 import closeSound from '../assets/sound/close.wav'
@@ -23,10 +23,20 @@ const soundMap = {
 
 export function SoundProvider({ children }) {
 
+    const soundRefs = useRef({}); // Ref to store audio objects for each sound, initialized as an empty object
     const ambientAudioRef = useRef(null) // Ref to store the ambient audio object, initialized with the ambient sound
 
     const [isMuted, setIsMuted] = useState(false)
     const [isAmbientPlaying, setIsAmbientPlaying] = useState(false)
+
+    useEffect(() => {
+        const preloadAudio = ['open', 'close', 'skills'];
+        preloadAudio.forEach(sound => {
+            const audio = new Audio(soundMap[sound]);
+            audio.preload = 'auto'
+            soundRefs.current[sound] = audio; // Store the preloaded audio object in the ref
+        })
+    }, [])
 
     // gets the ambient sound audio object, if it doesn't exist create it, set the volume and return it
     const ambientSound = () => {
@@ -41,9 +51,9 @@ export function SoundProvider({ children }) {
     // Play a sound base in the soundMap
     const playSound = (soundKey) => {
         if (isMuted) return;
-        const soundSrc = soundMap[soundKey];
-        if (!soundSrc) return;
-        const audio = new Audio(soundSrc);
+        const audio = soundRefs.current[soundKey];
+        if (!audio) return;
+        audio.currentTime = 0;
         audio.play();
     }
 
@@ -88,7 +98,4 @@ export function SoundProvider({ children }) {
     );
 }
 
-export const useSound = () => {
-    const context = useContext(SoundContext);
-    return context;
-}
+export { SoundContext };

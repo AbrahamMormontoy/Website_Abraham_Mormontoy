@@ -1,4 +1,4 @@
-import { useState ,useEffect } from "react";
+import { useState } from "react";
 import { TitleBar, WindowFrame, Button } from "../components/SharedUI";
 
 /*import moreIcon from '../assets/assets95/moreIcon.png'
