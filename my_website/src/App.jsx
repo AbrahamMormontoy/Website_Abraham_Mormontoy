@@ -10,6 +10,7 @@ import Links from './tabs/Links.jsx';
 import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
+//import Tetra from './game/Tetra.jsx';
 import { SoundContext } from './components/SoundContext.jsx';
 
 
@@ -47,6 +48,7 @@ const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
 const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
 const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
 const unmuteDark = `${ASSET_BASE}/assets95/unmuteDark.png`;
+const tetraIcon = `${ASSET_BASE}/assets95/tetraIcon.png`;
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -218,6 +220,7 @@ function App() {
     const taskTabs = [
         { label: 'Dark Mode', icon: modeIcon, soundType: 'open' },
         { label: 'Music', icon: musicIcon, soundType: 'open' },
+        { label: 'Tetra', icon: tetraIcon, soundType: 'open' },
     ];
 
     return (
@@ -312,9 +315,10 @@ function App() {
                             <Button soundType={tab.soundType} key={tab.label} onClick={() => {
                                 if (tab.label === "Dark Mode") {
                                     setTheme(theme === "light" ? "dark" : "light");
-                                }
-                                else if (tab.label === "Music") {
+                                } else if (tab.label === "Music") {
                                     toggleAmbientSound();
+                                } else if (tab.label === "Tetra") {
+                                    openWindow(tab.label);
                                 }
                             }} 
                             className="px-2 sm:pr-20 pr-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
