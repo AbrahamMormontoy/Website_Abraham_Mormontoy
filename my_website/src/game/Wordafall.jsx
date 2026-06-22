@@ -1,24 +1,14 @@
 import { WindowFrame, Button } from '../components/SharedUI.jsx';
 import { useEffect, useRef, useState } from 'react';
+import { SoundGame } from './soundGame.jsx';
 
 const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 const gameIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
 
-// Sound assets for the game in cloudflare storage
-const bgMusicPath = `${ASSET_BASE}/assets95/sound/gameMusic/background.mp3`;
-const losingSoundPath = `${ASSET_BASE}/assets95/sound/gameMusic/losing.mp3`;
-const rebootSoundPath = `${ASSET_BASE}/assets95/sound/gameMusic/reboot.mp3`;
-const compSounds = [
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion1.m4a`, 
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion3.m4a`, 
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion4.m4a`,
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion5.m4a`, 
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion6.m4a`, 
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion7.m4a`, 
-    `${ASSET_BASE}/assets95/sound/gameMusic/completion8.m4a`
-];
-
 function Wordarfall({ onClose }) {
+
+    const { startMusic, playCompletionSound, triggerLosingSound, triggerRebootSound } = SoundGame();
+
     const canvasRef = useRef(null);
     
     // React states for the game status
@@ -29,6 +19,7 @@ function Wordarfall({ onClose }) {
 
     // Function to reboot the game by resetting the game state and remounting the game component
     const rebootGame = () => {
+        triggerRebootSound(); // Play reboot sound
         setTimeout(() => {
             setGameOver(false);
             setGameKey(prevKey => prevKey + 1); // Change the key to remount the game component
@@ -39,7 +30,7 @@ function Wordarfall({ onClose }) {
         const canvas = canvasRef.current
         if (!canvas) return;
 
-        // 2 dimensional tool kit to draw using x and y coordinates on the canas
+        // 2d tool kit to draw using x and y coordinates on the canas
         const ctx = canvas.getContext('2d');
 
         // Canvas dimensions to fill the parent container which is the WindowFrame component
@@ -103,6 +94,7 @@ function Wordarfall({ onClose }) {
 
             if (!hasGameStarted) {
                 hasGameStarted = true;
+                startMusic(); // Start background music on the first key press
             }
 
             if (!e.key.match(/^[a-z]$/i)) return;
@@ -132,6 +124,8 @@ function Wordarfall({ onClose }) {
 
                 // Target index is the same as the last character of the word
                 if (targetIndex >= leader.text.length) {
+
+                    playCompletionSound(); // Play completion sound when a word is completed
 
                     // Finish the combo and mark all the words and their properties as dead and make them fall faster
                     comboGroup.forEach(word => {
@@ -216,6 +210,8 @@ function Wordarfall({ onClose }) {
         // Game over
         function triggerGameOver() {
             isGameOver = true;
+
+            triggerLosingSound(); // Play losing sound
 
             let isRecordUpdated = false;
 
