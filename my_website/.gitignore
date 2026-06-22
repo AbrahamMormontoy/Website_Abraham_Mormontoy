@@ -17,6 +17,8 @@ dist-ssr
 # Block all audio files from being uploaded to GitHub
 *.wav
 *.mp3
+*.m4a
+*.mp3
 
 /src/assets/
 
