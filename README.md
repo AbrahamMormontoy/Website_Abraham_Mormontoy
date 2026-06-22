@@ -21,7 +21,7 @@ The website is currently running on Vercel for now as there are features that I 
 
 - **Wordafall**: Added a typing game to add more dynamic to the website. This is bounded and work as a tab like the other.
 
-- **Adding more features in the future like a database in which you can see a leaderboard for the Wordafall game with your name, score and a quote**
+- **Adding more features in the future like a database in which you can see a leaderboard for the Wordafall game with your name, score and a quote.**
 
 ## Technologies Used
 
