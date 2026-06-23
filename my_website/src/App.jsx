@@ -222,7 +222,7 @@ function App() {
         { label: 'Dark Mode', icon: modeIcon, soundType: 'open' },
         { label: 'Music', icon: musicIcon, soundType: 'open' },
         { label: 'Wordafall', icon: wordafallIcon, soundType: 'open' },
-    ];
+    ].filter(tab => !(tab.label === 'Wordafall' && isMobile));
 
     return (
         <>
@@ -319,7 +319,9 @@ function App() {
                                 } else if (tab.label === "Music") {
                                     toggleAmbientSound();
                                 } else if (tab.label === "Wordafall") {
-                                    openWindow(tab.label);
+                                    if (!isMobile) {
+                                        openWindow(tab.label);
+                                    }
                                 }
                             }} 
                             className="px-2 sm:pr-20 pr-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
