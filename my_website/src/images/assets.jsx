@@ -29,8 +29,7 @@ export const PetMind = `${ASSET_BASE}/workImages/PetMind.png`;
 export const SFUFitness = `${ASSET_BASE}/workImages/SfuFitness.jpg`;
 export const Windows95 = `${ASSET_BASE}/workImages/Windows95.png`;
 
-export const resume = `${ASSET_BASE}/assets/Abraham_Mormontoy_Resume.pdf`;
-
+export const resume = `${ASSET_BASE}/resumeAbrahamMormontoy.pdf`;
 export const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
 export const Github = `${ASSET_BASE}/assets95/Github.png`;
 export const LinkedIn = `${ASSET_BASE}/assets95/LinkedIn.png`;
