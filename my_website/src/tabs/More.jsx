@@ -4,10 +4,7 @@ import { TitleBar, WindowFrame, Button } from "../components/SharedUI";
 /*import moreIcon from '../assets/assets95/moreIcon.png'
 import Exit from '../assets/assets95/Exit.png'*/
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-
-const moreIcon = `${ASSET_BASE}/assets95/moreIcon.png`;
-const Exit = `${ASSET_BASE}/assets95/Exit.png`;
+import { moreIcon } from '../images/assets.jsx'
 
 function More( { onClose } ) {
     
@@ -22,7 +19,7 @@ function More( { onClose } ) {
             question: `Why do I use Hyprland Arch Linux?`,
             answer: `I use arch linux mainly because of convenience. First I use this repository https://github.com/JaKooLit/Arch-Hyprland as its really hard to set up everything from the start and I just wanted to see if I like it. After using it for a while I decided to customize system to my liking because there were a lot of things I didnt truly like that went from small stuff, using nano instead of nvim, download terminal tools like ncdu and the power system timer, to big stuff, writing scripts to move applications like in windows, work for a second screen,apply touchscreen settings and the web camera (conf files in general).
             
-            My biggest recomedation is to start with a prebuilt software like the one I used and then remove things you dont like and add things you do like, this especially if you are aiming for convenience because you are gonna learn anyways and dealwith error anyways everytime there is an update or a mistake in the own changes you made (Recent change to hprlang to lua for example, I am not changing it for now).`
+            My biggest recommendation is to start with a prebuilt software like the one I used and then remove things you dont like and add things you do like, this especially if you are aiming for convenience because you are gonna learn anyways and dealwith error anyways everytime there is an update or a mistake in the own changes you made (Recent change to hprlang to lua for example, I am not changing it for now).`
         },
         {
             question: `What I am currently learning?`,

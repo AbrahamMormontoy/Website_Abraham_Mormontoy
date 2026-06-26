@@ -6,11 +6,7 @@ import { useAudio } from '../sound/AudioContext.jsx';
 import Github from '../assets/assets95/Github.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'*/
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-
-const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
-const Github = `${ASSET_BASE}/assets95/Github.png`;
-const Exit = `${ASSET_BASE}/assets95/Exit.png`;
+import { Exit, Github, GithubDark } from '../images/assets.jsx'
 
 export function Button ({ children, onClick, soundType, href, className="", disableScale }) {
     // Get the playSound function

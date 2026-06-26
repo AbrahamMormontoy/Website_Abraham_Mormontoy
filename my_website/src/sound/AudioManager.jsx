@@ -14,7 +14,7 @@ const soundConfig = {
     // Game music sounds
     bgMusic: { src: `${ASSET_BASE}/sound/gameMusic/background.mp3`, loop: true, volume: 0.5 },
     losing: { src: `${ASSET_BASE}/sound/gameMusic/losingSound.m4a`, loop: false, volume: 0.5 },
-    reboot: { src: `${ASSET_BASE}/sound/gameMusic/rebootSound.mp3`, loop: false, volume: 0.5 },
+    reboot: { src: `${ASSET_BASE}/sound/gameMusic/reboot.mp3`, loop: false, volume: 0.5 },
     comp1: { src: `${ASSET_BASE}/sound/gameMusic/completion1.m4a`, loop: false, volume: 0.5 },
     comp2: { src: `${ASSET_BASE}/sound/gameMusic/completion2.m4a`, loop: false, volume: 0.5 },
     comp3: { src: `${ASSET_BASE}/sound/gameMusic/completion3.m4a`, loop: false, volume: 0.5 },

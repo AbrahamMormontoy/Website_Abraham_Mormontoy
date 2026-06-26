@@ -30,7 +30,7 @@ import muteDark from './assets/assets95/muteDark.png'
 import unmuteLight from './assets/assets95/unmuteLight.png'
 import unmuteDark from './assets/assets95/unmuteDark.png'8 */
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+/*const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 
 const aboutIcon = `${ASSET_BASE}/assets95/aboutIcon.png`;
 const linksIcon = `${ASSET_BASE}/assets95/linksIcon.png`;
@@ -48,7 +48,16 @@ const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
 const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
 const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
 const unmuteDark = `${ASSET_BASE}/assets95/unmuteDark.png`;
-const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
+const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;*/
+
+import { 
+    aboutIcon, linksIcon, moreIcon, folderIcon, musicIcon, 
+    contactIcon, workIcon, modeIcon, CopyrightLight, CopyrightDark, 
+    darkModeIcon, lightModeIcon, muteLight, muteDark, unmuteLight, 
+    unmuteDark, wordafallIcon 
+} from './images/assets.jsx'; // Adjust path if needed
+
+import { ImagePreloader } from './images/ImageManager.jsx';
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -226,6 +235,7 @@ function App() {
 
     return (
         <>
+        <ImagePreloader />
         <CloudAnimation />
             <div className="w-screen h-dvh flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 {/* Image Viewer */}

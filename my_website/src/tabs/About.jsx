@@ -3,10 +3,7 @@ import { TitleBar, WindowFrame }  from '../components/SharedUI.jsx'
 /*import aboutIcon from '../assets/assets95/aboutIcon.png'
 import me from '../assets/Me.jpeg'*/
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-
-const aboutIcon = `${ASSET_BASE}/assets95/aboutIcon.png`;
-const me = `${ASSET_BASE}/Me.jpeg`;
+import { aboutIcon, me } from '../images/assets.jsx'
 
 function About( { onClose } ) {
   return (

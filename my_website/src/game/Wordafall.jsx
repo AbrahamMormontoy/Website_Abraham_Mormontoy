@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useAudio } from '../sound/AudioContext.jsx';
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-const gameIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
+import { wordafallIcon } from '../images/assets.jsx'
 
 function Wordarfall({ onClose }) {
 
@@ -237,7 +236,7 @@ function Wordarfall({ onClose }) {
 
     return (
             <div className="font-['W95font'] select-none relative z-50">
-                <WindowFrame title="Wordarfall.exe" iconSrc={gameIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
+                <WindowFrame title="Wordarfall.exe" iconSrc={wordafallIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
                     <div ref={containerRef} className="relative w-full h-full bg-white dark:bg-black overflow-hidden transition-colors duration-300">
                         
                         {/* Screen with the gameplay */}
