@@ -259,7 +259,7 @@ function App() {
                                     <div className="text-black text-3xl sm:text-6xl leading-tight 
                                     dark:text-white">Hi! <span className="font-bold">I'm Abraham</span></div>
                                     
-                                    <div className="text-black text-[1rem] sm:text-[1.5rem] leading-tight dark:text-white h-[2rem] sm:h-[1.7rem]">
+                                    <div className="text-black text-[1rem] sm:text-[1.5rem] leading-tight dark:text-white h-8 sm:h-[1.7rem]">
                                         <TypeAnimation
                                             sequence={[
                                                 'Computer Science Student at Simon Fraser University',
