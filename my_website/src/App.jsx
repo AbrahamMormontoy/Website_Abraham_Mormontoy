@@ -11,8 +11,8 @@ import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
 import Wordafall from './game/Wordafall.jsx';
-import { SoundContext } from './components/SoundContext.jsx';
 
+import { useAudio } from './sound/AudioContext.jsx';
 
 /*import aboutIcon from './assets/assets95/aboutIcon.png'
 import linksIcon from './assets/assets95/linksIcon.png'
@@ -30,7 +30,7 @@ import muteDark from './assets/assets95/muteDark.png'
 import unmuteLight from './assets/assets95/unmuteLight.png'
 import unmuteDark from './assets/assets95/unmuteDark.png'8 */
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
+/*const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 
 const aboutIcon = `${ASSET_BASE}/assets95/aboutIcon.png`;
 const linksIcon = `${ASSET_BASE}/assets95/linksIcon.png`;
@@ -48,7 +48,16 @@ const muteLight = `${ASSET_BASE}/assets95/muteLight.png`;
 const muteDark = `${ASSET_BASE}/assets95/muteDark.png`;
 const unmuteLight = `${ASSET_BASE}/assets95/unmuteLight.png`;
 const unmuteDark = `${ASSET_BASE}/assets95/unmuteDark.png`;
-const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
+const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;*/
+
+import { 
+    aboutIcon, linksIcon, moreIcon, folderIcon, musicIcon, 
+    contactIcon, workIcon, modeIcon, CopyrightLight, CopyrightDark, 
+    darkModeIcon, lightModeIcon, muteLight, muteDark, unmuteLight, 
+    unmuteDark, wordafallIcon 
+} from './images/assets.jsx'; // Adjust path if needed
+
+import { ImagePreloader } from './images/ImageManager.jsx';
 
 // Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
 function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
@@ -110,7 +119,7 @@ function App() {
         );
     }  
 
-    const { toggleAmbientSound, isMuted, setIsMuted } = useContext(SoundContext)
+    const { toggleAmbientSound, isMuted, toggleMute } = useAudio()  
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -226,6 +235,7 @@ function App() {
 
     return (
         <>
+        <ImagePreloader />
         <CloudAnimation />
             <div className="w-screen h-dvh flex flex-col overflow-hidden font-['W95font'] select-none relative z-50">
                 {/* Image Viewer */}
@@ -259,7 +269,7 @@ function App() {
                                     <div className="text-black text-3xl sm:text-6xl leading-tight 
                                     dark:text-white">Hi! <span className="font-bold">I'm Abraham</span></div>
                                     
-                                    <div className="text-black text-[1rem] sm:text-[1.5rem] leading-tight dark:text-white h-[2rem] sm:h-[1.7rem]">
+                                    <div className="text-black text-[1rem] sm:text-[1.5rem] leading-tight dark:text-white h-8 sm:h-[1.7rem]">
                                         <TypeAnimation
                                             sequence={[
                                                 'Computer Science Student at Simon Fraser University',
@@ -337,7 +347,7 @@ function App() {
                     </div> 
                     
                     <div className='flex item-center h-full'>
-                        <Button soundType="open" onClick={() => setIsMuted(prev => !prev)} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
+                        <Button soundType="open" onClick={toggleMute} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
                             <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark'? (isMuted ? unmuteDark : unmuteLight) : (isMuted ? muteDark : muteLight)} alt="music" />

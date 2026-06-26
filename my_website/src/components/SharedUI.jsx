@@ -1,20 +1,17 @@
-import React, { useEffect, useContext, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { useAudio } from '../sound/AudioContext.jsx';
 
 /*import Exit from '../assets/assets95/Exit.png'
 import Github from '../assets/assets95/Github.png'
 import GithubDark from '../assets/assets95/GithubDarkmode.png'*/
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-
-const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
-const Github = `${ASSET_BASE}/assets95/Github.png`;
-const Exit = `${ASSET_BASE}/assets95/Exit.png`;
-
-import { SoundContext } from './SoundContext'    
+import { Exit, Github, GithubDark } from '../images/assets.jsx'
 
 export function Button ({ children, onClick, soundType, href, className="", disableScale }) {
-    const { playSound } = useContext(SoundContext) || {}
-    
+    // Get the playSound function
+    const { playSound } = useAudio()
+
     const handleClick = (event) => {
         if (soundType && playSound) {
             playSound(soundType)

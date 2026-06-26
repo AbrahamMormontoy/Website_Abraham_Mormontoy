@@ -13,19 +13,7 @@ import PetMind from '../assets/workImages/PetMind.png'
 import SFUFitness from '../assets/workImages/SfuFitness.jpg'
 import Windows95 from '../assets/workImages/Windows95.png'*/
 
-const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
-
-const workIcon = `${ASSET_BASE}/assets95/workIcon.png`;
-const Exit = `${ASSET_BASE}/assets95/Exit.png`;
-const Cv = `${ASSET_BASE}/assets95/Cv.png`;
-const Github = `${ASSET_BASE}/assets95/Github.png`;
-const GithubDark = `${ASSET_BASE}/assets95/GithubDarkmode.png`;
-const DayCare = `${ASSET_BASE}/workImages/Daycare.png`;
-const DogBreed = `${ASSET_BASE}/workImages/DogBreed.png`;
-const PetMind = `${ASSET_BASE}/workImages/PetMind.png`;
-const SFUFitness = `${ASSET_BASE}/workImages/SfuFitness.jpg`;
-const Windows95 = `${ASSET_BASE}/workImages/Windows95.png`;
-
+import { workIcon, Cv, Github, GithubDark, DayCare, DogBreed, PetMind, SFUFitness, Windows95 } from '../images/assets.jsx'
 
 function Work( {onClose, onImageOpen} ) {
 
