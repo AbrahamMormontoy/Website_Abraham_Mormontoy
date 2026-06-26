@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-
+import { AudioContext } from './AudioContext.jsx';
 
 const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 
@@ -14,6 +14,7 @@ const soundConfig = {
     // Game music sounds
     bgMusic: { src: `${ASSET_BASE}/sound/gameMusic/background.mp3`, loop: true, volume: 0.5 },
     losing: { src: `${ASSET_BASE}/sound/gameMusic/losingSound.m4a`, loop: false, volume: 0.5 },
+    reboot: { src: `${ASSET_BASE}/sound/gameMusic/rebootSound.mp3`, loop: false, volume: 0.5 },
     comp1: { src: `${ASSET_BASE}/sound/gameMusic/completion1.m4a`, loop: false, volume: 0.5 },
     comp2: { src: `${ASSET_BASE}/sound/gameMusic/completion2.m4a`, loop: false, volume: 0.5 },
     comp3: { src: `${ASSET_BASE}/sound/gameMusic/completion3.m4a`, loop: false, volume: 0.5 },
@@ -47,6 +48,8 @@ export function AudioManager({ children }) {
         return () => {
             // Clean up audio elements on unmount to prevent memory leaks
             Object.keys(soundConfig).forEach(key => {
+                // For now
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const audio = soundRef.current[key];
                 
                 if (!audio) return;

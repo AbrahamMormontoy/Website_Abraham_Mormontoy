@@ -11,8 +11,8 @@ import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
 import Wordafall from './game/Wordafall.jsx';
-import { SoundContext } from './components/SoundContext.jsx';
 
+import { useAudio } from './sound/AudioContext.jsx';
 
 /*import aboutIcon from './assets/assets95/aboutIcon.png'
 import linksIcon from './assets/assets95/linksIcon.png'
@@ -110,7 +110,7 @@ function App() {
         );
     }  
 
-    const { toggleAmbientSound, isMuted, setIsMuted } = useContext(SoundContext)
+    const { toggleAmbientSound, isMuted, toggleMute } = useAudio()  
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -335,7 +335,7 @@ function App() {
                     </div> 
                     
                     <div className='flex item-center h-full'>
-                        <Button soundType="open" onClick={() => setIsMuted(prev => !prev)} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
+                        <Button soundType="open" onClick={toggleMute} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
                             shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
                             <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark'? (isMuted ? unmuteDark : unmuteLight) : (isMuted ? muteDark : muteLight)} alt="music" />

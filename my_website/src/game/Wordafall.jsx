@@ -1,13 +1,14 @@
 import { WindowFrame, Button } from '../components/SharedUI.jsx';
 import { useEffect, useRef, useState } from 'react';
-import { SoundGame } from './soundGame.jsx';
+
+import { useAudio } from '../sound/AudioContext.jsx';
 
 const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 const gameIcon = `${ASSET_BASE}/assets95/Wordafall.png`;
 
 function Wordarfall({ onClose }) {
 
-    const { startMusic, playCompletionSound, triggerLosingSound, triggerRebootSound } = SoundGame();
+    const { playSound, stopSound } = useAudio();
 
     const containerRef = useRef(null);
     
@@ -26,8 +27,9 @@ function Wordarfall({ onClose }) {
         targetIndex: 0,
     })
     
+
     const rebootGame = () => {
-        triggerRebootSound(); // Play reboot sound
+        playSound('reboot'); // Play reboot sound
         setTimeout(() => {
             setGameOver(false);
             setGameKey(prevKey => prevKey + 1); // Change the key to remount the game component
@@ -96,7 +98,7 @@ function Wordarfall({ onClose }) {
 
             if (!hasGameStarted) {
                 hasGameStarted = true;
-                startMusic(); // Start background music on the first key press
+                playSound('bgMusic'); // Start background music on the first key press
             }
 
             if (!e.key.match(/^[a-z]$/i)) return;
@@ -127,7 +129,8 @@ function Wordarfall({ onClose }) {
                 // Target index is the same as the last character of the word
                 if (targetIndex >= leader.text.length) {
 
-                    playCompletionSound(); // Play completion sound when a word is completed
+                    const randomCompSound = Math.floor(Math.random() * 8) + 1; // Random number between 1 and 8
+                    playSound(`comp${randomCompSound}`); // Play completion sound when a word is completed
 
                     // Finish the combo and mark all the words and their properties as dead and make them fall faster
                     comboGroup.forEach(word => {
@@ -148,7 +151,8 @@ function Wordarfall({ onClose }) {
         function triggerGameOver() {
             isGameOver = true;
 
-            triggerLosingSound(); // Play losing sound
+            stopSound('bgMusic'); // Stop background music
+            playSound('losing'); // Play losing sound
 
             let isRecordUpdated = false;
 
@@ -225,9 +229,15 @@ function Wordarfall({ onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameKey]);
 
+
+    const handleCloseWindow = () => {
+        stopSound('bgMusic');
+        onClose();
+    }
+
     return (
             <div className="font-['W95font'] select-none relative z-50">
-                <WindowFrame title="Wordarfall.exe" iconSrc={gameIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={onClose}>
+                <WindowFrame title="Wordarfall.exe" iconSrc={gameIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
                     <div ref={containerRef} className="relative w-full h-full bg-white dark:bg-black overflow-hidden transition-colors duration-300">
                         
                         {/* Screen with the gameplay */}
