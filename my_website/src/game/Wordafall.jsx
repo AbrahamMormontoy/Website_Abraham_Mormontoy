@@ -306,11 +306,11 @@ function Wordarfall({ onClose }) {
                                     REBOOT SYSTEM
                                 </Button>
                         </div>
-                    )}
-                </div>                        
-            </WindowFrame>
-        </div>
-    );
+                        )}
+                    </div>                        
+                </WindowFrame>
+            </div>
+        );
 }
 
 export default Wordarfall;

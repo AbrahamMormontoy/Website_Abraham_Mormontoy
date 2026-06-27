@@ -11,6 +11,7 @@ import Work from './tabs/Work.jsx';
 import More from './tabs/More.jsx';
 import Contact from './tabs/Contact.jsx';
 import Wordafall from './game/Wordafall.jsx';
+import AmbientVideo from './video/AmbientVideo.jsx';
 
 import { useAudio } from './sound/AudioContext.jsx';
 
@@ -119,7 +120,7 @@ function App() {
         );
     }  
 
-    const { toggleAmbientSound, isMuted, toggleMute } = useAudio()  
+    const { isMuted, toggleMute, toggleAmbientSound } = useAudio()  
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 766);
 
@@ -190,6 +191,7 @@ function App() {
         More: { Component: More, defaultPosition: getPosition(3)},
         Contact: { Component: Contact, defaultPosition: getPosition(4)},
         Wordafall: { Component: Wordafall, defaultPosition: getPosition(5)},    
+        Music: { Component: AmbientVideo, defaultPosition: getPosition(6)},
     }
 
     // Check if the theme is dark or light to change the icons in the links tab
@@ -327,7 +329,12 @@ function App() {
                                 if (tab.label === "Dark Mode") {
                                     setTheme(theme === "light" ? "dark" : "light");
                                 } else if (tab.label === "Music") {
-                                    toggleAmbientSound();
+                                    if (!isMobile) { 
+                                        openWindow(tab.label);
+                                    } else {
+                                        toggleAmbientSound();
+                                    }
+                                    
                                 } else if (tab.label === "Wordafall") {
                                     if (!isMobile) {
                                         openWindow(tab.label);
