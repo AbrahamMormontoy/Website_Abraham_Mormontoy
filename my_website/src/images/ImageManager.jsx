@@ -6,16 +6,16 @@ export function ImagePreloader() {
     
 
     useEffect(() => {
-        // SAFETY CHECK 1: Did the array import correctly?
+        // Check if array imported correctly
         if (!allImagesToPreload || !Array.isArray(allImagesToPreload)) {
-            console.error("ImagePreloader: allImagesToPreload is missing or not an array!");
+            console.error("ImagePreloader: allImagesToPreload is missing or not an array");
             return;
         }
 
         allImagesToPreload.forEach((src, index) => {
-            // SAFETY CHECK 2: Is one of the images inside the array missing?
+            // Check if one of the images in the array is missing
             if (!src) {
-                console.warn(`ImagePreloader: Missing image at index ${index} in your array!`);
+                console.warn(`ImagePreloader: Missing image at index ${index} in your array`);
                 return;
             }
             

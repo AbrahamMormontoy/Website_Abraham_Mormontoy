@@ -7,7 +7,7 @@ const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 const soundConfig = {
     // UI sounds
     open: { src: `${ASSET_BASE}/sound/open.wav`, loop: false, volume: 0.5 },
-    close: { src: `${ASSET_BASE}/sound/close.wav`, loop: false, volume: 0.5 },
+    close: { src: `${ASSET_BASE}/sound/close.wav`, loop: false, volume: 0.2 },
     skills: { src: `${ASSET_BASE}/sound/skills.wav`, loop: false, volume: 0.5 },
     ambient: { src: `${ASSET_BASE}/sound/ambient.mp3`, loop: true, volume: 0.5 },
     
@@ -99,15 +99,6 @@ export function AudioManager({ children }) {
         }
     }
 
-    // With the loops get from setActiveLoop, check if active loop has 'ambient'
-    const toggleAmbientSound = () => {
-        if (activeLoop.has('ambient')) {
-            stopSound('ambient');
-        } else {
-            playSound('ambient');
-        }
-    }
-
     useEffect(() => {
         Object.keys(soundConfig).forEach(key => {
             const audio = soundRef.current[key];
@@ -126,6 +117,17 @@ export function AudioManager({ children }) {
         });
     // Occurs when isMuted or activeLoop changes, ensuring that the audio state is consistent with the current settings
     }, [isMuted, activeLoop]);
+
+    const toggleAmbientSound = () => {
+        const ambientAudio = soundRef.current['ambient'];
+        if (!ambientAudio) return;
+
+        if (ambientAudio.paused) {
+            playSound('ambient');
+        } else {
+            stopSound('ambient');
+        }
+    }
 
     // Toggle mute
     const toggleMute = () => { setIsMuted(!isMuted) } 
