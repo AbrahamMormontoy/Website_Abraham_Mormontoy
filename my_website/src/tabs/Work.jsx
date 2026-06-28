@@ -21,8 +21,8 @@ function Work( {onClose, onImageOpen} ) {
     const darkMode = theme === 'dark';
 
     return (
-    <>
-        <div className="font-['W95font'] select-none relative z-50">
+        <>
+            <div className="font-['W95font'] select-none relative z-50">
             
                 {/* Size of the window and title bar included */}
                 <WindowFrame title="Work" iconSrc={workIcon} windowClassName="sm:w-250 w-[92vw] sm:h-170 h-[80vh]" onClose={onClose}>
@@ -197,9 +197,9 @@ function Work( {onClose, onImageOpen} ) {
                         </div>
                     </div>
                 </WindowFrame>
-        </div>
-    
-    </>)
+            </div>
+        </>
+    )
 }
 
 export default Work;

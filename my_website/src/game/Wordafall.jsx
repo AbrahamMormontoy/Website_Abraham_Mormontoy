@@ -1,4 +1,4 @@
-import { WindowFrame, Button } from '../components/SharedUI.jsx';
+import { WindowFrame, Button, InputText } from '../components/SharedUI.jsx';
 import { useEffect, useRef, useState } from 'react';
 
 import { useAudio } from '../sound/AudioContext.jsx';
@@ -259,6 +259,7 @@ function Wordarfall({ onClose }) {
     }
 
     return (
+        <>
             <div className="font-['W95font'] select-none relative z-50">
                 <WindowFrame title="Wordarfall.exe" iconSrc={wordafallIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
                     <div ref={containerRef} className="relative w-full h-full bg-white dark:bg-black overflow-hidden transition-colors duration-300">
@@ -267,11 +268,17 @@ function Wordarfall({ onClose }) {
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">WORDAFALL</div>
                                 <div className="flex flex-col gap-4">
-                                    <Button onClick={setPlaying} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                    <form>
+                                        <InputText label="Enter your name:" type="text" name="playerName" required={true} />
+                                        <InputText label='Leave a message (optional):' type='text' name='message' required={false} />
+                                    </form>
+                                    <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                    transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         START SYSTEM
                                     </Button>
 
-                                    <Button onClick={setLeaderboard} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                    <Button onClick={setLeaderboard} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                    transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         LEADERBOARD
                                     </Button>
                                 </div>
@@ -282,7 +289,8 @@ function Wordarfall({ onClose }) {
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
 
-                                <Button onClick={setStart} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                     BACK TO START
                                 </Button>
                             </div>
@@ -348,11 +356,13 @@ function Wordarfall({ onClose }) {
                                     <div className="text-red-600 dark:text-yellow-400 text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
                                 )}
 
-                                <Button onClick={setPlaying} className="w-56 mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                     REBOOT SYSTEM
                                 </Button>
 
-                                <Button onClick={setStart} className="w-56 mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                     RETURN START
                                 </Button>
                             </div>
@@ -360,7 +370,8 @@ function Wordarfall({ onClose }) {
                     </div>                        
                 </WindowFrame>
             </div>
-        );
+        </>
+    );
 }
 
 export default Wordarfall;
