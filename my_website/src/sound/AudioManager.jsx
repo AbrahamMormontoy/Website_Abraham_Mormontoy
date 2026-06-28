@@ -7,7 +7,7 @@ const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 const soundConfig = {
     // UI sounds
     open: { src: `${ASSET_BASE}/sound/open.wav`, loop: false, volume: 0.5 },
-    close: { src: `${ASSET_BASE}/sound/close.wav`, loop: false, volume: 0.2 },
+    close: { src: `${ASSET_BASE}/sound/close.wav`, loop: false, volume: 0.5 },
     skills: { src: `${ASSET_BASE}/sound/skills.wav`, loop: false, volume: 0.5 },
     ambient: { src: `${ASSET_BASE}/sound/ambient.mp3`, loop: true, volume: 0.5 },
     
@@ -102,7 +102,7 @@ export function AudioManager({ children }) {
     useEffect(() => {
         Object.keys(soundConfig).forEach(key => {
             const audio = soundRef.current[key];
-            
+
             if (!audio) return;
 
             if (isMuted) {

@@ -87,7 +87,7 @@ export function InputText( { label, type="text", name, required } ) {
     )
 }
 
-export const SkillsSections = function ({children}) {
+export function SkillsSections({children}) {
     // Took away the sound from the skill section because it was too much noise
     //const { playSound } = useSound() || {}
     
@@ -100,7 +100,7 @@ export const SkillsSections = function ({children}) {
     )
 }
 
-export const ProjectCard = function ( { title, date, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
+export function ProjectCard( { title, date, description, tools, imageSrc, imageAlt, githubUrl, onImageClick, darkMode }) {
     const [isPulsing, setIsPulsing] = useState(false)
     const pulseTimeoutRef = useRef(null)
 

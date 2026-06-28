@@ -54,8 +54,8 @@ const wordafallIcon = `${ASSET_BASE}/assets95/Wordafall.png`;*/
 import { 
     aboutIcon, linksIcon, moreIcon, folderIcon, musicIcon, 
     contactIcon, workIcon, modeIcon, CopyrightLight, CopyrightDark, 
-    darkModeIcon, lightModeIcon, muteLight, muteDark, unmuteLight, 
-    unmuteDark, wordafallIcon 
+    darkModeIcon, lightModeIcon, muteLight, muteDark, unmuteLight,
+     unmuteDark, wordafallIcon
 } from './images/assets.jsx'; // Adjust path if needed
 
 import { ImagePreloader } from './images/ImageManager.jsx';
@@ -346,21 +346,21 @@ function App() {
                             flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
                                 
                                 {/*Taskbar icons*/}
-                                <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? lightModeIcon : darkModeIcon ) : tab.icon} alt={tab.label} />
-                                <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : tab.label}</span>
+                                <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={tab.label === "Dark Mode" ? (theme === 'dark' ? darkModeIcon :lightModeIcon ) : tab.icon} alt={tab.label} />
+                                <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none">{tab.label === "Dark Mode" ? (theme === 'dark' ? 'Dark Mode' : 'Light Mode') : tab.label}</span>
                                 
                             </Button>
                         ))}
                     </div> 
                     
-                    <div className='flex item-center h-full'>
+                    <div className='flex item-center h-full gap-1'>
                         <Button soundType="open" onClick={toggleMute} className="p-2 py-0 h-full bg-[#C0C0C0] dark:bg-[#333333]
-                            shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000]
-                            flex items-center gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
-                            <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark'? (isMuted ? unmuteDark : unmuteLight) : (isMuted ? muteDark : muteLight)} alt="music" />
+                            shadow-[inset_-2px_-2px_0px_0px_#7F7F7F] dark:shadow-[inset_-2px_-2px_0px_0px_#000000] flex items-center 
+                            gap-1 shrink-0 cursor-pointer hover:scale-102 transition-transform duration-300">
+                            <img className="w-4 h-4 [image-rendering:pixelated]" draggable="false" src={theme === 'dark' ?  (isMuted ? muteLight : unmuteLight): (isMuted ? muteDark : unmuteDark)} alt="music" />
                         </Button> 
-                        <div className="px-2 h-full bg-[#c0c0c0] shadow-[inset_1px_1px_0px_0px_#7F7F7F] 
-                        dark:bg-[#333333] dark:shadow-[inset_1px_1px_0px_0px_#000000] flex items-center shrink-0">
+                        <div className="px-2 h-full bg-[#c0c0c0] dark:bg-[#333333]
+                        shadow-[inset_0px_0px_1px_1px_#7F7F7F] dark:shadow-[inset_0px_0px_1px_1px_#000000] flex items-center shrink-0">
                             <span className="text-black dark:text-white text-[9px] sm:text-[11px] leading-none mt-px">{formatTime()}</span>
                         </div>
                     </div>

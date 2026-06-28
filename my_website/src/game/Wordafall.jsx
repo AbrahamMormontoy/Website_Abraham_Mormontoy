@@ -27,6 +27,21 @@ function Wordarfall({ onClose }) {
         targetIndex: 0,
     })
 
+    // Handles when the user switches tabs or minimizes the browser window, it stops the music and sets the game to start
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.hidden && gameState === 'PLAYING') {
+                stopSound('bgMusic'); // Stop background music when the tab is hidden
+                setGameState('START'); // Change the game state to START when the tab is hidden
+            }
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }
+    }, [gameState, stopSound]);
+
+
     useEffect(() => { 
         const container = containerRef.current
         if (!container) return;
@@ -271,10 +286,7 @@ function Wordarfall({ onClose }) {
                                     BACK TO START
                                 </Button>
                             </div>
-                        )
-
-                        }
-
+                        )}
 
                         {/* Screen with the gameplay */}
                         {gameState === "PLAYING" && (
@@ -340,7 +352,7 @@ function Wordarfall({ onClose }) {
                                     REBOOT SYSTEM
                                 </Button>
 
-                                <Button onClick={setStart} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                <Button onClick={setStart} className="w-56 mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
                                     RETURN START
                                 </Button>
                             </div>
