@@ -16,7 +16,12 @@ function Wordarfall({ onClose }) {
     const [newRecord, setNewRecord] = useState(false);
     const [gameKey, setGameKey] = useState(0);
 
-    const [gameState, setGameState] = useState("START"); // START, PLAYING, GAMEOVER
+    const [gameState, setGameState] = useState("START"); // START, PLAYING, GAMEOVER, LEADERBOARD
+
+    // Database states for the leaderboard
+    const [playerName, setPlayerName] = useState("");
+    const [playerMessage, setPlayerMessage] = useState("");
+    const [leaderboardData, setLeaderboardData] = useState([]);
 
     // Function to reboot the game by resetting the game state and remounting the game component
     const [renderState, setRenderState] = useState({
@@ -210,7 +215,7 @@ function Wordarfall({ onClose }) {
             clearTimeout(spawnTimeoutId);
         }
 
-        function triggerGameOver() {
+        async function triggerGameOver() {
 
             stopSound('bgMusic'); // Stop background music
             playSound('losing'); // Play losing sound
@@ -226,6 +231,12 @@ function Wordarfall({ onClose }) {
             setFinalScore(score);
             setNewRecord(isRecordUpdated);
             setGameState("GAMEOVER");
+
+            try {
+                await saveScoreToDatabase({ name: playerName, message: playerMessage, score: score, });
+            } catch (e) {
+                console.error("Error saving score to database:", e);
+            }
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,7 +254,17 @@ function Wordarfall({ onClose }) {
             setGameState("START");
         }
 
-    const setPlaying = () => {
+    const setPlaying = (e) => {
+
+        if (e) {
+            e.preventDefault();
+        }
+
+        if (!playerName) {
+            alert("Enter your name before starting the game.");
+            return;
+        }
+
         playSound('reboot'); // Play reboot sound
         setTimeout(() => {
             setGameState("PLAYING");
@@ -267,11 +288,11 @@ function Wordarfall({ onClose }) {
                         {gameState === "START" && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">WORDAFALL</div>
-                                <div className="flex flex-col gap-4">
-                                    <form>
-                                        <InputText label="Enter your name:" type="text" name="playerName" required={true} />
-                                        <InputText label='Leave a message (optional):' type='text' name='message' required={false} />
-                                    </form>
+                                <form className="flex flex-col gap-4">
+                                    <InputText label="Enter your name:" type="text" name="playerName" required={true} onchange={(e) => setPlayerName(e.target.value)} />
+
+                                    <InputText label='Leave a message (optional):' type='text' name='message' required={false} onchange={(e) => setPlayerMessage(e.target.value)} />
+
                                     <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         START SYSTEM
@@ -281,13 +302,26 @@ function Wordarfall({ onClose }) {
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         LEADERBOARD
                                     </Button>
-                                </div>
+                                </form>
                             </div>
                         )}
 
                         {gameState === "LEADERBOARD" && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
-                                <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
+                            <div className="absolute inset-0 flex flex-col gap-5 items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
+                                <div className="text-6xl font-bold text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
+
+                                    {leaderboardData.length === 0 ? (
+                                        <div className='text-4xl dark:text-white'>Loading database...</div> 
+                                    ) : (leaderboardData.map((entry, index) => (
+                                        <div className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 overflow-y-auto border-2 border-black dark:border-white">
+                                            <div key={index} className="flex justify-between mb-2 p-2 bg-white dark:bg-black rounded">
+                                                <div className="font-bold">{entry.name}</div>
+                                                <div className="text-xl dark:text-white">{entry.score}</div>
+                                            </div>
+                                        </div>
+                                    )))}
+
+
 
                                 <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                 transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
@@ -353,7 +387,7 @@ function Wordarfall({ onClose }) {
                                 <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Final Score: {finalScore}</div>
                                 <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {/*bestScore*/}</div>
                                 {newRecord && (
-                                    <div className="text-red-600 dark:text-yellow-400 text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
+                                    <div className="text-[#d10000] dark:text-[#ffff00] text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
                                 )}
 
                                 <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
