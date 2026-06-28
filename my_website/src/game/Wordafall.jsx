@@ -12,10 +12,11 @@ function Wordarfall({ onClose }) {
     const containerRef = useRef(null);
     
     // React states for the game status
-    const [gameOver, setGameOver] = useState(false);
     const [finalScore, setFinalScore] = useState(0);
     const [newRecord, setNewRecord] = useState(false);
     const [gameKey, setGameKey] = useState(0);
+
+    const [gameState, setGameState] = useState("START"); // START, PLAYING, GAMEOVER
 
     // Function to reboot the game by resetting the game state and remounting the game component
     const [renderState, setRenderState] = useState({
@@ -25,15 +26,6 @@ function Wordarfall({ onClose }) {
         leaderText: null,
         targetIndex: 0,
     })
-    
-
-    const rebootGame = () => {
-        playSound('reboot'); // Play reboot sound
-        setTimeout(() => {
-            setGameOver(false);
-            setGameKey(prevKey => prevKey + 1); // Change the key to remount the game component
-        }, 500);
-    }
 
     useEffect(() => { 
         const container = containerRef.current
@@ -59,7 +51,6 @@ function Wordarfall({ onClose }) {
         let wordsOnScreen = [];
         let score = 0;
         let highScore = localStorage.getItem('hackathonHighScore') || 0;
-        let isGameOver = false;
         let spawnRate = 2000;
         let fallSpeed = 1.0;
         let hasGameStarted = false;
@@ -67,7 +58,7 @@ function Wordarfall({ onClose }) {
      
         // Where to spawn the word and how fast it goes
         function spawnWord() {
-            if (isGameOver) return;
+            if (gameState !== "PLAYING") return;
 
             // Choose a random word from the list and a random x position within the canvas bounds
             const text = wordList[Math.floor(Math.random() * wordList.length)];
@@ -93,11 +84,10 @@ function Wordarfall({ onClose }) {
         }
 
         function handleKeyPress(e) {
-            if (isGameOver) return;
+            if (gameState !== "PLAYING") return;
 
             if (!hasGameStarted) {
                 hasGameStarted = true;
-                playSound('bgMusic'); // Start background music on the first key press
             }
 
             if (!e.key.match(/^[a-z]$/i)) return;
@@ -146,29 +136,9 @@ function Wordarfall({ onClose }) {
             }
         }
 
-        // Game over
-        function triggerGameOver() {
-            isGameOver = true;
-
-            stopSound('bgMusic'); // Stop background music
-            playSound('losing'); // Play losing sound
-
-            let isRecordUpdated = false;
-
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('hackathonHighScore', highScore);
-                isRecordUpdated = true;
-            }
-
-            setFinalScore(score);
-            setNewRecord(isRecordUpdated);
-            setGameOver(true);
-        }
-
         // What is being run each frame by requestAnimationFrame
         function update() {
-            if (isGameOver) return;
+            if (gameState !== "PLAYING") return;
 
             // Find the word that is on the front and is not dead false
             const leader = wordsOnScreen.find(w => !w.isDead);
@@ -225,6 +195,24 @@ function Wordarfall({ onClose }) {
             clearTimeout(spawnTimeoutId);
         }
 
+        function triggerGameOver() {
+
+            stopSound('bgMusic'); // Stop background music
+            playSound('losing'); // Play losing sound
+
+            let isRecordUpdated = false;
+
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('hackathonHighScore', highScore);
+                isRecordUpdated = true;
+            }
+
+            setFinalScore(score);
+            setNewRecord(isRecordUpdated);
+            setGameState("GAMEOVER");
+        }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameKey]);
 
@@ -234,78 +222,128 @@ function Wordarfall({ onClose }) {
         onClose();
     }
 
+    const setStart = () => {
+            stopSound('bgMusic');
+            playSound('reboot')
+            setGameState("START");
+        }
+
+    const setPlaying = () => {
+        playSound('reboot'); // Play reboot sound
+        setTimeout(() => {
+            setGameState("PLAYING");
+            playSound('bgMusic'); // Start background music
+            setGameKey(prevKey => prevKey + 1); // Change the key to remount the game component
+        }, 500);
+    }
+    
+    const setLeaderboard = () => {
+        stopSound('bgMusic');
+        playSound('reboot')
+        setGameState("LEADERBOARD");
+    }
+
     return (
             <div className="font-['W95font'] select-none relative z-50">
                 <WindowFrame title="Wordarfall.exe" iconSrc={wordafallIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
                     <div ref={containerRef} className="relative w-full h-full bg-white dark:bg-black overflow-hidden transition-colors duration-300">
                         
+                        {gameState === "START" && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
+                                <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">WORDAFALL</div>
+                                <div className="flex flex-col gap-4">
+                                    <Button onClick={setPlaying} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                        START SYSTEM
+                                    </Button>
+
+                                    <Button onClick={setLeaderboard} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                        LEADERBOARD
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+
+                        {gameState === "LEADERBOARD" && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
+                                <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
+
+                                <Button onClick={setStart} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                    BACK TO START
+                                </Button>
+                            </div>
+                        )
+
+                        }
+
+
                         {/* Screen with the gameplay */}
-                        <div style={{ display: gameOver ? 'none' : 'block' }}>
-                            
+                        {gameState === "PLAYING" && (
+                            <div className="absolute inset-0 w-full h-full">
                             {/* Render Score and High Score */}
-                            <div className="absolute top-4 left-4 text-[1.25rem] font-bold text-[#000080] dark:text-[#33ff33]">
-                                SCORE: {renderState.score}
+                                <div className="absolute top-4 left-4 text-[1.25rem] font-bold text-[#000080] dark:text-[#33ff33]">SCORE: {renderState.score}</div>
+                                <div className="absolute top-4 right-4 text-[1.25rem] font-bold text-[#ff0000] dark:text-[#ffcc00]">MAX: {renderState.highScore}</div>
+
+                                {/* Render Words on Screen */}
+                                {renderState.wordsOnScreen.map(word => {
+                                    // Check if the word is part of the combo group (same as leader and not dead) to render the combo indicator
+                                    const isPartOfCombo = (renderState.leaderText) && (word.text === renderState.leaderText);
+
+                                    return (
+                                        <div key={word.id} className="absolute font-bold text-2xl whitespace-nowrap" style={{ left: word.x, top: word.y }}>
+                                            {/* The ~ indicator to indicate the current target letter */}
+                                            {isPartOfCombo && !word.isDead && (
+                                                <span className="absolute -left-6 text-[#d10000] dark:text-[#ffff00]">~</span>
+                                            )}
+
+                                            {/* Splitting the word to render letters individually for shaking and colors */}
+                                            {word.text.split('').map((char, i) => {
+                                                
+                                                // apply shaking effect if the word is shaking and it's the current target letter
+                                                let transform = 'none';
+                                                if (word.shakeTimer > 0 && i === word.shakingCharIndex) {
+                                                    const intensity = 5;
+                                                    const offsetX = (Math.random() - 0.5) * intensity;
+                                                    const offsetY = (Math.random() - 0.5) * intensity;
+                                                    transform = `translate(${offsetX}px, ${offsetY}px)`;
+                                                }
+
+                                                // Color of the word when is dead or not dead
+                                                let colorClass = "text-[#000000] dark:text-white";
+                                                if (word.isDead || (isPartOfCombo && i < renderState.targetIndex)) {
+                                                    colorClass = "text-[#000080] dark:text-[#33ff33]";
+                                                }
+
+                                                return (
+                                                    // Render each letter with the corresponding color and shaking effect if it's the current target letter
+                                                    <span key={i} className={`inline-block ${colorClass}`} style={{ transform }}>
+                                                        {char}
+                                                    </span>
+                                                );
+                                            })}
+                                        </div>
+                                    );
+                                })}
                             </div>
-                            <div className="absolute top-4 right-4 text-[1.25rem] font-bold text-[#ff0000] dark:text-[#ffcc00]">
-                                MAX: {renderState.highScore}
-                            </div>
-
-                            {/* Render Words on Screen */}
-                            {renderState.wordsOnScreen.map(word => {
-                                // Check if the word is part of the combo group (same as leader and not dead) to render the combo indicator
-                                const isPartOfCombo = (renderState.leaderText) && (word.text === renderState.leaderText);
-
-                                return (
-                                    <div key={word.id} className="absolute font-bold text-2xl whitespace-nowrap" style={{ left: word.x, top: word.y }}>
-                                        {/* The ~ indicator to indicate the current target letter */}
-                                        {isPartOfCombo && !word.isDead && (
-                                            <span className="absolute -left-6 text-[#d10000] dark:text-[#ffff00]">~</span>
-                                        )}
-
-                                        {/* Splitting the word to render letters individually for shaking and colors */}
-                                        {word.text.split('').map((char, i) => {
-                                            
-                                            // apply shaking effect if the word is shaking and it's the current target letter
-                                            let transform = 'none';
-                                            if (word.shakeTimer > 0 && i === word.shakingCharIndex) {
-                                                const intensity = 5;
-                                                const offsetX = (Math.random() - 0.5) * intensity;
-                                                const offsetY = (Math.random() - 0.5) * intensity;
-                                                transform = `translate(${offsetX}px, ${offsetY}px)`;
-                                            }
-
-                                            // Color of the word when is dead or not dead
-                                            let colorClass = "text-[#000000] dark:text-white";
-                                            if (word.isDead || (isPartOfCombo && i < renderState.targetIndex)) {
-                                                colorClass = "text-[#000080] dark:text-[#33ff33]";
-                                            }
-
-                                            return (
-                                                // Render each letter with the corresponding color and shaking effect if it's the current target letter
-                                                <span key={i} className={`inline-block ${colorClass}`} style={{ transform }}>
-                                                    {char}
-                                                </span>
-                                            );
-                                        })}
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        )}
 
                         {/* Game Over Screen */}
-                        {gameOver && (
+                        {gameState === "GAMEOVER" && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10">
-                                <h1 className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">SYSTEM FAILURE</h1>
-                                <p className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Final Score: {finalScore}</p>
-                                
+                                <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">SYSTEM FAILURE</div>
+                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Final Score: {finalScore}</div>
+                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {/*bestScore*/}</div>
                                 {newRecord && (
-                                    <p className="text-red-600 dark:text-yellow-400 text-lg mb-6 animate-pulse">(NEW RECORD!)</p>
+                                    <div className="text-red-600 dark:text-yellow-400 text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
                                 )}
 
-                                <Button onClick={rebootGame} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                <Button onClick={setPlaying} className="w-56 mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
                                     REBOOT SYSTEM
                                 </Button>
-                        </div>
+
+                                <Button onClick={setStart} className="mt-4 px-6 py-2 text-lg bg-[#c0c0c0] text-black border-2 border-white hover:scale-105 transition-transform duration-300">
+                                    RETURN START
+                                </Button>
+                            </div>
                         )}
                     </div>                        
                 </WindowFrame>
