@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Draggable from 'react-draggable';
 
 import { useAudio } from '../sound/AudioContext.jsx';
-
-/*import Exit from '../assets/assets95/Exit.png'
-import Github from '../assets/assets95/Github.png'
-import GithubDark from '../assets/assets95/GithubDarkmode.png'*/
 
 import { Exit, Github, GithubDark } from '../images/assets.jsx'
 
@@ -146,4 +143,49 @@ export function ProjectCard( { title, date, description, tools, imageSrc, imageA
     )
 }
 
+// Wraps all tab components and handles the dragging logic. Also handles if screen is in mobile by tabs static at the center
+export function DraggableWindow({ label, zIndex, defaultPosition, onFocus, isMobile, children }) {
+    
+    // Tracking of the tab position
+    const nodeRef = useRef(null);
+    const [dragBounds, setDragBounds] = useState({})
+
+    // Handle the start of the dragging to generate the focus on the current label and set the drag bounds based in the size of the screen
+    const handleStart = () => {
+        onFocus(label);
+        
+        const node = nodeRef.current;
+        if (!node) return;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        setDragBounds({
+            left: -node.offsetWidth / 2,
+            right: vw - node.offsetWidth / 2,
+            top: 0,
+            bottom: vh - node.offsetHeight / 2,
+        })
+    }
+    
+    // Mobile portability
+    if (isMobile) {
+        return (
+            <div className='fixed inset-0 flex items-center justify-center pointer-events-none pb-7' style={{ zIndex}}>
+                <div className='pointer-events-auto' onMouseDownCapture={() => onFocus(label)}>
+                    {children}
+                </div>
+            </div>
+        )
+    }
+
+    // desktop portability with dragging, the handle is .title bar which means that the classes that have the tittle bar in className tailwind can be dragged around
+    // Node ref is tracking, default position gives the initial position of each tab, bounds makes sure that tabs can only be dragged half of the screen, onStart handles the 
+    // focus, on MouseDown capture is to make sure that the moment the user clicks a tab it becomes the focus with the highest zIndex. 
+    return (
+        <Draggable nodeRef={nodeRef} handle=".title-bar" defaultPosition={defaultPosition} bounds={dragBounds} onStart={handleStart}>
+            <div ref={nodeRef} className='absolute' style={{ zIndex }} onMouseDownCapture={() => onFocus(label)}>{children}</div>
+        </Draggable>
+    )
+}
 
