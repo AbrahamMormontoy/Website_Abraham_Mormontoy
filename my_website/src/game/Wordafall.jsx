@@ -27,7 +27,7 @@ function Wordarfall({ onClose }) {
     const [renderState, setRenderState] = useState({
         wordsOnScreen: [],
         score: 0,
-        highScore: localStorage.getItem('hackathonHighScore') || 0,
+        highScore: localStorage.getItem('bestScore') || 0,
         leaderText: null,
         targetIndex: 0,
     })
@@ -46,10 +46,34 @@ function Wordarfall({ onClose }) {
         }
     }, [gameState, stopSound]);
 
+    useEffect(() => {
+        if (gameState === "LEADERBOARD") {
+            // Fetch the leaderboard data from the backend API
+            const fetchLeaderboardData = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/api/scores');
+                    const data = await response.json();
+
+                    if (Array.isArray(data)) {
+                        setLeaderboardData(data); // Set the leaderboard data if it's an array
+                    } else {
+                        console.error('Unexpected data format:', data);
+                        setLeaderboardData([]); // Set to empty array if the data format is unexpected  
+                    }
+                } catch (error) {
+                    console.error('Error fetching leaderboard data:', error);
+                    setLeaderboardData([]); // Set to empty array
+                }
+            }
+            fetchLeaderboardData();
+        }
+    }, [gameState]);
 
     useEffect(() => { 
         const container = containerRef.current
         if (!container) return;
+        
+        let isGameOver = false;
 
         // Canvas dimensions to fill the parent container which is the WindowFrame component
         let gameWidth = container.clientWidth;
@@ -70,7 +94,7 @@ function Wordarfall({ onClose }) {
         // game variables
         let wordsOnScreen = [];
         let score = 0;
-        let highScore = localStorage.getItem('hackathonHighScore') || 0;
+        let highScore = localStorage.getItem('bestScore') || 0;
         let spawnRate = 2000;
         let fallSpeed = 1.0;
         let hasGameStarted = false;
@@ -158,7 +182,7 @@ function Wordarfall({ onClose }) {
 
         // What is being run each frame by requestAnimationFrame
         function update() {
-            if (gameState !== "PLAYING") return;
+            if (gameState !== "PLAYING" || isGameOver) return;
 
             // Find the word that is on the front and is not dead false
             const leader = wordsOnScreen.find(w => !w.isDead);
@@ -215,7 +239,9 @@ function Wordarfall({ onClose }) {
             clearTimeout(spawnTimeoutId);
         }
 
-        async function triggerGameOver() {
+        function triggerGameOver() {
+            if (isGameOver) return; // Prevent multiple triggers
+            isGameOver = true;
 
             stopSound('bgMusic'); // Stop background music
             playSound('losing'); // Play losing sound
@@ -231,17 +257,37 @@ function Wordarfall({ onClose }) {
             setFinalScore(score);
             setNewRecord(isRecordUpdated);
             setGameState("GAMEOVER");
-
-            try {
-                await saveScoreToDatabase({ name: playerName, message: playerMessage, score: score, });
-            } catch (e) {
-                console.error("Error saving score to database:", e);
-            }
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameKey]);
 
+    async function handleSubmitScore(e) {
+
+        const API_URL =  'http://localhost:3000/api/scores';
+
+        // Prevent the default form submission behavior which is to reload the page
+        e.preventDefault();
+
+        // If user tries to submit without entering a name, show an alert and return 
+        if (!playerName) {
+            alert("Please enter your name before submitting your score.");
+            return;
+        }
+
+        try {
+            // fetch the database API, make a POST request with headers that specify the content type as JSON, send the player name, message and score in JSON.stringify format as the body of the request
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: playerName, message: playerMessage, score: finalScore, }),
+            }) ;
+            setLeaderboard(); // After submitting the score, show the leaderboard
+        } catch (e) {
+            console.error("Error saving score to database:", e);
+        }
+    }
 
     const handleCloseWindow = () => {
         stopSound('bgMusic');
@@ -254,16 +300,7 @@ function Wordarfall({ onClose }) {
             setGameState("START");
         }
 
-    const setPlaying = (e) => {
-
-        if (e) {
-            e.preventDefault();
-        }
-
-        if (!playerName) {
-            alert("Enter your name before starting the game.");
-            return;
-        }
+    const setPlaying = () => {
 
         playSound('reboot'); // Play reboot sound
         setTimeout(() => {
@@ -288,10 +325,7 @@ function Wordarfall({ onClose }) {
                         {gameState === "START" && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">WORDAFALL</div>
-                                <form className="flex flex-col gap-4">
-                                    <InputText label="Enter your name:" type="text" name="playerName" required={true} onchange={(e) => setPlayerName(e.target.value)} />
-
-                                    <InputText label='Leave a message (optional):' type='text' name='message' required={false} onchange={(e) => setPlayerMessage(e.target.value)} />
+                                <div className="flex flex-col gap-4">
 
                                     <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
@@ -302,7 +336,7 @@ function Wordarfall({ onClose }) {
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         LEADERBOARD
                                     </Button>
-                                </form>
+                                </div>
                             </div>
                         )}
 
@@ -313,8 +347,8 @@ function Wordarfall({ onClose }) {
                                     {leaderboardData.length === 0 ? (
                                         <div className='text-4xl dark:text-white'>Loading database...</div> 
                                     ) : (leaderboardData.map((entry, index) => (
-                                        <div className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 overflow-y-auto border-2 border-black dark:border-white">
-                                            <div key={index} className="flex justify-between mb-2 p-2 bg-white dark:bg-black rounded">
+                                        <div key={index} className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 overflow-y-auto border-2 border-black dark:border-white">
+                                            <div className="flex justify-between mb-2 p-2 bg-white dark:bg-black rounded">
                                                 <div className="font-bold">{entry.name}</div>
                                                 <div className="text-xl dark:text-white">{entry.score}</div>
                                             </div>
@@ -382,20 +416,38 @@ function Wordarfall({ onClose }) {
 
                         {/* Game Over Screen */}
                         {gameState === "GAMEOVER" && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10">
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10 gap-3">
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">SYSTEM FAILURE</div>
                                 <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Final Score: {finalScore}</div>
-                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {/*bestScore*/}</div>
+                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {localStorage.getItem('bestScore') || 0}</div>
                                 {newRecord && (
                                     <div className="text-[#d10000] dark:text-[#ffff00] text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
                                 )}
 
-                                <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                <div className="text-2xl mb-2 text-black dark:text-white">Save your results?</div>
+                                <form onSubmit={handleSubmitScore} className="flex flex-col gap-4 w-80 bg-[#f7f7f7] dark:bg-[#222222] p-5 mb-6">
+                                    <InputText label="Enter your name:" type="text" name="playerName" required={true} onChange={(e) => setPlayerName(e.target.value)} />
+
+                                    {/* Message */}
+                                    <label className="flex flex-col gap-1">
+                                        <div className="text-black dark:text-white text-[1rem]">Leave a message (optional):</div>
+                                        <textarea name="message" type="text" required={false} rows="2" maxLength="30" onChange={(e) => setPlayerMessage(e.target.value)} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
+                                        shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#000000] dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>    
+                                    </label>
+                                    
+                                    <Button onClick={handleSubmitScore} className="bg-[#c0c0c0]  px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                    transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
+                                    SUBMIT
+                                    </Button>
+                                </form>
+
+
+                                <Button onClick={setPlaying} className="bg-[#c0c0c0] w-50 px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                 transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                     REBOOT SYSTEM
                                 </Button>
 
-                                <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                <Button onClick={setStart} className="bg-[#c0c0c0] w-50 px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                 transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                     RETURN START
                                 </Button>

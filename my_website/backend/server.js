@@ -1,3 +1,4 @@
+require ("dotenv").config(); // Load environment variables from .env file
 // Package imports, instead of import you use require()
 // Framework for building the web server
 const express = require("express");
@@ -34,7 +35,7 @@ app.get('/api/scores', async (req, res) => {
     try {
         // Send a raw SQL query to the database to get the top 10 scores ordered in desc. The result is an object with a property called rows, 
         // which is an array of objects, each object is a row in the database that has the properties name, message, score and timestamp as columns
-        const result = await pool.query('SELECT * FROM scores ORDER BY score DESC LIMIT 10');
+        const result = await pool.query('SELECT * FROM leaderboard ORDER BY score DESC LIMIT 50');
         // Send the result back to the front end as a json object, result.rows is an array of objects, each object is a row in the database that has the properties name, message, score and timestamp as columns
         res.json(result.rows);
     } catch (error) {
@@ -50,7 +51,7 @@ app.post('/api/scores', async (req, res) => {
     const { name, message, score } = req.body;
     try {
         // Send a raw SQL query to the database to insert the new score, the $1, $2 and $3 are placeholders for the values that will be passed in the array [name, message, score]}}
-        const result = await pool.query('INSERT INTO scores (name, message, score) VALUES ($1, $2, $3)', [name, message, score]);
+        const result = await pool.query('INSERT INTO leaderboard (name, message, score) VALUES ($1, $2, $3) RETURNING *', [name, message, score]);
         // Send the row that was just inserted back to the frontend as a json object
         res.json(result.rows[0]);
     } catch (error) {

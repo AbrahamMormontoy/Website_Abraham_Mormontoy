@@ -73,13 +73,13 @@ export function WindowFrame({ title, iconSrc, showExit, children, footer ,window
     );
 }
 
-export function InputText( { label, type="text", name, required } ) {
+export function InputText({ label, type="text", name, required, maxLength, onChange, className }) {
     return (
         <div className="flex flex-col gap-1">
             <label className="text-black dark:text-white text-[1rem]">{label}</label>
-            <input type={type} name={name} required={required} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 focus:outline-none
+            <input type={type} name={name} required={required} maxLength={maxLength} onChange={onChange} className={`w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 focus:outline-none
             shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#000000]
-            dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>
+            dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555] ${className}`}/>
         </div>
     )
 }
