@@ -1,4 +1,4 @@
-import { WindowFrame, Button } from '../components/SharedUI.jsx';
+import { WindowFrame, Button, InputText } from '../components/SharedUI.jsx';
 import { useEffect, useRef, useState } from 'react';
 
 import { useAudio } from '../sound/AudioContext.jsx';
@@ -16,13 +16,18 @@ function Wordarfall({ onClose }) {
     const [newRecord, setNewRecord] = useState(false);
     const [gameKey, setGameKey] = useState(0);
 
-    const [gameState, setGameState] = useState("START"); // START, PLAYING, GAMEOVER
+    const [gameState, setGameState] = useState("START"); // START, PLAYING, GAMEOVER, LEADERBOARD
+
+    // Database states for the leaderboard
+    const [playerName, setPlayerName] = useState("");
+    const [playerMessage, setPlayerMessage] = useState("");
+    const [leaderboardData, setLeaderboardData] = useState([]);
 
     // Function to reboot the game by resetting the game state and remounting the game component
     const [renderState, setRenderState] = useState({
         wordsOnScreen: [],
         score: 0,
-        highScore: localStorage.getItem('hackathonHighScore') || 0,
+        highScore: localStorage.getItem('bestScore') || 0,
         leaderText: null,
         targetIndex: 0,
     })
@@ -41,10 +46,34 @@ function Wordarfall({ onClose }) {
         }
     }, [gameState, stopSound]);
 
+    useEffect(() => {
+        if (gameState === "LEADERBOARD") {
+            // Fetch the leaderboard data from the backend API
+            const fetchLeaderboardData = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/api/scores');
+                    const data = await response.json();
+
+                    if (Array.isArray(data)) {
+                        setLeaderboardData(data); // Set the leaderboard data if it's an array
+                    } else {
+                        console.error('Unexpected data format:', data);
+                        setLeaderboardData([]); // Set to empty array if the data format is unexpected  
+                    }
+                } catch (error) {
+                    console.error('Error fetching leaderboard data:', error);
+                    setLeaderboardData([]); // Set to empty array
+                }
+            }
+            fetchLeaderboardData();
+        }
+    }, [gameState]);
 
     useEffect(() => { 
         const container = containerRef.current
         if (!container) return;
+        
+        let isGameOver = false;
 
         // Canvas dimensions to fill the parent container which is the WindowFrame component
         let gameWidth = container.clientWidth;
@@ -65,7 +94,7 @@ function Wordarfall({ onClose }) {
         // game variables
         let wordsOnScreen = [];
         let score = 0;
-        let highScore = localStorage.getItem('hackathonHighScore') || 0;
+        let highScore = localStorage.getItem('bestScore') || 0;
         let spawnRate = 2000;
         let fallSpeed = 1.0;
         let hasGameStarted = false;
@@ -153,7 +182,7 @@ function Wordarfall({ onClose }) {
 
         // What is being run each frame by requestAnimationFrame
         function update() {
-            if (gameState !== "PLAYING") return;
+            if (gameState !== "PLAYING" || isGameOver) return;
 
             // Find the word that is on the front and is not dead false
             const leader = wordsOnScreen.find(w => !w.isDead);
@@ -211,6 +240,8 @@ function Wordarfall({ onClose }) {
         }
 
         function triggerGameOver() {
+            if (isGameOver) return; // Prevent multiple triggers
+            isGameOver = true;
 
             stopSound('bgMusic'); // Stop background music
             playSound('losing'); // Play losing sound
@@ -231,6 +262,33 @@ function Wordarfall({ onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameKey]);
 
+    async function handleSubmitScore(e) {
+
+        const API_URL =  'http://localhost:3000/api/scores';
+
+        // Prevent the default form submission behavior which is to reload the page
+        e.preventDefault();
+
+        // If user tries to submit without entering a name, show an alert and return 
+        if (!playerName) {
+            alert("Please enter your name before submitting your score.");
+            return;
+        }
+
+        try {
+            // fetch the database API, make a POST request with headers that specify the content type as JSON, send the player name, message and score in JSON.stringify format as the body of the request
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: playerName, message: playerMessage, score: finalScore, }),
+            }) ;
+            setLeaderboard(); // After submitting the score, show the leaderboard
+        } catch (e) {
+            console.error("Error saving score to database:", e);
+        }
+    }
 
     const handleCloseWindow = () => {
         stopSound('bgMusic');
@@ -244,6 +302,7 @@ function Wordarfall({ onClose }) {
         }
 
     const setPlaying = () => {
+
         playSound('reboot'); // Play reboot sound
         setTimeout(() => {
             setGameState("PLAYING");
@@ -251,8 +310,15 @@ function Wordarfall({ onClose }) {
             setGameKey(prevKey => prevKey + 1); // Change the key to remount the game component
         }, 500);
     }
+
+    const setLeaderboard = () => {
+        stopSound('bgMusic');
+        playSound('reboot')
+        setGameState("LEADERBOARD");
+    }
     
     return (
+        <>
             <div className="font-['W95font'] select-none relative z-50">
                 <WindowFrame title="Wordarfall.exe" iconSrc={wordafallIcon} windowClassName="sm:w-[40rem] sm:h-[50rem] w-[92vw] h-[80vh]" onClose={handleCloseWindow}>
                     <div ref={containerRef} className="relative w-full h-full bg-white dark:bg-black overflow-hidden transition-colors duration-300">
@@ -261,12 +327,47 @@ function Wordarfall({ onClose }) {
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
                                 <div className="text-4xl sm:text-6xl mb-20 font-bold text-[#000080] dark:text-[#33ff33]">WORDAFALL</div>
                                 <div className="flex flex-col gap-4">
+
                                     <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
                                         START SYSTEM
                                     </Button>
 
+                                    <Button onClick={setLeaderboard} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                    transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
+                                        LEADERBOARD
+                                    </Button>
                                 </div>
+                            </div>
+                        )}
+
+                        {gameState === "LEADERBOARD" && (
+                            <div className="absolute inset-0 flex flex-col gap-5 items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10" >
+                                <div className="text-6xl font-bold text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
+
+                                    {leaderboardData.length === 0 ? (
+                                        <div className='text-4xl dark:text-white'>Loading database...</div> 
+                                    ) : (
+                                        <div className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 border-2 border-black dark:border-white overflow-y-auto">
+                                        {leaderboardData.map((entry, index) => (
+                                            <div key={index} className="flex justify-between items-center mb-2 p-2 bg-white dark:bg-black">
+                                                <div className="font-bold text-xl dark:text-white">{entry.name}</div>
+
+                                                <div className="flex flex-col items-center m-1 mx-10">
+                                                    <div className="text-s dark:text-white">{entry.message}</div>
+                                                </div>
+
+                                                <div className="text-xl dark:text-white">{entry.score}</div>
+                                            </div>
+                                    ))}
+                                    </div>)}
+
+
+
+                                <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
+                                    BACK TO START
+                                </Button>
                             </div>
                         )}
 
@@ -322,31 +423,48 @@ function Wordarfall({ onClose }) {
 
                         {/* Game Over Screen */}
                         {gameState === "GAMEOVER" && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10">
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-black p-4 text-center transition-colors duration-300 z-10 gap-3">
                                 <div className="text-4xl sm:text-6xl font-bold mb-4 text-[#000080] dark:text-[#33ff33]">SYSTEM FAILURE</div>
                                 <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Final Score: {finalScore}</div>
-                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {/*bestScore*/}</div>
+                                <div className="text-xl sm:text-2xl mb-2 text-black dark:text-white">Best Score: {localStorage.getItem('bestScore') || 0}</div>
                                 {newRecord && (
-                                    <div className="text-red-600 dark:text-yellow-400 text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
+                                    <div className="text-[#d10000] dark:text-[#ffff00] text-lg mb-6 animate-pulse">(NEW RECORD!)</div>
                                 )}
 
-                                <div className="flex flex-col gap-4">
-                                    <Button onClick={setPlaying} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
-                                    transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
-                                        REBOOT SYSTEM
-                                    </Button>
+                                <div className="text-2xl mb-2 text-black dark:text-white">Save your results?</div>
+                                <form onSubmit={handleSubmitScore} className="flex flex-col gap-4 w-80 bg-[#f7f7f7] dark:bg-[#222222] p-5 mb-6">
+                                    <InputText label="Enter your name:" type="text" name="playerName" maxLength="20" required={true} onChange={(e) => setPlayerName(e.target.value)} />
 
-                                    <Button onClick={setStart} className="bg-[#c0c0c0] px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                    {/* Message */}
+                                    <label className="flex flex-col gap-1">
+                                        <div className="text-black dark:text-white text-[1rem]">Leave a message (optional):</div>
+                                        <textarea name="message" type="text" required={false} rows="2" maxLength="80" onChange={(e) => setPlayerMessage(e.target.value)} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
+                                        shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#000000] dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>    
+                                    </label>
+                                    
+                                    <Button onClick={handleSubmitScore} className="bg-[#c0c0c0]  px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
                                     transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
-                                        RETURN START
+                                    SUBMIT
                                     </Button>
-                                </div>
+                                </form>
+
+
+                                <Button onClick={setPlaying} className="bg-[#c0c0c0] w-50 px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
+                                    REBOOT SYSTEM
+                                </Button>
+
+                                <Button onClick={setStart} className="bg-[#c0c0c0] w-50 px-4 py-1 text-black text-[1.4rem] shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff] 
+                                transition-all duration-300 hover:scale-105 cursor-default dark:bg-[#333333] dark:text-white dark:shadow-[inset_-1.5px_-1.5px_0px_0px_#000000,inset_1.5px_1.5px_0px_0px_#ffffff]">
+                                    RETURN START
+                                </Button>
                             </div>
                         )}
                     </div>                        
                 </WindowFrame>
             </div>
-        );
+        </>
+    );
 }
 
 export default Wordarfall;
