@@ -19,8 +19,6 @@ app.use(cors());
 // The following line translates it back into usable javascript object as express.json fixes the request body to be a javascript object instead of a string
 app.use(express.json());
 
-const port = process.env.PORT || 3000; // Use the port from the environment variable or default to 3000
-
 // Using the pool manager to connect to the PostgreSQL database, Blueprint to find it, all the credential are in the env file
 const pool = new Pool({
 
@@ -30,9 +28,9 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD, // The password set up
     port: process.env.DB_PORT, // The default port for PostgreSQL*/
 
-    connectionString: process.env.DATABASE_URL, // The connection string to the database, this is a single string that contains all the information needed to connect to the database
+    connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false // This is needed because the database is hosted on a remote server and the certificate is self-signed, so we need to tell the client to accept it
+        rejectUnauthorized: false 
     } 
 })
 
@@ -40,10 +38,9 @@ const pool = new Pool({
 // GET request to the /api/scores endpoint, this is the endpoint that the frontend will call to get the top 10 scores
 app.get('/api/scores', async (req, res) => {
     try {
-        // Send a raw SQL query to the database to get the top 10 scores ordered in desc. The result is an object with a property called rows, 
-        // which is an array of objects, each object is a row in the database that has the properties name, message, score and timestamp as columns
+        // Send a raw SQL query to the database to get the top 10 scores ordered in desc. 
         const result = await pool.query('SELECT * FROM leaderboard ORDER BY score DESC LIMIT 50');
-        // Send the result back to the front end as a json object, result.rows is an array of objects, each object is a row in the database that has the properties name, message, score and timestamp as columns
+        // Send the result back to the front end as a json object, result.rows is an array of objects
         res.json(result.rows);
     } catch (error) {
         // If there is an error, log it in the console and send a 500 status which means internal server error
@@ -67,6 +64,7 @@ app.post('/api/scores', async (req, res) => {
     }
 })
 
+// Start the server and listen on the specified port
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });

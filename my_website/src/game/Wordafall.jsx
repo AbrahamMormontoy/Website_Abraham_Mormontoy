@@ -51,7 +51,7 @@ function Wordarfall({ onClose }) {
             // Fetch the leaderboard data from the backend API
             const fetchLeaderboardData = async () => {
                 try {
-                    const response = await fetch('http://localhost:3000/api/scores');
+                    const response = await fetch('https://website-abraham-mormontoy.onrender.com/api/scores');
                     const data = await response.json();
 
                     if (Array.isArray(data)) {
@@ -264,7 +264,7 @@ function Wordarfall({ onClose }) {
 
     async function handleSubmitScore(e) {
 
-        const API_URL =  'http://localhost:3000/api/scores';
+        const API_URL =  'https://website-abraham-mormontoy.onrender.com/api/scores';
 
         // Prevent the default form submission behavior which is to reload the page
         e.preventDefault();
