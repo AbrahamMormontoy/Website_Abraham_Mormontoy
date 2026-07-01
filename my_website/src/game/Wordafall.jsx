@@ -346,14 +346,20 @@ function Wordarfall({ onClose }) {
 
                                     {leaderboardData.length === 0 ? (
                                         <div className='text-4xl dark:text-white'>Loading database...</div> 
-                                    ) : (leaderboardData.map((entry, index) => (
-                                        <div key={index} className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 overflow-y-auto border-2 border-black dark:border-white">
-                                            <div className="flex justify-between mb-2 p-2 bg-white dark:bg-black rounded">
-                                                <div className="font-bold">{entry.name}</div>
+                                    ) : (
+                                        <div className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 border-2 border-black dark:border-white overflow-y-auto">
+                                        {leaderboardData.map((entry, index) => (
+                                            <div key={index} className="flex justify-between items-center mb-2 p-2 bg-white dark:bg-black">
+                                                <div className="font-bold text-xl dark:text-white">{entry.name}</div>
+
+                                                <div className="flex flex-col items-center m-1 mx-10">
+                                                    <div className="text-s dark:text-white">{entry.message}</div>
+                                                </div>
+
                                                 <div className="text-xl dark:text-white">{entry.score}</div>
                                             </div>
-                                        </div>
-                                    )))}
+                                    ))}
+                                    </div>)}
 
 
 
@@ -426,12 +432,12 @@ function Wordarfall({ onClose }) {
 
                                 <div className="text-2xl mb-2 text-black dark:text-white">Save your results?</div>
                                 <form onSubmit={handleSubmitScore} className="flex flex-col gap-4 w-80 bg-[#f7f7f7] dark:bg-[#222222] p-5 mb-6">
-                                    <InputText label="Enter your name:" type="text" name="playerName" required={true} onChange={(e) => setPlayerName(e.target.value)} />
+                                    <InputText label="Enter your name:" type="text" name="playerName" maxLength="20" required={true} onChange={(e) => setPlayerName(e.target.value)} />
 
                                     {/* Message */}
                                     <label className="flex flex-col gap-1">
                                         <div className="text-black dark:text-white text-[1rem]">Leave a message (optional):</div>
-                                        <textarea name="message" type="text" required={false} rows="2" maxLength="30" onChange={(e) => setPlayerMessage(e.target.value)} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
+                                        <textarea name="message" type="text" required={false} rows="2" maxLength="80" onChange={(e) => setPlayerMessage(e.target.value)} className="w-full bg-white dark:bg-[#111] text-black dark:text-white p-1 resize-none focus:outline-none custom-scrollbar
                                         shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#000000] dark:shadow-[inset_1.5px_1.5px_0px_0px_#000000,inset_-1px_-1px_0px_0px_#555555]"/>    
                                     </label>
                                     

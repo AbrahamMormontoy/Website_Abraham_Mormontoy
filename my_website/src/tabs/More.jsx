@@ -6,7 +6,7 @@ import Exit from '../assets/assets95/Exit.png'*/
 
 import { moreIcon } from '../images/assets.jsx'
 
-function More( { onClose } ) {
+function More({ onClose }) {
     
     const questionList = [
         {

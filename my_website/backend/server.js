@@ -1,34 +1,41 @@
-require ("dotenv").config(); // Load environment variables from .env file
-// Package imports, instead of import you use require()
-// Framework for building the web server
+ // Load environment variables from .env file
+require ("dotenv").config();
+
+// Package imports, instead of import you use require() Framework for building the web server
 const express = require("express");
+
 // Allows react frontend to make requests to the backend, cors stand for Cross-Origin Resource Sharing, they are in different ports but sharing resources
 const cors = require("cors");
+
 // Official tool to connect Node.js with PostgreSQL, pg stands for PostgreSQL, Pool is a manager for multiple connections
 const { Pool } = require("pg");
 
 // Init the actual server application in app
 const app = express();
 
-// By default, browsers block websites from talking to servers in different portsS
 // React app is on port 5173 and server on 3000, so using app.use(cors()) allows the frontend to make requests to the backend
 app.use(cors());
 
-// JSON is the format that the frontend and backend will use to comunnicate, this commes like this {name: "Abraham", message: "Hello World", score: 100, timestamp: "2024-06-01T12:00:00Z"},
 // The following line translates it back into usable javascript object as express.json fixes the request body to be a javascript object instead of a string
 app.use(express.json());
 
-// Using the pool manager to connect to the PostgreSQL database, 
-// Blueprint to find it, all the credential are in the env file
+const port = process.env.PORT || 3000; // Use the port from the environment variable or default to 3000
+
+// Using the pool manager to connect to the PostgreSQL database, Blueprint to find it, all the credential are in the env file
 const pool = new Pool({
-    user: process.env.DB_USER, // User created in setup.sql
+
+    /*user: process.env.DB_USER, // User created in setup.sql
     host: process.env.DB_HOST, // Database is on this computer local
     database: process.env.DB_NAME, // The name of the database created in setup.sql
     password: process.env.DB_PASSWORD, // The password set up
-    port: process.env.DB_PORT, // The default port for PostgreSQL 
+    port: process.env.DB_PORT, // The default port for PostgreSQL*/
+
+    connectionString: process.env.DATABASE_URL, // The connection string to the database, this is a single string that contains all the information needed to connect to the database
+    ssl: {
+        rejectUnauthorized: false // This is needed because the database is hosted on a remote server and the certificate is self-signed, so we need to tell the client to accept it
+    } 
 })
 
-// API routes are the endpoints that the frontend will call to get data from the backend
 
 // GET request to the /api/scores endpoint, this is the endpoint that the frontend will call to get the top 10 scores
 app.get('/api/scores', async (req, res) => {

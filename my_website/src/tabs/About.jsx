@@ -5,7 +5,7 @@ import me from '../assets/Me.jpeg'*/
 
 import { aboutIcon, me } from '../images/assets.jsx'
 
-function About( { onClose } ) {
+function About({ onClose }) {
     return (
         <>
             <div className="font-['W95font'] select-none relative z-50">

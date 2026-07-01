@@ -13,7 +13,7 @@ import { linksIcon, GithubDark, Github, LinkedIn, Cv, resume } from '../images/a
 
 import { Button } from '../components/SharedUI.jsx'
 
-function Links( { onClose } ) {
+function Links({ onClose }) {
     const { theme }  = useContext(ThemeContext);
     const darkMode = theme === 'dark';
 
