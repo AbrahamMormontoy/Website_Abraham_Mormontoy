@@ -3,21 +3,20 @@ import React, { useEffect, createContext, useState } from "react";
 // Create a context for theme management
 const ThemeContext = createContext(undefined);
 
-// Checks theme preference based on time of day (6am-6pm = light, otherwise dark)
-function getThemebyTime() {
-    const hour = new Date().getHours();
-    if (hour >= 6 && hour < 18) {
-        return "light";
-    } else {
-        return "dark";
+// Function to get the system's preferred color scheme (light or dark)
+function getSystemTheme() {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
+    return 'light';
 }
 
 function ThemeProvider({ children }) {
     const savedTheme = localStorage.getItem("useTheme"); // check if user has a saved theme preference (light/dark)
     const userPreference = savedTheme !== null;
     
-    const [theme, setThemeState] = useState(savedTheme || getThemebyTime()); // default to time-based theme if no saved preference
+    // If add user preference useState(savedTheme || getSystemTheme())
+    const [theme, setThemeState] = useState(getSystemTheme()); // default to system theme if no saved preference
 
     const [backgroundEffect, setBackgroundEffect] = useState("clouds"); // default effect is clouds
     const [isAnimating, setIsAnimating] = useState(false); // tracking animation state
