@@ -346,7 +346,7 @@ function Wordarfall({ onClose }) {
                                 <div className="text-6xl font-bold text-[#000080] dark:text-[#33ff33]">LEADERBOARD</div>
 
                                     {leaderboardData.length === 0 ? (
-                                        <div className='text-4xl dark:text-white'>Loading database...</div> 
+                                        <div className='text-4xl dark:text-white'>Loading database... (may take a moment)</div> 
                                     ) : (
                                         <div className="w-full max-w-md bg-[#f7f7f7] dark:bg-[#222222] p-4 h-120 border-2 border-black dark:border-white overflow-y-auto">
                                         {leaderboardData.map((entry, index) => (

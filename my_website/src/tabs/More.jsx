@@ -11,27 +11,27 @@ function More({ onClose }) {
     const questionList = [
         {
             question: `What are my hobbies and interests?`,
-            answer: `I have a lot of hobbies and interests that vary a lot along time. My main hobbies are story driven media such as mangas and narrative videogames. I like how these media explore different themes in different ways and are still able to convey message and emotions even if you dont fully understand whats happening or dont completely relate to the characters.
-            
-            My favorite genre in videogame is psychological horror and in manga is thriller. If I had to pick one game and one manga, I would say Silent Hill 2 and Fire Punch (at this moment) but there are a lot of videogames and mangas that I enjoyed such as Resident Evil 2, Silksong, Deltarune, Portal 2, Full Metal Alchemist, Jojos, Tokyo Ghoul and more.`  
+            answer: `I have a lot of hobbies and interests that vary a lot over time. My main hobbies are story-driven media such as manga and narrative video games. I like how these media explore different themes in different ways and are still able to convey messages and emotions even if you don't fully understand what's happening or don't completely relate to the characters.
+
+            My favorite genre in video games is psychological horror, and in manga is thriller. If I had to pick one game and one manga, I would say Silent Hill 2 and Fire Punch (at this moment), but there are a lot of videogames and mangas that I enjoyed, such as Resident Evil 2, Silksong, Deltarune, Portal 2, Full Metal Alchemist, JoJo's, Tokyo Ghoul, and more.`  
         },
         {
             question: `Why do I use Hyprland Arch Linux?`,
-            answer: `I use arch linux mainly because of convenience. First I use this repository https://github.com/JaKooLit/Arch-Hyprland as its really hard to set up everything from the start and I just wanted to see if I like it. After using it for a while I decided to customize system to my liking because there were a lot of things I didnt truly like that went from small stuff, using nano instead of nvim, download terminal tools like ncdu and the power system timer, to big stuff, writing scripts to move applications like in windows, work for a second screen,apply touchscreen settings and the web camera (conf files in general).
-            
-            My biggest recommendation is to start with a prebuilt software like the one I used and then remove things you dont like and add things you do like, this especially if you are aiming for convenience because you are gonna learn anyways and dealwith error anyways everytime there is an update or a mistake in the own changes you made (Recent change to hprlang to lua for example, I am not changing it for now).`
+            answer: `I use my Arch + Hyprland setup mainly because of convenience. First, I used this repository https://github.com/JaKooLit/Arch-Hyprland as it's really hard to set up everything from the start, and I just wanted to see if I liked it. After using it for a while, I decided to customize the system to my liking because there were a lot of things I didn't truly like. This went from small stuff, like using nano instead of nvim and downloading terminal tools like ncdu and the power system timer, to big stuff, like writing scripts to move applications like in Windows, configuring a second screen, and applying touchscreen and web camera settings (.conf files in general).
+
+            My biggest recommendation is to start with a prebuilt setup like the one I used, then remove things you don't like and add things you do. This is especially true if you are aiming for convenience, because you are going to learn and deal with errors anyway every time there is an update or a mistake in the changes you made (the recent change from hyprlang to lua, for example, which I am not changing for now).`
         },
         {
             question: `What I am currently learning?`,
-            answer: `I am currently learning SQL and node.js to expand my backend development skills while constantly improving my frontend development skills with React and Tailwind.`
+            answer: `I am currently learning SQL and Node.js to expand my backend development skills while constantly improving my frontend development skills with React and Tailwind.`
         },
         {
             question: `What are my future goals?`,
-            answer: `At the moment, I am seekin co-op opportunities in various fields as a software developer and data analyst. I am aiming for a frontend development role, data analysis role, full-stack development or IT`
+            answer: `At the moment, I am seeking co-op opportunities in various fields as a software developer and data analyst. I am aiming for a frontend development role, a data analysis role, a full-stack development or IT role.`
         },
         {
             question: `What coursework have I taken?`,
-            answer: `I have taken Introduction to Software Engineering (CMPT 276), Data Structures and Algorithms (CMPT 225), Introduction to Computer Systems (CMPT 295), System Programming (CMPT 201), Introduction to Artificial Intelligence (CMPT 310).`
+            answer: `I have taken Introduction to Software Engineering (CMPT 276), Data Structures and Algorithms (CMPT 225), Introduction to Computer Systems (CMPT 295), System Programming (CMPT 201), and Introduction to Artificial Intelligence (CMPT 310).`
         },
         {
             question: `What are the course I plan to take?`,
