@@ -1,12 +1,12 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* This tells every single element in your app to fade smoothly when its color or shadow changes */
+/* This tells every single element in your app to fade smoothly when its color or shadow changes 
 * {
   transition-property: background-color, color, border-color, box-shadow;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
-}
+}*/
 
 @theme {
   --breakpoint-sm: 766px;
@@ -16,4 +16,22 @@ html, body {
   overscroll-behavior-y: none;
   /* Optional: prevents iOS Safari from double-tap zooming */
   touch-action: pan-x pan-y; 
+}
+
+@font-face {
+  font-family: 'W95font';
+  src: url('/fonts/W95font.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'W95font';
+  src: url('/fonts/W95font-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: 'W95font', sans-serif;
 }
