@@ -26,7 +26,7 @@ function About({ onClose }) {
                         <div className="text-[1.25rem] sm:text-[1.5rem] font-bold text-black dark:text-white mb-2">About Myself</div>
                         <div className="text-[0.875rem] sm:text-[1rem] text-black dark:text-white mb-3 text-justify flex flex-col gap-3">
                             <div>
-                                I'm an undergraduate third-year Computer Science student at Simon Fraser University with a passion for building clean, user-centric interfaces and developing software . I thrive on building engaging user experiences and creative-driven features that add value to the design and functionality of an application.
+                                I'm an undergraduate third-year Computer Science student at Simon Fraser University with a passion for building clean, user-centric interfaces and developing software. I thrive on building engaging user experiences and creative-driven features that add value to the design and functionality of an application.
                             </div>
                             <div>
                                 My academic journey provides me with a strong foundation in programming, algorithms, and software development principles. I enjoy collaborating with peers on projects, from developing an interactive frontend with React and Tailwind CSS to  building a game with a clean structure, functionality, and following the requirements. 

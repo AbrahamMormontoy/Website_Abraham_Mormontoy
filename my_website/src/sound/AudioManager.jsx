@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-
+import { Howl, Howler } from 'howler'; // Added Howler here
 import { AudioContext } from './AudioContext.jsx';
 
 const ASSET_BASE = 'https://assets.abrahammormontoy.com/assets';
 
 const soundConfig = {
     // UI sounds
-    open: { src: `${ASSET_BASE}/sound/open.wav`, loop: false, volume: 0.5 },
-    close: { src: `${ASSET_BASE}/sound/close.wav`, loop: false, volume: 0.5 },
-    skills: { src: `${ASSET_BASE}/sound/skills.wav`, loop: false, volume: 0.5 },
+    open: { src: `${ASSET_BASE}/sound/open.mp3`, loop: false, volume: 0.5 },
+    close: { src: `${ASSET_BASE}/sound/close.mp3`, loop: false, volume: 0.5 },
+    //skills: { src: `${ASSET_BASE}/sound/skills.mp3`, loop: false, volume: 0.5 },
     ambient: { src: `${ASSET_BASE}/sound/ambient.mp3`, loop: true, volume: 0.5 },
     
     // Game music sounds
@@ -26,115 +26,56 @@ const soundConfig = {
 }
 
 export function AudioManager({ children }) {
-    
     const soundRef = useRef({});
     const [isMuted, setIsMuted] = useState(false);
-    const [activeLoop, setActiveLoop] = useState(new Set());
 
     useEffect(() => {
-        // List of objects to iterate through their keys and preload the audio files. The object are audio elements
+        // Capture the current ref value for the cleanup function
+        const currentSounds = soundRef.current;
+
+        // Initialize Howls
         Object.keys(soundConfig).forEach(key => {
-            // Get the configuration for the current sound key and load the audio file as an Audio element
             const config = soundConfig[key];
-            const audio = new Audio(config.src);
-            // Configuration of the audio element
-            audio.preload = 'auto';
-            audio.loop = config.loop;
-            audio.volume = config.volume;
-            // Store the audio element in the ref as its already loaded and ready to play
-            soundRef.current[key] = audio;
+            currentSounds[key] = new Howl({
+                src: [config.src],
+                loop: config.loop,
+                volume: config.volume,
+                html5: true // Essential for mobile browsers to stream/handle long files
+            });
         });
 
         return () => {
-            // Clean up audio elements on unmount to prevent memory leaks
-            Object.keys(soundConfig).forEach(key => {
-                // For now
-                // eslint-disable-next-line react-hooks/exhaustive-deps
-                const audio = soundRef.current[key];
-                
-                if (!audio) return;
-                // Pause the audio if it's playing
-                audio.pause();
-                // Remove the src attribute to free up memory
-                audio.removeAttribute('src');
-            });
-        }
+            // Use the captured variable instead of soundRef.current
+            Object.values(currentSounds).forEach(howl => howl.unload());
+        };
     }, []);
 
     const playSound = (soundKey) => {
-        // Load the audio element from the reference to audio variable
-        const audio = soundRef.current[soundKey];
-        // Exists?
-        if (!audio) return;
-
-        // Checks if the audio is a looping track and adds it to the activeLoop set if it is
-        if (audio.loop) {
-            setActiveLoop(prev => new Set([...prev, soundKey]));
-        }
-
-        // If muted then return without playing
         if (isMuted) return;
-
-        // Current time to 0 and catch error 
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log(`Error: ${soundKey}`, e));
-    }
+        const sound = soundRef.current[soundKey];
+        if (sound) sound.play();
+    };
 
     const stopSound = (soundKey) => {
-        // Load the audio element 
-        const audio = soundRef.current[soundKey];
-        if (!audio) return;
-
-        // Pause the audio and reset to 0
-        audio.pause();
-        audio.currentTime = 0;
-        
-        // Only remove from active loops if it's actually a looping track
-        if (audio.loop) {
-            setActiveLoop(prev => {
-                const newSet = new Set(prev);
-                newSet.delete(soundKey);
-                return newSet;
-            });
-        }
-    }
-
-    useEffect(() => {
-        Object.keys(soundConfig).forEach(key => {
-            const audio = soundRef.current[key];
-
-            if (!audio) return;
-
-            if (isMuted) {
-                if (!audio.paused) {
-                    audio.pause();
-                }
-            } else {
-                if (audio.loop && activeLoop.has(key) && audio.paused) {
-                    audio.play().catch(e => console.log("Play blocked:", e));
-                }
-            }
-        });
-    // Occurs when isMuted or activeLoop changes, ensuring that the audio state is consistent with the current settings
-    }, [isMuted, activeLoop]);
+        const sound = soundRef.current[soundKey];
+        if (sound) sound.stop();
+    };
 
     const toggleAmbientSound = () => {
-        const ambientAudio = soundRef.current['ambient'];
-        if (!ambientAudio) return;
+        const ambient = soundRef.current['ambient'];
+        if (!ambient) return;
+        ambient.playing() ? ambient.stop() : ambient.play();
+    };
 
-        if (ambientAudio.paused) {
-            playSound('ambient');
-        } else {
-            stopSound('ambient');
-        }
-    }
-
-    // Toggle mute
-    const toggleMute = () => { setIsMuted(!isMuted) } 
+    const toggleMute = () => {
+        const newMuted = !isMuted;
+        setIsMuted(newMuted);
+        Howler.mute(newMuted); // Howler is now properly imported and defined
+    };
 
     return (
-        <AudioContext.Provider value={{ playSound, stopSound, isMuted, toggleMute, toggleAmbientSound }} >
+        <AudioContext.Provider value={{ playSound, stopSound, isMuted, toggleMute, toggleAmbientSound }}>
             {children}
         </AudioContext.Provider>
-    )
+    );
 }
